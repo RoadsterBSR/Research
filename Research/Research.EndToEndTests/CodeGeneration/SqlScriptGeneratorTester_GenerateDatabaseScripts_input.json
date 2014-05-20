@@ -1,0 +1,21 @@
+﻿{
+    "Tables":
+    [
+        {
+            "Name": "AchtergrondProcesInfo",
+            "Schema": "Algemeen",
+            "Columns":
+            [
+                { "DataTypeName": "int", "DataTypeMaximumLength": 4, "DataTypeNumericPrecision": 10, "DataTypeNumericScale": 0, "DefaultText": null, "IsDefault": false, "IsForeignKey": true, "IsIdentity": true, "IsNullable": false, "IdentityIncrement": 1, "IdentitySeed": 1, "IsPrimaryKey": true, "Name": "Id" },
+                { "DataTypeName": "varchar", "DataTypeMaximumLength": 255, "DataTypeNumericPrecision": 0, "DataTypeNumericScale": 0, "DefaultText": null, "IsDefault": false, "IsForeignKey": true, "IsIdentity": true, "IsNullable": false, "IdentityIncrement": 0, "IdentitySeed": 0, "IsPrimaryKey": false, "Name": "Naam" },
+                { "DataTypeName": "datetime", "DataTypeMaximumLength": 8, "DataTypeNumericPrecision": 23, "DataTypeNumericScale": 3, "DefaultText": null, "IsDefault": false, "IsForeignKey": true, "IsIdentity": true, "IsNullable": true, "IdentityIncrement": 0, "IdentitySeed": 0, "IsPrimaryKey": false, "Name": "StartDateTime" },
+                { "DataTypeName": "datetime", "DataTypeMaximumLength": 8, "DataTypeNumericPrecision": 23, "DataTypeNumericScale": 3, "DefaultText": null, "IsDefault": false, "IsForeignKey": true, "IsIdentity": true, "IsNullable": true, "IdentityIncrement": 0, "IdentitySeed": 0, "IsPrimaryKey": false, "Name": "EndDateTime" },
+                { "DataTypeName": "int", "DataTypeMaximumLength": 4, "DataTypeNumericPrecision": 10, "DataTypeNumericScale": 0, "DefaultText": null, "IsDefault": false, "IsForeignKey": true, "IsIdentity": true, "IsNullable": true, "IdentityIncrement": 0, "IdentitySeed": 0, "IsPrimaryKey": false, "Name": "SorteerdagId" }
+            ],
+            "ForeignKeys":
+            [
+                { "ColumnName": "SorteerdagId", "ReferencedTableName": "Sorteerdag", "ReferencedSchemaName": "Algemeen", "ReferencedColumnName": "Id" }
+            ]
+        }
+    ]
+}
