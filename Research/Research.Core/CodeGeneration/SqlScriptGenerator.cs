@@ -11,9 +11,23 @@ namespace Research.Core.CodeGeneration
     using System.Text;
     using System.Threading.Tasks;
     using Research.Core.CodeGeneration.SqlScriptDtos;
-    
-    public class SqlScriptGenerator
+
+
+    public interface ISqlScriptGenerator
     {
+        SqlScriptingInput GetSqlScriptingInput(string serverName, string databaseName, string userName = null, string password = null);
+        SqlScriptingResult GenerateSqlScripts(SqlScriptingInput input);
+    }
+
+    public class SqlScriptGenerator : ISqlScriptGenerator
+    {
+        private readonly IFileSystem _fileSystem;
+
+        public SqlScriptGenerator(IFileSystem fileSystem = null)
+        {
+            _fileSystem = fileSystem ?? new FileSystem();
+        }
+
         /// <summary>
         /// Maps SMO objects to Dtos.
         /// </summary>
@@ -36,6 +50,16 @@ namespace Research.Core.CodeGeneration
             {
                 server.ConnectionContext.Disconnect();
             }
+
+            return result;
+        }
+
+        public SqlScriptingResult GenerateSqlScripts(SqlScriptingInput input)
+        {
+            var result = new SqlScriptingResult();
+
+            HandleTables(result, input.Tables);
+            HandleTextObjects(result, input.TextObjects);
 
             return result;
         }
@@ -114,17 +138,6 @@ namespace Research.Core.CodeGeneration
             }
         }
         
-        public SqlScriptingResult GenerateSqlScripts(SqlScriptingInput input)
-        {
-            var result = new SqlScriptingResult();
-
-            HandleTables(result, input.Tables);
-            HandleTextObjects(result, input.TextObjects);
-
-            return result;
-        }
-
-
         public Server GetServer(string serverName, string userName, string password)
         {
             var connectionInfo = new SqlConnectionInfo();

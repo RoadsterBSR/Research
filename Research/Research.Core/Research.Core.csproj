@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneration\FileGenerator.cs" />
+    <Compile Include="CodeGeneration\FileSystem.cs" />
     <Compile Include="CodeGeneration\SqlScriptDtos.cs" />
     <Compile Include="CodeGeneration\SqlScriptGenerator.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
