@@ -31,8 +31,7 @@ namespace Research.EndToEndTests
         public void GetSqlScriptingInput_should_return_correct_input()
         {
             var generator = new SqlScriptGenerator();
-            SqlScriptingInput input = generator.GetSqlScriptingInput(@"dsql02.ada-dev.nl\v2012", "CRIS", "sa", "00sterH0ut");
-            // SqlScriptingInput input = generator.GetSqlScriptingInput(@"LI001", "RouteMaker", "", "");
+            SqlScriptingInput input = generator.GetSqlScriptingInput("MyServer", "MyDatabase");
             input.RootFolder = @"C:\Temp\Generated";
 
             SqlScriptingResult result = generator.GenerateSqlScripts(input);
