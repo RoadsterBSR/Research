@@ -3,29 +3,18 @@ namespace Research.Core.CodeGeneration
 {
     using Microsoft.SqlServer.Management.Common;
     using Microsoft.SqlServer.Management.Smo;
-    using System;
+    using Research.Core.CodeGeneration.SqlScriptDtos;
+    using Research.Core.Components;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Data;
+    using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
-    using Research.Core.CodeGeneration.SqlScriptDtos;
-
-
-    public interface ISqlScriptGenerator
+    
+    public class SqlScriptGenerator
     {
-        SqlScriptingInput GetSqlScriptingInput(string serverName, string databaseName, string userName = null, string password = null);
-        SqlScriptingResult GenerateSqlScripts(SqlScriptingInput input);
-    }
-
-    public class SqlScriptGenerator : ISqlScriptGenerator
-    {
-        private readonly IFileSystem _fileSystem;
-
-        public SqlScriptGenerator(IFileSystem fileSystem = null)
+    
+        public SqlScriptGenerator()
         {
-            _fileSystem = fileSystem ?? new FileSystem();
         }
 
         /// <summary>
@@ -58,8 +47,8 @@ namespace Research.Core.CodeGeneration
         {
             var result = new SqlScriptingResult();
 
-            HandleTables(result, input.Tables);
-            HandleTextObjects(result, input.TextObjects);
+            HandleTables(result, input.Tables, input.RootFolder);
+            HandleTextObjects(result, input.TextObjects, input.RootFolder);
 
             return result;
         }
@@ -160,49 +149,57 @@ namespace Research.Core.CodeGeneration
             return server;
         }
 
-        public void HandleTextObjects(SqlScriptingResult result, List<SqlTextObject> textObjects)
+        public void HandleTextObjects(SqlScriptingResult result, List<SqlTextObject> textObjects, string rootFolder)
         {
             foreach (SqlTextObject textObject in textObjects)
             {
-                var contentBuilder = new StringBuilder(string.Empty);
-                string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
+                // Ignore "tSQLt" schema.
+                if (!textObject.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var contentBuilder = new StringBuilder(string.Empty);
+                    string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
 
-                AddTextObjectHeader(contentBuilder, name, textObject.TypeName);
-                contentBuilder.Append(textObject.TextHeader);
-                contentBuilder.Append(textObject.TextBody);
-                AddTextObjectFooter(contentBuilder);
+                    AddTextObjectHeader(contentBuilder, name, textObject.TypeName);
+                    contentBuilder.Append(textObject.TextHeader);
+                    contentBuilder.Append(textObject.TextBody);
+                    AddTextObjectFooter(contentBuilder);
 
-                AddScriptToResult(textObject.GroupName, textObject.Schema, textObject.Name, contentBuilder, result);
+                    AddScriptToResult(rootFolder, textObject.GroupName, textObject.Schema, textObject.Name, contentBuilder, result);
+                }
             }
         }
 
-        public void HandleTables(SqlScriptingResult result, List<SqlTable> tables)
+        public void HandleTables(SqlScriptingResult result, List<SqlTable> tables, string rootFolder)
         {
             foreach (SqlTable table in tables)
             {
-                var contentBuilder = new StringBuilder(string.Empty);
-                string name = string.Format("{0}.{1}", table.Schema, table.Name);
-                
-                AddTableHeader(contentBuilder, name, "table");
-                int totalColumnCount = table.Columns.Count;
-                for (int i = 0; i < totalColumnCount; i++)
+                // Ignore "tSQLt" schema.
+                if (!table.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SqlColumn column = table.Columns[i];
-                    var columnBuilder = new StringBuilder(string.Empty);
-                    columnBuilder.AppendFormat("        {0}", column.Name);
-                    columnBuilder.AppendFormat(" {0}", column.DataTypeName);
-                    HandleDataTypeLength(column, columnBuilder);
-                    HandleIdentity(column, columnBuilder);
-                    HandleNullability(column, columnBuilder);
-                    HandlePrimaryKey(table, column, columnBuilder);
-                    HandleDefault(table, column, columnBuilder);
-                    HandleForeignKey(table, column, columnBuilder);
-                    HandleSeperator(totalColumnCount, i, columnBuilder);
-                    contentBuilder.AppendLine(columnBuilder.ToString());
+                    var contentBuilder = new StringBuilder(string.Empty);
+                    string name = string.Format("{0}.{1}", table.Schema, table.Name);
+
+                    AddTableHeader(contentBuilder, name, "table");
+                    int totalColumnCount = table.Columns.Count;
+                    for (int i = 0; i < totalColumnCount; i++)
+                    {
+                        SqlColumn column = table.Columns[i];
+                        var columnBuilder = new StringBuilder(string.Empty);
+                        columnBuilder.AppendFormat("        {0}", column.Name);
+                        columnBuilder.AppendFormat(" {0}", column.DataTypeName);
+                        HandleDataTypeLength(column, columnBuilder);
+                        HandleIdentity(column, columnBuilder);
+                        HandleNullability(column, columnBuilder);
+                        HandlePrimaryKey(table, column, columnBuilder);
+                        HandleDefault(table, column, columnBuilder);
+                        HandleForeignKey(table, column, columnBuilder);
+                        HandleSeperator(totalColumnCount, i, columnBuilder);
+                        contentBuilder.AppendLine(columnBuilder.ToString());
+                    }
+                    AddTableFooter(contentBuilder);
+
+                    AddScriptToResult(rootFolder, "Tables", table.Schema, table.Name, contentBuilder, result);
                 }
-                AddTableFooter(contentBuilder);
-                
-                AddScriptToResult("Tables", table.Schema, table.Name, contentBuilder, result);
             }
         }
 
@@ -239,13 +236,15 @@ go
 ");
         }
 
-        public void AddScriptToResult(string folderName, string schema, string name , StringBuilder fileContent, SqlScriptingResult result)
+        public void AddScriptToResult(string rootFolder, string folderName, string schema, string name , StringBuilder fileContent, SqlScriptingResult result)
         {
-            var script = new SqlScriptInfo
+            string fileName = string.Format("{0}.{1}.sql", schema, name);
+            string folderPath = string.IsNullOrWhiteSpace(rootFolder) ? folderName : Path.Combine(rootFolder, folderName);
+            string path = Path.Combine(folderPath, fileName);
+            var script = new FileInfoDto
             {
-                FileContent = fileContent.ToString(),
-                FileName = string.Format("{0}.{1}.sql", schema, name),
-                FolderName = folderName
+                Content = fileContent.ToString(),
+                Path = path
             };
 
             result.Scripts.Add(script);
@@ -362,6 +361,4 @@ go
             //</ItemGroup>
         }
     }
-
-    
 }

@@ -5,8 +5,10 @@ namespace Research.EndToEndTests
     using Newtonsoft.Json;
     using Research.Core.CodeGeneration;
     using Research.Core.CodeGeneration.SqlScriptDtos;
+    using Research.Core.Components;
     using Research.Core.Extensions;
     using System.Reflection;
+    using System.Threading.Tasks;
     
     [TestClass]
     public class CodeGeneratorTester
@@ -31,9 +33,16 @@ namespace Research.EndToEndTests
             var generator = new SqlScriptGenerator();
             SqlScriptingInput input = generator.GetSqlScriptingInput(@"dsql02.ada-dev.nl\v2012", "CRIS", "sa", "00sterH0ut");
             // SqlScriptingInput input = generator.GetSqlScriptingInput(@"LI001", "RouteMaker", "", "");
+            input.RootFolder = @"C:\Temp\Generated";
 
             SqlScriptingResult result = generator.GenerateSqlScripts(input);
+            var fs = new FileSystem();
+            Task deleteDirectoryTask = fs.DeleteDirectoryAsync(input.RootFolder);
+            deleteDirectoryTask.Wait();
 
+            Task generateFilesTask = fs.GenerateFilesAsync(result.Scripts);
+            generateFilesTask.Wait();
+            
             Assert.AreEqual(true, true);
         }
     }

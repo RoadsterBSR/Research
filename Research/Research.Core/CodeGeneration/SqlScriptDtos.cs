@@ -1,16 +1,14 @@
 ﻿
 namespace Research.Core.CodeGeneration.SqlScriptDtos
 {
-    using System;
+    using Research.Core.Components;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class SqlScriptingInput
     {
         public List<SqlTable> Tables { get; set; }
         public List<SqlTextObject> TextObjects { get; set; }
+        public string RootFolder { get; set; }
 
         public SqlScriptingInput()
         {
@@ -61,11 +59,11 @@ namespace Research.Core.CodeGeneration.SqlScriptDtos
 
     public class SqlScriptingResult
     {
-        public List<SqlScriptInfo> Scripts { get; set; }
+        public List<FileInfoDto> Scripts { get; set; }
 
         public SqlScriptingResult()
         {
-            Scripts = new List<SqlScriptInfo>();
+            Scripts = new List<FileInfoDto>();
         }
     }
 
@@ -77,12 +75,5 @@ namespace Research.Core.CodeGeneration.SqlScriptDtos
         public string Schema { get; set; }
         public string TextBody { get; set; }
         public string TextHeader { get; set; }
-    }
-
-    public class SqlScriptInfo
-    {
-        public string FolderName { get; set; }
-        public string FileName { get; set; }
-        public string FileContent { get; set; }
     }
 }
