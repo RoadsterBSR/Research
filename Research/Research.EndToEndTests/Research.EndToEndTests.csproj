@@ -56,7 +56,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CodeGeneration\SqlScriptGeneratorTester.cs" />
     <Compile Include="Extensions\AssemblyExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
