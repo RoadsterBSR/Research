@@ -31,6 +31,7 @@ namespace Research.Core.CodeGeneration
                 server.ConnectionContext.Connect();
                 Database database = server.Databases[databaseName];
                 MapSmoTablesToSqlScriptDtos(database.Tables.Cast<Table>().Where(x => x.IsSystemObject == false), result);
+                MapSmoSchemasToSqlScriptDtos(database.Schemas.Cast<Schema>().Where(x => x.IsSystemObject == false), result);
                 MapSmoTextObjectsToSqlScriptDtos(database.StoredProcedures.Cast<StoredProcedure>().Where(x => x.IsSystemObject == false), "procedure", "StoredProcedures", result);
                 MapSmoTextObjectsToSqlScriptDtos(database.UserDefinedFunctions.Cast<UserDefinedFunction>().Where(x => x.IsSystemObject == false), "function", "Functions", result);
                 MapSmoTextObjectsToSqlScriptDtos(database.Views.Cast<View>().Where(x => x.IsSystemObject == false), "view", "Views", result);
@@ -51,6 +52,72 @@ namespace Research.Core.CodeGeneration
             HandleTextObjects(result, input.TextObjects, input.RootFolder);
 
             return result;
+        }
+
+        public SqlDeployScriptResult GenerateDeployScript(SqlScriptingInput input)
+        {
+            var result = new SqlDeployScriptResult();
+
+            var tables = new StringBuilder(string.Empty);
+            foreach (SqlTable table in input.Tables)
+            {
+                // Ignore "tSQLt" schema.
+                if (!table.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string name = string.Format("{0}.{1}", table.Schema, table.Name);
+                    string groupName = "Tables";
+                    tables.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine(groupName, name)));
+                }
+            }
+            result.Tables = tables.ToString();
+
+            var schemas = new StringBuilder(string.Empty);
+            foreach (string schema in input.Schemas)
+            {
+                schemas.AppendLine(Path.Combine("Schemas", schema));
+                schemas.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine("Schemas", schema)));
+            }
+            result.Schemas = result.ToString();
+
+            var functions = new StringBuilder(string.Empty);
+            var views = new StringBuilder(string.Empty);
+            var storedProcedures = new StringBuilder(string.Empty);
+            foreach (SqlTextObject textObject in input.TextObjects)
+            {
+                // Ignore "tSQLt" schema.
+                if (!textObject.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
+                    string groupName = textObject.GroupName;
+
+                    switch (groupName.ToLower())
+                    {
+                        case "functions":
+                            functions.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine(groupName, name)));
+                            break;
+                        case "views":
+                            views.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine(groupName, name)));
+                            break;
+                        case "storedprocedures":
+                            storedProcedures.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine(groupName, name)));
+                            break;
+                    }
+                }
+            }
+            result.Functions = functions.ToString();
+            result.Views = views.ToString();
+            result.StoredProcedures = storedProcedures.ToString();
+
+            return result;
+        }
+
+        public void MapSmoSchemasToSqlScriptDtos(IEnumerable<Schema> schemas, SqlScriptingInput input)
+        {
+
+            foreach (Schema schema in schemas)
+            {
+                input.Schemas.Add(schema.Name);
+            }
         }
 
         public void MapSmoTextObjectsToSqlScriptDtos(IEnumerable<object> textObjects, string typeName, string groupName, SqlScriptingInput input)
@@ -159,7 +226,11 @@ namespace Research.Core.CodeGeneration
                     var contentBuilder = new StringBuilder(string.Empty);
                     string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
 
-                    AddTextObjectHeader(contentBuilder, name, textObject.TypeName);
+                    // Don't add drop statement for schema's.
+                    if (!textObject.GroupName.ToLower().Equals("schema"))
+                    {
+                        AddTextObjectHeader(contentBuilder, name, textObject.TypeName);
+                    }
                     contentBuilder.Append(textObject.TextHeader);
                     contentBuilder.Append(textObject.TextBody);
                     AddTextObjectFooter(contentBuilder);

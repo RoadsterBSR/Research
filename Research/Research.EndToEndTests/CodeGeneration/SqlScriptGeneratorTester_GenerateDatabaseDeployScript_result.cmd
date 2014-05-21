@@ -23,40 +23,22 @@ cd "%~dp0"
 echo Create [Database].
 REM controle op username/password of windows authentication
 IF EXIST %Deploy_Username% (
-    "%Deploy_SqlCmdPath%" -S %Deploy_Server% -d master -U "%Deploy_Username%" -P "%Deploy_Password%" -b -i "Database\Database.sql" -v Database=%Deploy_Database%
+    "%Deploy_SqlCmdPath%" -S %Deploy_Server% -d master -U "%Deploy_Username%" -P "%Deploy_Password%" -b -i "Database/Database.sql" -v Database=%Deploy_Database%
 ) ELSE (
-    "%Deploy_SqlCmdPath%" -S "%Deploy_Server%" -d master -b -i "Database\Database.sql" -v Database=%Database%
+    "%Deploy_SqlCmdPath%" -S "%Deploy_Server%" -d master -b -i "Database/Database.sql" -v Database=%Database%
 )
 
 echo Create [Schemas].
-call :runCmd "Schemas\ACP.sql"
+{0}
 
-echo Create [Security] tables.
-call :runCmd "Tables\Security.AspNetUsers.sql"
+echo Create [Tables].
+{1}
 
-echo Create [Roles]
-call :runCmd "Roles\RouteMakerRole.sql"
-
-echo Create [ACP] tables.
-call :runCmd "Tables\ACP.ImportStatus.sql"
-
-echo Create [Algemeen] functions.
-call :runCmd "Functions\Algemeen.GetErrorInfo.sql"
-
-echo Create [Algemeen] tables.
-call :runCmd "Tables\Algemeen.AdaLog.sql"
-
-echo Create [Staging] tables.
-call :runCmd "Tables\Staging.AdviesVervoertypePc6.sql"
-
-echo Create [Relationeel] reference tables (stamtabellen).
-call :runCmd "Tables\Relationeel.LocatieStatus.sql"
-
-echo Create [Relationeel] data tables.
-call :runCmd "Tables\Relationeel.Postcode6Groep.sql"
+echo Recreate [Functions].
+{2}
 
 echo Recreate [Stored Procedures].
-call :runCmd "StoredProcedures\Algemeen.Log.sql"
+{3}
 
 echo Deploy.cmd finished
 

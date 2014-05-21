@@ -67,7 +67,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeGeneration\SqlScriptGeneratorTester_GenerateDatabaseDeployScript_result.cmd" />
+    <EmbeddedResource Include="CodeGeneration\SqlScriptGeneratorTester_GenerateDatabaseDeployScript_result.cmd" />
     <None Include="CodeGeneration\SqlScriptGeneratorTester_GenerateDatabaseScripts_input.json" />
     <None Include="CodeGeneration\SqlScriptGeneratorTester_GenerateDatabaseScripts_output.json" />
     <None Include="packages.config" />
