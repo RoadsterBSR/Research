@@ -4,6 +4,7 @@ namespace Research.UI.Web.Server.Controllers
     using Research.UI.Web.Server.Model;
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -23,6 +24,7 @@ namespace Research.UI.Web.Server.Controllers
 
             // Don't load navigation properties automatically.
             _dbContext.Configuration.ProxyCreationEnabled = false;
+
             // Because ProxyCreation is disabled, lazyloading is of no use, so we disable it.            
             _dbContext.Configuration.LazyLoadingEnabled = false;
         }

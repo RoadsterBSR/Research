@@ -1,6 +1,8 @@
 ﻿
 namespace Research.UI.Web
 {
+    using Research.UI.Web.Server.Model;
+    using System.Data.Entity;
     using System.Web.Http;
 
     public class WebApiApplication : System.Web.HttpApplication

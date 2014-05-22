@@ -3,12 +3,12 @@ namespace Research.UI.Web.Server.Model
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class Setting
+    public class Product
     {
-        [Key]    
+        [Key]
         public int Id { get; set; }
         [Required]
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
     }
 }

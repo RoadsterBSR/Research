@@ -12,6 +12,7 @@ namespace Research.UI.Web.Migrations
         {
             // During development the database will automatically be updated, when de application starts.
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         /// <summary>
@@ -21,7 +22,7 @@ namespace Research.UI.Web.Migrations
         {
             // Add some settings.  
             context.Settings.AddOrUpdate(
-              s => s.Key, 
+              s => s.Key,
                 new Setting { Key = "MySetting1_Key", Value = "MySetting1_Value" },
                 new Setting { Key = "MySetting2_Key", Value = "MySetting2_Value" }
             );
