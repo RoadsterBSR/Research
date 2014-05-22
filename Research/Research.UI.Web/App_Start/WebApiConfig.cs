@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
+﻿
 namespace Research.UI.Web
 {
+    using System.Web.Http;
+
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Register ASP .NET Web Api routs.
+        /// </summary>
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
