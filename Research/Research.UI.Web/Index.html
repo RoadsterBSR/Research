@@ -1,9 +1,25 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html ng-app="demoApp">
 <head>
+    <meta charset="utf-8">
     <title>Research Application</title>
+    <link href="/Client/Libraries/Kendo/css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Client/Libraries/Kendo/css/kendo.silver.min.css" rel="stylesheet" type="text/css" />
+    <script src="/Client/Libraries/Kendo/js/jquery.min.js"></script>
+    <script src="/Client/Libraries/Kendo/js/kendo.all.min.js"></script>
+    <script src="/Client/Libraries/Angular/angular.js"></script>
+    <script src="/Client/Libraries/Angular/angular-route.js"></script>
+    <script src="/Client/Libraries/Angular/angular-sanitize.js"></script>
+    <script src="/Client/Libraries/Angular/angular-kendo.js"></script>
+    <script src="/Client/Libraries/Live/head.min.js"></script>
+    <script src="/Client/Libraries/Live/live.js"></script>
+    
 </head>
-<body>
-    Research Application
+<body ng-controller="demoCtrl">
+    <div>
+        <div kendo-grid k-options="mainGridOptions"></div>
+    </div>
+
+    <script src="/Client/Core/app.js"></script>
 </body>
 </html>

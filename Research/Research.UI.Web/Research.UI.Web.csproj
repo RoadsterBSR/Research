@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Client\Core\app.js" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\imagebrowser.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\indeterminate.gif" />
@@ -279,6 +280,9 @@
     <Content Include="Client\Libraries\Kendo\css\Uniform\slider-v.gif" />
     <Content Include="Client\Libraries\Kendo\css\Uniform\sprite.png" />
     <Content Include="Client\Libraries\Kendo\css\Uniform\sprite_2x.png" />
+    <Content Include="Client\Libraries\Kendo\js\kendo.all.min.js" />
+    <Content Include="Client\Libraries\Live\head.min.js" />
+    <Content Include="Client\Libraries\Live\live.js" />
     <Content Include="packages.config" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.woff" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.ttf" />
@@ -1052,6 +1056,8 @@
     <Content Include="Client\Libraries\Q\q.js" />
     <Content Include="Client\Libraries\Q\q.min.js" />
     <Content Include="Client\Libraries\Angular\version.json" />
+    <Content Include="Client\Libraries\Angular\angular-kendo.js" />
+    <Content Include="Client\Libraries\Angular\angular-kendo.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1079,10 +1085,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Client\Core\" />
     <Folder Include="Client\Features\" />
     <Folder Include="Client\Libraries\Bootstrap\" />
-    <Folder Include="Client\Libraries\Live\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
