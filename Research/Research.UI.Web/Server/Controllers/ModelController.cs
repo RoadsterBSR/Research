@@ -21,7 +21,8 @@ namespace Research.UI.Web.Server.Controllers
         [HttpGet]
         public string Metadata()
         {
-            return _contextProvider.Metadata();
+            string result = _contextProvider.Metadata();
+            return result;
         }
 
         [HttpGet]

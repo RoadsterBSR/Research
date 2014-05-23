@@ -1083,7 +1083,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Controllers\ResearchController.cs" />
     <Compile Include="Server\Model\Employee.cs" />
-    <Compile Include="Server\Model\MyModel.cs" />
     <Compile Include="Server\Model\Product.cs" />
     <Compile Include="Server\Model\ResearchDbContext.cs" />
     <Compile Include="Server\Model\Setting.cs" />
@@ -1092,6 +1091,12 @@
     <Folder Include="App_Data\" />
     <Folder Include="Client\Features\" />
     <Folder Include="Client\Libraries\Bootstrap\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Research.Core\Research.Core.csproj">
+      <Project>{2ee2676c-2ebb-4e41-a732-577fe11c92ec}</Project>
+      <Name>Research.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

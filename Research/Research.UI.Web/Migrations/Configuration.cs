@@ -1,6 +1,5 @@
 namespace Research.UI.Web.Migrations
 {
-    using Research.UI.Web.Server.Model;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -10,22 +9,24 @@ namespace Research.UI.Web.Migrations
     {
         public Configuration()
         {
-            // During development the database will automatically be updated, when de application starts.
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        /// <summary>
-        /// This method will be called after migrating to the latest version.
-        /// </summary>
         protected override void Seed(Research.UI.Web.Server.Model.ResearchDbContext context)
         {
-            // Add some settings.  
-            context.Settings.AddOrUpdate(
-              s => s.Key,
-                new Setting { Key = "MySetting1_Key", Value = "MySetting1_Value" },
-                new Setting { Key = "MySetting2_Key", Value = "MySetting2_Value" }
-            );
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }

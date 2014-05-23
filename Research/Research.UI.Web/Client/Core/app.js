@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../Libraries/Breeze/breeze.min.js" />
+
 // Main entry point of the application.
 var demoApp = angular.module("demoApp", ["kendo.directives"]);
 demoApp.controller('demoCtrl', function ($scope)
@@ -118,10 +119,12 @@ demoApp.controller('demoCtrl', function ($scope)
 
         var query = new breeze.EntityQuery()
             .from("Employees");
-
+        
         manager.executeQuery(query).then(function (data)
         {
             console.log(data);
+            var entityTypes = manager.metadataStore.getEntityTypes();
+            console.log(entityTypes);
         }).fail(function (e)
         {
             alert(e);
