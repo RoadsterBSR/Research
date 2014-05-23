@@ -11,7 +11,7 @@ namespace Research.UnitTests
     using System.IO;
 
     [TestClass]
-    public class Research
+    public class ResearchTester
     {
         [TestMethod]
         public void TestWithoutTiming()
