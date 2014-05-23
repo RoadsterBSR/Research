@@ -6,17 +6,38 @@ namespace Research.UI.Web.Server.Controllers
     using Breeze.WebApi2;
     using Newtonsoft.Json.Linq;
     using Research.UI.Web.Server.Model;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
     using System.Web.Http;
 
     [BreezeController]
-    public class ModelController : ApiController
+    public class BreezeController : ApiController
     {
-        private readonly EFContextProvider<ResearchDbContext> _contextProvider = new EFContextProvider<ResearchDbContext>();
+        private readonly EFContextProvider<ResearchDbContext> _contextProvider;
+        private static string _customMetaData;
+       
+        public BreezeController(): this(null, null)
+        {
+        }
+
+        public BreezeController(EFContextProvider<ResearchDbContext> contextProvider, string customMetaData)
+        {
+            _contextProvider = contextProvider ??  new EFContextProvider<ResearchDbContext>();
+
+            if (!string.IsNullOrWhiteSpace(customMetaData))
+            {
+                _customMetaData = customMetaData;
+            }
+        }
+
+        [HttpGet]
+        public string CustomMetaData()
+        {
+            if (string.IsNullOrWhiteSpace(_customMetaData))
+            {
+
+            }
+            return _customMetaData;
+        }
 
         [HttpGet]
         public string Metadata()
@@ -32,9 +53,9 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
-        public IQueryable<Product> Products()
+        public IQueryable<Declaration> Declarations()
         {
-            return _contextProvider.Context.Products;
+            return _contextProvider.Context.Declarations;
         }
 
         [HttpGet]

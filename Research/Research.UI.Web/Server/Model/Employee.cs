@@ -1,7 +1,9 @@
 ﻿
 namespace Research.UI.Web.Server.Model
 {
-    using Research.Core.Validators;
+    using Research.UI.Web.Validation;
+    using Research.UI.Web.Validation.Rules;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Employee
@@ -12,8 +14,7 @@ namespace Research.UI.Web.Server.Model
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [StringLengthRange(Minimum = 5, Maximum = 10, ErrorMessage = "Must be between 5 and 10 characters.")]
         public string PhoneNumber { get; set; }
-        public int ProductId { get; set; }
+        List<Declaration> Declarations { get; set; }
     }
 }

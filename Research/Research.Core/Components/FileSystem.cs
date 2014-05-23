@@ -7,14 +7,14 @@ namespace Research.Core.Components
         
     public class FileSystem
     {
-        public Task<bool> CheckIfFileExistsAsync(string path)
+        public async Task<bool> CheckIfFileExistsAsync(string path)
         {
-            return Task.Factory.StartNew(() => { return File.Exists(path); });
+            return await Task.Factory.StartNew(() => { return File.Exists(path); });
         }
 
-        public Task CreateDirectoryAsync(string path)
+        public async Task CreateDirectoryAsync(string path)
         {
-            return Task.Factory.StartNew(() => {
+            await Task.Factory.StartNew(() => {
                 Directory.CreateDirectory(path);
             });
         }
@@ -23,20 +23,23 @@ namespace Research.Core.Components
         {
             string[] files = await GetFilesAsync(path, "*", SearchOption.AllDirectories);
             await DeleteFilesAsync(files);
-            Directory.Delete(path, true);
+            await Task.Factory.StartNew(() =>
+            {
+                Directory.Delete(path, true);
+            });
         }
 
-        public Task<string[]> GetFilesAsync(string path, string searchPattern, SearchOption searchOption)
+        public async Task<string[]> GetFilesAsync(string path, string searchPattern, SearchOption searchOption)
         {
-            return Task.Factory.StartNew(() =>
+            return await Task.Factory.StartNew(() =>
             {
                 return Directory.GetFiles(path, searchPattern, searchOption);
             });
         }
 
-        public Task<string[]> GetDirectoriesAsync(string path, string searchPattern, SearchOption searchOption)
+        public async Task<string[]> GetDirectoriesAsync(string path, string searchPattern, SearchOption searchOption)
         {
-            return Task.Factory.StartNew(() =>
+            return await Task.Factory.StartNew(() =>
             {
                 return Directory.GetDirectories(path, searchPattern, searchOption);
             });
@@ -45,7 +48,10 @@ namespace Research.Core.Components
         public async Task DeleteFileAsync(string path)
         {
             await MakeFileWritableAsync(path);
-            File.Delete(path);
+            await Task.Factory.StartNew(() =>
+            {
+                File.Delete(path);
+            });
         }
 
         public async Task DeleteFilesAsync(string[] files)
@@ -58,7 +64,10 @@ namespace Research.Core.Components
 
         public async Task GenerateFileAsync(FileInfoDto file)
         {
-            string folder = Path.GetDirectoryName(file.Path);
+            string folder = await Task.Factory.StartNew(() =>
+            {
+                return Path.GetDirectoryName(file.Path);
+            });
             await CreateDirectoryAsync(folder);
             await MakeFileWritableAsync(file.Path);
             await WriteAllTextAsync(file.Path, file.Content);
@@ -77,7 +86,10 @@ namespace Research.Core.Components
             bool fileExists = await CheckIfFileExistsAsync(path);
             if (fileExists)
             {
-                File.SetAttributes(path, FileAttributes.Normal);
+                await Task.Factory.StartNew(() =>
+                {
+                    File.SetAttributes(path, FileAttributes.Normal);
+                });
             }
         }
 
@@ -87,11 +99,17 @@ namespace Research.Core.Components
             {
                 await MakeFileWritableAsync(file);
             }
-        }   
+        }
 
-        public Task WriteAllTextAsync(string path, string content)
+        public async Task<string> ReadAllTextAsync(string path)
         {
-            return Task.Factory.StartNew(() => { File.WriteAllText(path, content); });
+            string result = await Task.Factory.StartNew(() => { return File.ReadAllText(path); });
+            return result;
+        }
+
+        public async Task WriteAllTextAsync(string path, string content)
+        {
+            await Task.Factory.StartNew(() => { File.WriteAllText(path, content); });
         }
     }
 

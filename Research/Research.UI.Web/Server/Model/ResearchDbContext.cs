@@ -7,7 +7,7 @@ namespace Research.UI.Web.Server.Model
     public class ResearchDbContext : DbContext
     {
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Declaration> Declarations { get; set; }
         public DbSet<Setting> Settings { get; set; }
     }    
 }

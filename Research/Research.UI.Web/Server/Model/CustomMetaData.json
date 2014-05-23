@@ -1,0 +1,16 @@
+﻿{
+    "structuralTypes": [
+        {
+            "shortName": "Employee",
+            "namespace": "Research.UI.Web.Server.Model",
+            "dataProperties": [
+                {
+                    "nameOnServer": "PhoneNumber",
+                    "validators": [{
+                        "name": "This is custom information."
+                    }]
+                }
+            ]
+        }
+    ]
+}

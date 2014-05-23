@@ -115,7 +115,8 @@ demoApp.controller('demoCtrl', function ($scope)
 
     $scope.getDataFromServer = function ()
     {
-        var manager = new breeze.EntityManager('breeze/model');
+        
+        var manager = new breeze.EntityManager('breeze/breeze');
 
         var query = new breeze.EntityQuery()
             .from("Employees");
@@ -123,6 +124,26 @@ demoApp.controller('demoCtrl', function ($scope)
         manager.executeQuery(query).then(function (data)
         {
             console.log(data);
+
+
+            var customMetadata = {
+                "structuralTypes": [{
+                    "shortName": "Employee",
+                    "namespace": "Research.UI.Web.Server.Model",
+                    "dataProperties": [ {
+                        "nameOnServer": "PhoneNumber",
+                        "custom": {                     
+                            "description": "This is custom information."
+                        }
+                    }]
+                }]};
+            manager.metadataStore.importMetadata(customMetadata, true);
+
+
+
+
+
+
             var entityTypes = manager.metadataStore.getEntityTypes();
             console.log(entityTypes);
         }).fail(function (e)
