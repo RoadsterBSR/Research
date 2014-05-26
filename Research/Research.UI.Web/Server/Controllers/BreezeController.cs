@@ -5,6 +5,7 @@ namespace Research.UI.Web.Server.Controllers
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
     using Newtonsoft.Json.Linq;
+    using Research.UI.Web.Server.Components;
     using Research.UI.Web.Server.Model;
     using System.Linq;
     using System.Web.Http;
@@ -14,12 +15,13 @@ namespace Research.UI.Web.Server.Controllers
     {
         private readonly EFContextProvider<ResearchDbContext> _contextProvider;
         private static string _customMetaData;
-       
-        public BreezeController(): this(null, null)
+        private readonly ICustomMetaDataBuilder _customMetaDataBuilder;
+
+        public BreezeController(): this(null, null, null)
         {
         }
 
-        public BreezeController(EFContextProvider<ResearchDbContext> contextProvider, string customMetaData)
+        public BreezeController(EFContextProvider<ResearchDbContext> contextProvider, string customMetaData, ICustomMetaDataBuilder customMetaDataBuilder)
         {
             _contextProvider = contextProvider ??  new EFContextProvider<ResearchDbContext>();
 
@@ -27,6 +29,14 @@ namespace Research.UI.Web.Server.Controllers
             {
                 _customMetaData = customMetaData;
             }
+
+            _customMetaDataBuilder = customMetaDataBuilder ?? new CustomMetaDataBuilder();
+        }
+
+        [HttpGet]
+        public void ResetCustomMetaData()
+        {
+            _customMetaData = _customMetaDataBuilder.GetCustomMetaData(new ResearchDbContext());
         }
 
         [HttpGet]
@@ -34,7 +44,7 @@ namespace Research.UI.Web.Server.Controllers
         {
             if (string.IsNullOrWhiteSpace(_customMetaData))
             {
-
+                _customMetaData = _customMetaDataBuilder.GetCustomMetaData(new ResearchDbContext());
             }
             return _customMetaData;
         }

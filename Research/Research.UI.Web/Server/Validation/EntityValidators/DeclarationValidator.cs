@@ -1,16 +1,14 @@
 ﻿
-namespace Research.UI.Web.Validation.Rules
+namespace Research.UI.Web.Validation.EntityValidators
 {
     using Research.UI.Web.Server.Model;
-    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    
-    public class DeclarationValidator : System.Attribute, IEntityRule
+
+    public class DeclarationValidator : System.Attribute, IEntityValidator
     {
         public int MaxDeclarationTotal { get; set; }
 

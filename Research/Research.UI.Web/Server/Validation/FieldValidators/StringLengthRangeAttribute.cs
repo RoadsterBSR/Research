@@ -1,5 +1,5 @@
 ﻿
-namespace Research.UI.Web.Validation.FieldRules
+namespace Research.UI.Web.Validation.FieldValidators
 {
     using System.ComponentModel.DataAnnotations;
 

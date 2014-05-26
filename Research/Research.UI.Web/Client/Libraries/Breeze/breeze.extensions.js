@@ -1,18 +1,24 @@
-﻿breeze.validators = breeze.validators || (function () {
-    var v1 = 10; // This is a private variable shared by all instances of Greeter.
-
-    function Validators() {
-        
-        this.v2 = 20; // This is a public instance variable.
-        var v3 = 30; // This is a private instance variable, can only be accessed by the current Greeter instance.
+﻿breeze.CustomValidator = breeze.CustomValidator || (function ()
+{
+    function CustomValidator()
+    {
     }
 
-    Validators.prototype.v4 = 40; // This is a public variable shared by all instances of Greeter.
+    CustomValidator.prototype.Research_UI_Web_Validation_FieldValidators_StringLengthRangeAttribute = function (fieldName, fieldValue, fieldValidator)
+    {
+        var result = {
+            message: "",
+            isValid: true
+        };
 
-    Validators.prototype.increase = function () {
-        v1 = v1 + 1;
-        this.v2 = this.v2 + 1;
+        if (!(fieldValue && fieldValue.length && fieldValue.length >= fieldValidator.Minimum && fieldValue.length <= fieldValidator.Maximum))
+        {
+            result.message = fieldName + " should be between " + fieldValidator.Minimum.toString() + " and " + fieldValidator.Maximum.toString() + ".";
+            result.isValid = false;
+        }
+        
+        return result;
     };
 
-    return Validators;
+    return CustomValidator;
 })();
