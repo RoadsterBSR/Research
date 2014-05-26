@@ -5,6 +5,7 @@ var demoApp = angular.module("demoApp", ["kendo.directives"]);
 demoApp.controller('demoCtrl', function ($scope)
 {
     var _manager;
+    var _customMetaData;
 
     $scope.getEntityModel = function ()
     {
@@ -12,86 +13,16 @@ demoApp.controller('demoCtrl', function ($scope)
         var modelItem = {};
         var entityType = {};
         
-        var entityTypes = _manager.getEntityTypes();
+        // All entities must have a field "Id" as primairykey.
+        modelItem.id = "Id";
+
+        var entityTypes = _manager.metadataStore.getEntityTypes();
         for (var i = 0, length = entityTypes.length; i < length; i += 1)
         {
             entityType = entityTypes[i];
             modelItem = $scope.getModelItem(entityType);
             model.push(modelItem);
         }
-
-        //model = [
-        //{
-        //    typeName: "Employee",
-        //    typeDisplayName: "Employees",
-        //    columns: [{
-        //        field: "FirstName",
-        //        title: "First Name",
-        //        width: "120px"
-        //    }, {
-        //        field: "LastName",
-        //        title: "Last Name",
-        //        width: "120px"
-        //    }, {
-        //        field: "ProductId",
-        //        title: "Product",
-        //        width: "120px",
-        //        values: [
-        //        { "value": 1, "text": "Product 1" },
-        //        { "value": 2, "text": "Product 2" },
-        //        { "value": 3, "text": "Product 3" },
-        //        { "value": 4, "text": "Product 4" },
-        //        { "value": 5, "text": "Product 5" },
-        //        { "value": 6, "text": "Product 6" },
-        //        { "value": 7, "text": "Product 7" }],
-        //    }],
-        //    fields: {
-        //        FirstName: {
-        //            type: "string", validation: {
-        //                required: true, firstnamevalidation: function (input)
-        //                {
-        //                    return $scope.handleFielValidation(input);
-        //                }
-        //            }
-        //        },
-        //        LastName: { type: "string", validation: { required: true } },
-        //        ProductId: { type: "number", defaultValue: 1, validation: { required: true } }
-        //    },
-        //    data: new kendo.data.ObservableArray([
-        //        { Id: 1, FirstName: "Rob", LastName: "Do", ProductId: 1 },
-        //        { Id: 2, FirstName: "Bill", LastName: "Do", ProductId: 1 },
-        //        { Id: 3, FirstName: "Joey", LastName: "Do", ProductId: 1 },
-        //        { Id: 4, FirstName: "Scott", LastName: "Do", ProductId: 1 },
-        //        { Id: 5, FirstName: "Harry", LastName: "Do", ProductId: 1 },
-        //        { Id: 6, FirstName: "Mike", LastName: "Do", ProductId: 1 },
-        //        { Id: 7, FirstName: "Morgan", LastName: "Do", ProductId: 1 }])
-        //},
-        //{
-        //    typeName: "Product",
-        //    typeDisplayName: "Product",
-        //    columns: [{
-        //        field: "Name",
-        //        title: "Name",
-        //        width: "120px"
-        //    }, {
-        //        field: "Price",
-        //        title: "Price",
-        //        width: "120px"
-        //    }],
-        //    fields: {
-        //        Name: { type: "string", validation: { required: true } },
-        //        Price: { type: "number", defaultValue: "1", validation: { required: true } }
-        //    },
-        //    data: new kendo.data.ObservableArray([
-        //        { Id: 1, Name: "Product 1", Price: "100" },
-        //        { Id: 2, Name: "Product 2", Price: "100" },
-        //        { Id: 3, Name: "Product 3", Price: "100" },
-        //        { Id: 4, Name: "Product 4", Price: "100" },
-        //        { Id: 5, Name: "Product 5", Price: "100" },
-        //        { Id: 6, Name: "Product 6", Price: "100" },
-        //        { Id: 7, Name: "Product 7", Price: "100" }])
-        //}
-        //];
 
         return model;
     };
@@ -102,45 +33,68 @@ demoApp.controller('demoCtrl', function ($scope)
         var column = {};
         var fieldName = "";
         var dataProperty = {};
+        var dataProperties = {};
+        var validationFunctionName = "";
+        var validationObject = {};
 
-        modelItem.typeName = entityType.name;
-        modelItem.typeDisplayName = entityType.name;
-        var dataProperties = entityType.dataProperties;
-        
+        modelItem.typeName = entityType.shortName;
+        modelItem.typeDisplayName = entityType.shortName;
+        modelItem.columns = [];
+        modelItem.fields = {};
+        modelItem.data = [];
+
+        dataProperties = entityType.dataProperties;
         for (var i = 0, length = dataProperties.length; i < length; i += 1)
         {
-            fieldName = dataProperty.nameOnServer;
             dataProperty = dataProperties[i];
-            column = {
-                field: fieldName,
-                title: fieldName
-            };
-            modelItem.columns.push(column);
+            fieldName = dataProperty.nameOnServer;
 
-            var validationFunctionName = fieldName.toLowerCase() + "validation";
+            // Skip 'Id' fields, because Id fields are used as model
+            if (fieldName.toLowerCase() !== 'id') {
+                column = {
+                    field: fieldName,
+                    title: fieldName
+                };
+                modelItem.columns.push(column);
 
-            var validationObject = {};
-            validationObject[validationFunctionName] = function (input)
-            {
-                return $scope.handleFielValidation(input);
-            };
+                validationFunctionName = fieldName.toLowerCase() + "validation";
+                validationObject = {};
+                validationObject[validationFunctionName] = function (input) {
+                    return $scope.handleFielValidation(input);
+                };
 
-            modelItem.fields[fieldName] = {
-                type: "string",
-                validation: validationObject
-            };
+                var modelType = $scope.getModelType(dataProperty.dataType);
+                modelItem.fields[fieldName] = {
+                    type: modelType,
+                    validation: validationObject
+                };
+            }
         }
 
-        modelItem.data = new kendo.data.ObservableArray([
-                { Id: 1, FirstName: "Rob", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 2, FirstName: "Bill", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 3, FirstName: "Joey", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 4, FirstName: "Scott", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 5, FirstName: "Harry", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 6, FirstName: "Mike", LastName: "Do", PhoneNumber: "0654256987" },
-                { Id: 7, FirstName: "Morgan", LastName: "Do", PhoneNumber: "0654256987" }]);
+        modelItem.data = new kendo.data.ObservableArray([]);
 
         return modelItem;
+    };
+
+    $scope.getModelType = function (databaseType) {
+        var result = "string";
+
+        // Kendo ModelTypes are: "string", "number", "boolean", "date".
+        var name = databaseType.name;
+        
+        if (name === "Int32" || name === "Float" || name === "Double" || name === "Decimal") {
+            result = "Number";
+        }
+
+        if (name === "Boolean") {
+            result = "boolean";
+        }
+
+        if (name === "DateTime" || name === "Date") {
+            result = "date";
+        }
+        
+        return result;
     };
 
     $scope.getColumns = function (entityType)
@@ -162,25 +116,29 @@ demoApp.controller('demoCtrl', function ($scope)
         return column;
     };
 
-    $scope.getGridDataSource = function ()
+    $scope.getGridDataSource = function (data, selectedEntityType)
     {
-        return {
-            dataSource: {
-                data: $scope.selectedEntityType.data,
-                batch: false,
-                pageSize: 5,
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: $scope.selectedEntityType.fields
+        var result = {};
+        if (selectedEntityType) {
+            result = {
+                dataSource: {
+                    data: data,
+                    batch: false,
+                    pageSize: 5,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: selectedEntityType.fields
+                        }
                     }
-                }
-            },
-            editable: "popup",
-            sortable: true,
-            pageable: true,
-            columns: $scope.getGridColumnsWithCommandColumn($scope.selectedEntityType.columns)
-        };
+                },
+                editable: "popup",
+                sortable: true,
+                pageable: true,
+                columns: $scope.getGridColumnsWithCommandColumn(selectedEntityType.columns)
+            };
+        }
+        return result;
     };
 
     $scope.handleFielValidation = function (input)
@@ -280,32 +238,12 @@ demoApp.controller('demoCtrl', function ($scope)
         return columnsWithCommandColumn;
     };
 
-    $scope.getEmployees = function ()
+    $scope.getData = function (entityListName)
     {
         var query = new breeze.EntityQuery()
-            .from("Employees");
+            .from(entityListName);
 
         return _manager.executeQuery(query);
-    };
-
-    $scope.getDataFromServer = function ()
-    {
-        
-        var query = new breeze.EntityQuery()
-            .from("Employees");
-        
-        _manager.executeQuery(query).then(function (data)
-        {
-            console.log(data);
-            
-            return $.ajax("breeze/Breeze/CustomMetaData");
-        }).then(function (data)
-        {
-            $scope.initialiseCustomMetaData(data);
-        }).fail(function (e)
-        {
-            alert(e);
-        });
     };
 
     $scope.initialiseCustomMetaData = function (data)
@@ -324,41 +262,73 @@ demoApp.controller('demoCtrl', function ($scope)
     $scope.entityTypeChanged = function (e)
     {
         var index = e.sender.selectedIndex;
-        $scope.initialise(index);
+        var entityType = $scope.entityModel[index];
+        $scope.selectedEntityType = entityType;
 
-        // TODO: Remove jQuery from controller!!
-        // Must destroy and empty grid before refreshing columns.
-        $('#crudGrid').data().kendoGrid.destroy();
-        $('#crudGrid').empty();
-        $('#crudGrid').kendoGrid($scope.mainGridOptions);
-
-    };
-
-    $scope.initialise = function (index)
-    {
-        // Get MetaData
-        var breezeControllerUrl = 'breeze/breeze';
-        _manager = new breeze.EntityManager(breezeControllerUrl);
-
-        $scope.getEmployees()
-        .then(function (data)
-        {
-            console.log(data);
-
-            // Get custom metadata.
-            return $.ajax("breeze/Breeze/CustomMetaData");
-        }).then(function (data)
-        {
-            $scope.initialiseCustomMetaData(data);
-            $scope.entityModel = $scope.getEntityModel();
-            $scope.selectedEntityType = $scope.entityModel[index];
-            $scope.mainGridOptions = $scope.getGridDataSource();
-        }).fail(function (e)
-        {
+        $scope.getData($scope.selectedEntityType.typeName)
+        .then(function (data) {
+            var observableArray = $scope.convertToObservableArray(data.results);
+            $scope.selectedEntityType.data = observableArray;
+            $scope.mainGridOptions = $scope.getGridDataSource(observableArray, $scope.selectedEntityType);
+            $scope.reDrawGrid($scope.mainGridOptions);
+        }).fail(function (e) {
             alert(e);
         });
     };
 
-    // Initialise view.
-    $scope.initialise(0);
+    $scope.convertToObservableArray = function (data) {
+        var result = new kendo.data.ObservableArray([]);
+
+        for (var i = 0, length = data.length; i < length; i += 1) {
+            result.push(data[i]._backingStore);
+        }
+        return result;
+    };
+
+    $scope.reDrawGrid = function (mainGridOptions) {
+        // TODO: Remove jQuery from controller!!
+        // Must destroy and empty grid before refreshing columns.
+        if ($('#crudGrid').data().kendoGrid) {
+            $('#crudGrid').data().kendoGrid.destroy();
+            $('#crudGrid').empty();
+        }
+        
+        $('#crudGrid').kendoGrid(mainGridOptions);
+    };
+
+    $scope.start = function () {
+        var breezeControllerUrl = 'breeze/breeze';
+        _manager = new breeze.EntityManager(breezeControllerUrl);
+
+        // Get custom metadata.
+        Q($.ajax("breeze/Breeze/CustomMetaData"))
+        .then(function (data)
+        {
+            _customMetaData = data;
+            return $scope.getData("Employee");
+        })
+        .then(function (data) {
+            var observableArray = $scope.convertToObservableArray(data.results);
+
+            $scope.initialiseCustomMetaData(_customMetaData);
+            $scope.entityModel = $scope.getEntityModel();
+            var employeeEntityType = {};
+            for (var i = 0, length = $scope.entityModel.length; i < length; i += 1)
+            {
+                var entityType = $scope.entityModel[i];
+                if (entityType.typeName === "Employee")
+                {
+                    employeeEntityType = entityType;
+                }
+            }
+            $scope.selectedEntityType = employeeEntityType;
+            $scope.mainGridOptions = $scope.getGridDataSource(observableArray, $scope.selectedEntityType);
+            $scope.reDrawGrid($scope.mainGridOptions);
+        }).fail(function (e) {
+            alert(e);
+        });
+    };
+
+    // Start application
+    $scope.start();
 });

@@ -57,19 +57,19 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
-        public IQueryable<Employee> Employees()
+        public IQueryable<Employee> Employee()
         {
             return _contextProvider.Context.Employees;
         }
 
         [HttpGet]
-        public IQueryable<Declaration> Declarations()
+        public IQueryable<Declaration> Declaration()
         {
             return _contextProvider.Context.Declarations;
         }
 
         [HttpGet]
-        public IQueryable<Setting> Settings()
+        public IQueryable<Setting> Setting()
         {
             return _contextProvider.Context.Settings;
         }

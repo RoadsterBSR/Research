@@ -57,6 +57,11 @@ namespace Research.UI.Web.Server.Components
                         nameOnServer = epi.Name
                     };
 
+                    if (epi.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        dataProperty.isPartOfKey = true;
+                    }
+
                     // Get all field validation attributes.
                     IEnumerable<Attribute> epiAttributes = epi.GetCustomAttributes();
 
@@ -104,8 +109,9 @@ namespace Research.UI.Web.Server.Components
         public DataProperty()
         {
             custom = new CustomFieldMetaData();
+            isPartOfKey = false;
         }
-
+        public bool isPartOfKey { get; set; }
         public string nameOnServer { get; set; }
         public CustomFieldMetaData custom { get; set; }
     }
