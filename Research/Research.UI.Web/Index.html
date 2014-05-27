@@ -6,10 +6,10 @@
     <link href="/Client/Libraries/Kendo/css/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/Client/Libraries/Kendo/css/kendo.silver.min.css" rel="stylesheet" type="text/css" />
     <script src="/Client/Libraries/Kendo/js/jquery.min.js"></script>
-    <script src="/Client/Libraries/Kendo/js/kendo.all.min.js"></script>
     <script src="/Client/Libraries/Angular/angular.js"></script>
     <script src="/Client/Libraries/Angular/angular-route.js"></script>
     <script src="/Client/Libraries/Angular/angular-sanitize.js"></script>
+    <script src="/Client/Libraries/Kendo/js/kendo.all.min.js"></script>
     <script src="/Client/Libraries/Angular/angular-kendo.js"></script>
     <script src="/Client/Libraries/Q/q.min.js"></script>
     <script src="/Client/Libraries/Breeze/breeze.debug.js"></script>
@@ -21,21 +21,14 @@
     <fieldset>
         <legend>CRUD</legend>
         <div>
+            <!--k-min-length="3"-->
             EntityType:
-            <select kendo-combo-box
-                    k-placeholder="'Select entity type'"
-                    k-data-text-field="'typeDisplayName'"
-                    k-data-value-field="'typeName'"
-                    k-index="0"
-                    k-filter="'contains'"
-                    k-auto-bind="true"
-                    k-min-length="3"
-                    k-data-source="entityModel"
-                    k-on-change="entityTypeChanged(kendoEvent)"></select>
+            <select kendo-combo-box="entityTypeCombobox" k-options="entityTypeComboboxOptions"></select>
         </div>
         <br>
         <div>
-            <div id="crudGrid" kendo-grid k-options="mainGridOptions"></div>
+            <!--kendo-grid k-options="mainGridOptions"-->
+            <div id="crudGrid" kendo-grid="crudGrid" k-options="crudGridOptions"></div>
         </div>
     </fieldset>
      <script src="/Client/Core/app.js"></script>

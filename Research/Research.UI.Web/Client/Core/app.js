@@ -1,12 +1,42 @@
 ﻿/// <reference path="../Libraries/Breeze/breeze.min.js" />
 
 // Main entry point of the application.
-var demoApp = angular.module("demoApp", ["kendo.directives"]);
+var demoApp = angular.module('demoApp', ['kendo.directives']);
 demoApp.controller('demoCtrl', function ($scope)
 {
     var _manager;
     var _customMetaData;
 
+    $scope.entityModel = {};
+
+    $scope.entityTypeChanged = function (e)
+    {
+        var index = e.sender.selectedIndex;
+        var entityType = $scope.entityModel[index];
+        $scope.selectedEntityType = entityType;
+        $scope.getData($scope.selectedEntityType.typeName)
+        .then(function (data)
+        {
+            var observableArray = $scope.convertToObservableArray(data.results, $scope.selectedEntityType.fields);
+            var gridOptions = $scope.getGridOptions(observableArray, $scope.selectedEntityType);
+            $scope.reDrawGrid('#crudGrid', gridOptions);
+            $scope.$apply();
+        }).fail(function (e)
+        {
+            alert(e);
+        });
+    };
+
+    $scope.entityTypeComboboxOptions = {
+        dataTextField: 'typeDisplayName',
+        dataValueField: 'typeName',
+        index: 0,
+        filter: 'contains',
+        autoBind: false,
+        dataSource: $scope.entityModel,
+        change: $scope.entityTypeChanged
+    };
+    
     $scope.getEntityModel = function ()
     {
         var model = [];
@@ -70,9 +100,6 @@ demoApp.controller('demoCtrl', function ($scope)
                 };
             }
         }
-
-        modelItem.data = new kendo.data.ObservableArray([]);
-
         return modelItem;
     };
 
@@ -116,24 +143,27 @@ demoApp.controller('demoCtrl', function ($scope)
         return column;
     };
 
-    $scope.getGridDataSource = function (data, selectedEntityType)
+    $scope.getGridOptions = function (data, selectedEntityType)
     {
         var result = {};
         if (selectedEntityType) {
             result = {
-                dataSource: {
+                dataSource: new kendo.data.DataSource({
                     data: data,
                     batch: false,
                     pageSize: 5,
                     schema: {
-                        model: {
-                            id: "Id",
+                        model: kendo.data.Model.define({
+                            id: 'Id',
                             fields: selectedEntityType.fields
-                        }
+                        })
                     }
-                },
+                }),
                 editable: "popup",
-                sortable: true,
+                sortable: {
+                    mode: "multiple",
+                    allowUnsort: true
+                },
                 pageable: true,
                 columns: $scope.getGridColumnsWithCommandColumn(selectedEntityType.columns)
             };
@@ -224,7 +254,7 @@ demoApp.controller('demoCtrl', function ($scope)
         var columnsWithCommandColumn = [];
 
         // Columns are copied, because the original data must not be changed.
-        columnsWithCommandColumn = columns.splice(0);
+        columnsWithCommandColumn = columns.slice(0);
 
         // Add the command column.
         var commandColumn = {
@@ -259,41 +289,34 @@ demoApp.controller('demoCtrl', function ($scope)
         return functionName;
     };
 
-    $scope.entityTypeChanged = function (e)
+    
+
+    $scope.convertToObservableArray = function (data, fields)
     {
-        var index = e.sender.selectedIndex;
-        var entityType = $scope.entityModel[index];
-        $scope.selectedEntityType = entityType;
-
-        $scope.getData($scope.selectedEntityType.typeName)
-        .then(function (data) {
-            var observableArray = $scope.convertToObservableArray(data.results);
-            $scope.selectedEntityType.data = observableArray;
-            $scope.mainGridOptions = $scope.getGridDataSource(observableArray, $scope.selectedEntityType);
-            $scope.reDrawGrid($scope.mainGridOptions);
-        }).fail(function (e) {
-            alert(e);
-        });
-    };
-
-    $scope.convertToObservableArray = function (data) {
+        // When a model is used in a Kendo UI datasource, it expects the data to be a observerable array, where the array items are models. 
         var result = new kendo.data.ObservableArray([]);
+        var GridModel = kendo.data.Model.define({
+            id: 'Id',
+            fields: fields
+        });
 
         for (var i = 0, length = data.length; i < length; i += 1) {
-            result.push(data[i]._backingStore);
+            result.push(new GridModel(data[i]._backingStore));
         }
         return result;
     };
 
-    $scope.reDrawGrid = function (mainGridOptions) {
-        // TODO: Remove jQuery from controller!!
+    $scope.reDrawGrid = function (gridOptions) {
         // Must destroy and empty grid before refreshing columns.
-        if ($('#crudGrid').data().kendoGrid) {
-            $('#crudGrid').data().kendoGrid.destroy();
-            $('#crudGrid').empty();
-        }
         
-        $('#crudGrid').kendoGrid(mainGridOptions);
+        if ($scope.crudGrid)
+        {
+            var domId = '#' + $scope.crudGrid.id;
+            var div = $scope.crudGrid.element[0];
+            $scope.crudGrid.destroy();
+            div.innerHTML = '';
+        }
+        $(domId).kendoGrid(gridOptions);
     };
 
     $scope.start = function () {
@@ -308,8 +331,6 @@ demoApp.controller('demoCtrl', function ($scope)
             return $scope.getData("Employee");
         })
         .then(function (data) {
-            var observableArray = $scope.convertToObservableArray(data.results);
-
             $scope.initialiseCustomMetaData(_customMetaData);
             $scope.entityModel = $scope.getEntityModel();
             var employeeEntityType = {};
@@ -322,8 +343,10 @@ demoApp.controller('demoCtrl', function ($scope)
                 }
             }
             $scope.selectedEntityType = employeeEntityType;
-            $scope.mainGridOptions = $scope.getGridDataSource(observableArray, $scope.selectedEntityType);
+            var observableArray = $scope.convertToObservableArray(data.results, $scope.selectedEntityType.fields);
+            $scope.crudGridOptions = $scope.getGridOptions(observableArray, $scope.selectedEntityType);
             $scope.reDrawGrid($scope.mainGridOptions);
+            $scope.$apply();
         }).fail(function (e) {
             alert(e);
         });
