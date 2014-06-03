@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGeneration\VsSolution.cs" />
     <Compile Include="Components\FileSystem.cs" />
     <Compile Include="CodeGeneration\SqlScriptDtos.cs" />
     <Compile Include="CodeGeneration\SqlScriptGenerator.cs" />

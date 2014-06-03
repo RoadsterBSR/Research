@@ -1,6 +1,7 @@
 ﻿
 namespace Research.Core.Components
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
@@ -27,6 +28,17 @@ namespace Research.Core.Components
             {
                 Directory.Delete(path, true);
             });
+        }
+
+        public async Task FindAndReplace(string path, string searchPattern, SearchOption searchOption, Func<string, string> updateContent)
+        {
+            string[] files = await GetFilesAsync(path, searchPattern, searchOption);
+            foreach (string file in files)
+            {
+                string content = await ReadAllTextAsync(file);
+                content = updateContent(content);
+                await WriteAllTextAsync(file, content);
+            }
         }
 
         public async Task<string[]> GetFilesAsync(string path, string searchPattern, SearchOption searchOption)

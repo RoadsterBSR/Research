@@ -10,7 +10,8 @@ namespace Research.EndToEndTests
     using System.Data.Entity;
     using System.Linq;
     using System.Reflection;
-    using System.Text;    
+    using System.Text;
+    using System.Text.RegularExpressions;    
 
     [TestClass]
     public class ResearchTester
@@ -36,11 +37,7 @@ namespace Research.EndToEndTests
         [TestMethod]
         public void TestWithoutTiming()
         {
-            var dbContext = new ResearchDbContext();
             
-            // string customMetaData = GetCustomMetaData(dbContext);
-
-            // Console.WriteLine(customMetaData);
 
             // Only fail, when exception occurs.
             Assert.IsTrue(true);
