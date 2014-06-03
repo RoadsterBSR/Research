@@ -10,11 +10,22 @@ namespace Research.EndToEndTests.Components
     public class FileSystemTester
     {
         [TestMethod]
+        public void FindAndReplace_should_add_commonassemblyinfo_as_link()
+        {
+            var solution = new VsSolution();
+            var fs = new FileSystem();
+            Task task = fs.FindAndReplace(@"C:\Projects\TNT\RouteMaker\Main-v1.0\Source", "*.csproj", System.IO.SearchOption.AllDirectories, solution.AddCommonAssemblyInfo);
+
+            task.Wait();
+        }
+
+        [TestMethod]
         public void FindAndReplace_should_replace_common_assemblyinfo()
         {
             var solution = new VsSolution();
             var fs = new FileSystem();
-            Task task = fs.FindAndReplace(@"C:\Projects\Github\roelvanlisdonk\Research\Main", "AssemblyInfo.cs", System.IO.SearchOption.AllDirectories, solution.RemoveCommonAssemblyInfo);
+            Task task = fs.FindAndReplace(@"C:\Projects\TNT\RouteMaker\Main-v1.0\Source", "AssemblyInfo.cs", System.IO.SearchOption.AllDirectories, solution.RemoveCommonAssemblyInfo);
+            
             task.Wait();
         }
     }

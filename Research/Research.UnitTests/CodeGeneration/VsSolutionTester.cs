@@ -7,6 +7,28 @@ namespace Research.UnitTests.CodeGeneration
     [TestClass]
     public class VsSolutionTester
     {
+        //AddCommonAssemblyInfo
+        [TestMethod]
+        public void AddCommonAssemblyInfo()
+        {
+            string input = @"<ItemGroup>
+    <Compile Include=""Properties\\AssemblyInfo.cs"" />
+  </ItemGroup>";
+
+            string expected = @"<ItemGroup>
+    <Compile Include=""..\\SharedSource\\CommonAssemblyInfo.cs"">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include=""Properties\\AssemblyInfo.cs"" />
+  </ItemGroup>";
+
+            var solution = new VsSolution();
+            string actual = solution.AddCommonAssemblyInfo(input);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
         [TestMethod]
         public void RemoveCommonAssemblyInfo()
         {

@@ -11,17 +11,36 @@ namespace Research.Core.CodeGeneration
     public class VsSolution
     {
         /// <summary>
-        /// This function will remove common information found in all AssemblyInfo.cs files and add this to a CommonAssemblyInfo.cs file.
-        /// This CommonAssemblyInfo.cs file is then linked to each project.
-        /// Extracting common information is done to manage this information in one place.
-        /// 
-        /// For instance: Managing one version number for all assemblies in the solution.
+        /// Add CommonAssemblyInfo as link to a project.
         /// </summary>
-        public void AddCommonAssemblyInfo()
+        public string AddCommonAssemblyInfo(string content)
         {
-            // GetFiles
-            // GetFileContents
-            // Remove information
+            string result = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                result = content;
+
+                var findRegEx = new Regex(@"<ItemGroup>.*
+<Compile Include=""..\\SharedSource\\CommonAssemblyInfo.cs"">
+<Link>CommonAssemblyInfo.cs</Link>
+</Compile>.*
+</ItemGroup>", RegexOptions.Singleline);
+
+                if (!findRegEx.IsMatch(content))
+                {
+                    var replaceRegEx = new Regex(@"<ItemGroup>");
+
+                    result = replaceRegEx.Replace(result, @"<ItemGroup>
+<Compile Include=""..\\SharedSource\\CommonAssemblyInfo.cs"">
+<Link>CommonAssemblyInfo.cs</Link>
+</Compile>", 1);
+                }
+
+
+            }
+
+            return result;
         }
 
         /// <summary>
