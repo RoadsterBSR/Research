@@ -122,6 +122,7 @@
     <Content Include="Client\Features\Research\ResearchApp.js" />
     <Content Include="Client\Features\Research\Research.html" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
+    <Content Include="Client\Libraries\Jasmine\UnitTests.html" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\imagebrowser.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\indeterminate.gif" />
@@ -292,6 +293,8 @@
     <Content Include="Client\Libraries\Kendo\js\kendo.all.min.js" />
     <Content Include="Client\Libraries\Live\head.min.js" />
     <Content Include="Client\Libraries\Live\live.js" />
+    <Content Include="Client\Libraries\Jasmine\jasmine.css" />
+    <Content Include="Client\Libraries\Jasmine\jasmine_favicon.png" />
     <Content Include="packages.config" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.woff" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.ttf" />
@@ -1067,14 +1070,12 @@
     <Content Include="Client\Libraries\Angular\version.json" />
     <Content Include="Client\Libraries\Angular\angular-kendo.js" />
     <Content Include="Client\Libraries\Angular\angular-kendo.min.js" />
-    <Content Include="scripts\angular-mocks.js" />
-    <Content Include="scripts\angular.js" />
-    <Content Include="scripts\angular.min.js" />
-    <None Include="scripts\breeze.intellisense.js" />
-    <Content Include="scripts\breeze.debug.js" />
-    <Content Include="scripts\breeze.min.js" />
+    <Content Include="Client\Libraries\Jasmine\boot.js" />
+    <Content Include="Client\Libraries\Jasmine\console.js" />
+    <Content Include="Client\Libraries\Jasmine\jasmine-html.js" />
+    <Content Include="Client\Libraries\Jasmine\jasmine.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
-    <Content Include="scripts\angular.min.js.map" />
+    <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
