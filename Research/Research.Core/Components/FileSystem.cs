@@ -8,6 +8,11 @@ namespace Research.Core.Components
         
     public class FileSystem
     {
+        public async Task<bool> CheckIfDirectoryExistsAsync(string path)
+        {
+            return await Task.Factory.StartNew(() => { return Directory.Exists(path); });
+        }
+
         public async Task<bool> CheckIfFileExistsAsync(string path)
         {
             return await Task.Factory.StartNew(() => { return File.Exists(path); });
@@ -22,12 +27,15 @@ namespace Research.Core.Components
 
         public async Task DeleteDirectoryAsync(string path)
         {
-            string[] files = await GetFilesAsync(path, "*", SearchOption.AllDirectories);
-            await DeleteFilesAsync(files);
-            await Task.Factory.StartNew(() =>
+            if (await CheckIfDirectoryExistsAsync(path))
             {
-                Directory.Delete(path, true);
-            });
+                string[] files = await GetFilesAsync(path, "*", SearchOption.AllDirectories);
+                await DeleteFilesAsync(files);
+                await Task.Factory.StartNew(() =>
+                {
+                    Directory.Delete(path, true);
+                });
+            }
         }
 
         public async Task FindAndReplace(string path, string searchPattern, SearchOption searchOption, Func<string, string> updateContent)
