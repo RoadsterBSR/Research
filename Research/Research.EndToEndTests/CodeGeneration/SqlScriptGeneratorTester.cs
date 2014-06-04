@@ -18,7 +18,7 @@ namespace Research.EndToEndTests.CodeGeneration
         public void GenerateSqlScripts_should_generate_correct_scripts_on_disk()
         {
             var generator = new SqlScriptGenerator();
-            SqlScriptingInput input = generator.GetSqlScriptingInput(@"MyServer", @"MyDatabase");
+            SqlScriptingInput input = generator.GetSqlScriptingInput(@"dsql02.ada-dev.nl\v2012", @"Cris");
             input.RootFolder = @"C:\Temp\Generated";
 
             SqlScriptingResult result = generator.GenerateSqlScripts(input);
@@ -36,7 +36,7 @@ namespace Research.EndToEndTests.CodeGeneration
         public void GenerateDeployScript_should_generate_correct_script_on_disk()
         {
             var generator = new SqlScriptGenerator();
-            SqlScriptingInput input = generator.GetSqlScriptingInput(@"MyServer", @"MyDatabase");
+            SqlScriptingInput input = generator.GetSqlScriptingInput(@"dsql02.ada-dev.nl\v2012", @"Cris");
             input.RootFolder = @"C:\Temp\Generated";
 
             SqlDeployScriptResult result = generator.GenerateDeployScript(input);
