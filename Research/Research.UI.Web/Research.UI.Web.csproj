@@ -1064,11 +1064,7 @@
     <Content Include="Client\Libraries\Angular\version.json" />
     <Content Include="Client\Libraries\Angular\angular-kendo.js" />
     <Content Include="Client\Libraries\Angular\angular-kendo.min.js" />
-    <Content Include="scripts\angular-mocks.js" />
-    <Content Include="scripts\angular.js" />
-    <Content Include="scripts\angular.min.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
-    <Content Include="scripts\angular.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
