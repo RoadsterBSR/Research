@@ -13,6 +13,7 @@ namespace Research.UI.Web.App_Start
     ///</remarks>
     public static class BreezeWebApiConfig
     {
+
         public static void RegisterBreezePreStart()
         {
             GlobalConfiguration.Configuration.Routes.MapHttpRoute(
