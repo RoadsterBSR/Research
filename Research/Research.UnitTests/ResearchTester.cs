@@ -16,10 +16,7 @@ namespace Research.UnitTests
         [TestMethod]
         public void TestWithoutTiming()
         {
-            Func<string, Task<string>> func = new Func<string, Task<string>>(ReadAllTextAsync);
-            Task<string> task = func(@"C:\Temp\temp.txt");
-            task.Wait();
-            string result = task.Result;
+            
         }
 
         [TestMethod]
