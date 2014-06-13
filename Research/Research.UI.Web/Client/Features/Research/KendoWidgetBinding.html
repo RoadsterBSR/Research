@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Kendo element binding research page.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 20px;
+        }
+    </style>
+    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div id="view">
+        <input data-role="combobox"
+               data-placeholder="Type een locatienaam."
+               data-suggest="true"
+               data-text-field="Naam"
+               data-value-field="Id"
+               data-bind="value: selectedLocatie,
+                              source: locaties,
+                              events: {
+                                change: onLocatieChange
+                              }"
+               style="width: 300px" />
+
+        <input data-role="combobox"
+               data-placeholder="Type een bezorggebiednaam."
+               data-text-field="Naam"
+               data-value-field="Id"
+               data-suggest="true"
+               data-bind="value: selectedBezorggebiednaam,
+                              source: bezorggebieden,
+                              events: {
+                                change: onBezorggebiedChange
+                              }"
+               style="width: 300px" />
+    </div>
+    
+    <script>
+        var dataService = (function (){
+            var self = {};
+            
+            self.getBezorgGebieden = function (locatie) {
+                var result = [];
+
+                if (locatie)
+                {
+                    var gebieden =
+                    [
+                        { Id: 1, LocatieId: 1, Naam: '1100' },
+                        { Id: 2, LocatieId: 1, Naam: '1200' },
+                        { Id: 3, LocatieId: 1, Naam: '1300' },
+                        { Id: 4, LocatieId: 1, Naam: '1400' },
+                        { Id: 5, LocatieId: 2, Naam: '6800' },
+                        { Id: 6, LocatieId: 2, Naam: '6900' },
+                        { Id: 7, LocatieId: 2, Naam: '7000' },
+                        { Id: 8, LocatieId: 2, Naam: '7100' },
+                    ];
+                    result = self.filterRecordsBasedOnParentId('LocatieId', locatie.Id, gebieden);
+                }
+                
+                return result;
+            };
+
+            self.getLocaties = function () {
+                return [
+                    { Id: 1, Naam: 'Amsterdam' },
+                    { Id: 2, Naam: 'Leeuwarden' }
+                ];
+            };
+
+            self.filterRecordsBasedOnParentId = function (parentFieldName, parentFieldValue, records) {
+                var result = [];
+
+                for (var i = 0, len = records.length; i < len; i++) {
+                    var record = records[i];
+                    if (record && record[parentFieldName] === parentFieldValue) {
+                        result.push(record);
+                    }
+                }
+
+                return result;
+            };
+
+            return self;
+        })();
+
+        var viewModel = kendo.observable({
+            selectedLocatie: null,
+            selectedBezorggebiednaam: null,
+            onLocatieChange: function () {
+                this.set('bezorggebieden', new kendo.data.DataSource({
+                    data: dataService.getBezorgGebieden(viewModel.get('selectedLocatie'))
+                }));
+                console.log('Locatie veranderd.');
+            },
+            onBezorggebiedChange: function () {
+                console.log('Bezorggebied veranderd.');
+            },
+            locaties: new kendo.data.DataSource({
+                data: dataService.getLocaties()
+            })
+            ,
+            bezorggebieden: new kendo.data.DataSource({
+                data: []
+            })
+        });
+
+        
+
+        kendo.bind($("#view"), viewModel);
+    </script>
+</body>
+</html>
