@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
+    <Content Include="Client\Features\Plunker\KendoElementBinding.html" />
     <Content Include="Client\Features\Research\RebindGrid.html" />
     <Content Include="Client\Features\Research\Research.css" />
     <Content Include="Client\Features\Research\ResearchApp.js" />

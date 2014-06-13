@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Kendo binding research page.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 20px;
+        }
+    </style>
+    <link href="/Client/Libraries/Kendo/css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Client/Libraries/Kendo/css/kendo.silver.min.css" rel="stylesheet" type="text/css" />
+    <script src="/Client/Libraries/Kendo/js/jquery.min.js"></script>
+    <script src="/Client/Libraries/Kendo/js/kendo.all.min.js"></script>
+    <script src="/Client/Libraries/Live/head.min.js"></script>
+    <script src="/Client/Libraries/Live/live.js"></script>
+</head>
+<body>
+    <div id="view">
+        <input data-bind="value: inputValue, events: { keypress: showValueOnLabel }" />
+        <span data-bind="text: label"></span>
+    </div>
+    <script>
+        var viewModel = kendo.observable({
+            inputValue: "Enter some text",
+            label: "",
+            showValueOnLabel: function (e) {
+                var pressedKey = String.fromCharCode(e.charCode);
+                var currentValue = e.currentTarget.value;
+                this.set("label", currentValue + pressedKey);
+            }
+        });
+
+        kendo.bind($("#view"), viewModel);
+    </script>
+</body>
+</html>
