@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic styling research page.</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .table {
+            display: table;
+            /* Show borders, when using display: table. */
+            border-collapse: collapse;
+        }
+
+        .tablerow {
+            display: table-row;
+            border: 1px solid rgb(218, 218, 218);
+        }
+
+        /* Add some spacing between the first and second column. */
+        .tablerow div:first-child {
+            padding-right: 10px;
+        }
+
+        .tablecell {
+            display: table-cell;
+        }
+        
+        /* Style the bottom, left and right row borders. */
+        .selected {
+            border: 1px solid #1984c8;
+        }
+
+        /* Style the top of each cell to fake the row top border. */
+        .selected div {
+            border-top: 1px solid #1984c8;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="table">
+        <div class="tablerow selected">
+            <div class="tablecell">Cell 1.1</div>
+            <div class="tablecell">Cell 1.2</div>
+        </div>
+        <div class="tablerow">
+            <div class="tablecell">Cell 2.1</div>
+            <div class="tablecell">Cell 2.2</div>
+        </div>
+        <div class="tablerow">
+            <div class="tablecell">Cell 3.1</div>
+            <div class="tablecell">Cell 3.2</div>
+        </div>
+        <div class="tablerow">
+            <div class="tablecell">Cell 4.1</div>
+            <div class="tablecell">Cell 4.2</div>
+        </div>
+        <div class="tablerow">
+            <div class="tablecell">Cell 5.1</div>
+            <div class="tablecell">Cell 5.2</div>
+        </div>
+    </div>
+</body>
+</html>
