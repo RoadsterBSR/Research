@@ -10,6 +10,28 @@
         body {
             padding: 20px;
         }
+
+        .gridRow {
+            /*border-collapse: separate;*/
+            border: 0 solid rgb(219, 219, 222);
+        }
+        /*#bestelLoopGrid table { 
+            border-collapse: collapse; 
+        }*/
+        table tr.gridRowHighlighted td {
+            border-top: 1px solid rgba(142, 188, 0, 0.85);
+            border-bottom: 1px solid rgba(142, 188, 0, 0.85);
+            /*border-collapse: collapse;
+            background-color: rgba(142, 188, 0, 0.85);*/
+        }
+
+        table tr.gridRowHighlighted td:first-child {
+            border-left: 1px solid rgba(142, 188, 0, 0.85);
+        }
+
+        table tr.gridRowHighlighted td:last-child {
+            border-right: 1px solid rgba(142, 188, 0, 0.85);
+        }
     </style>
     <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />
@@ -21,7 +43,7 @@
 </head>
 <body>
     <div id="view">
-        <div><button id="Execute" data-bind="click: executeClickHandler">Execute</button></div>
+        <div><button id="Execute" data-bind="click: onExecuteClick">Execute</button></div>
         <div id="filters">
             <input data-role="dropdownlist"
                    data-placeholder="Type een vervoertype."
@@ -94,7 +116,8 @@
                                 }"
                    style="width: 250px" />
         </div>
-        <div data-role="grid"
+        <div id="bestelLoopGrid" data-role="grid"
+             data-row-template="bestelLoopRowTemplate"
              data-columns="[
                                     { 'field': 'Adres' },
                                     { 'field': 'Lat' },
@@ -103,23 +126,52 @@
              data-bind="source: bestelLopen"></div>
         <div id="mapCanvas" style="height: 800px;"></div>
     </div>
-    
+    <script id="bestelLoopRowTemplate" type="text/x-kendo-tmpl">
+        <tr data-uid="#: uid #"
+            data-bind="cssToggle: Selected"
+            data-enabled-css="gridRowHighlighted"
+            data-disabled-css="gridRow">
+            <td>
+                #: Adres#
+            </td>
+            <td>
+                #: Lat#
+            </td>
+            <td>
+                #: Long#
+            </td>
+        </tr>
+    </script>
     <script>
+        kendo.data.binders.cssToggle = kendo.data.Binder.extend({
+            init: function (element, bindings, options)
+            {
+                kendo.data.Binder.fn.
+                            init.call(
+                             this, element, bindings, options
+                           );
+
+                var target = $(element);
+                this.enabledCss = target.data("enabledCss");
+                this.disabledCss = target.data("disabledCss");
+            },
+            refresh: function ()
+            {
+                if (this.bindings.cssToggle.get())
+                {
+                    $(this.element).addClass(this.enabledCss);
+                    $(this.element).removeClass(this.disabledCss);
+                } else
+                {
+                    $(this.element).addClass(this.disabledCss);
+                    $(this.element).removeClass(this.enabledCss);
+                }
+            }
+        });
+
         var dataService = (function (){
             var self = {};
             
-            //self.convertToMarkers = function (bestelLopen)
-            //{
-            //    var result = [];
-
-            //    if (bestelLopen)
-            //    {
-                    
-            //    }
-
-            //    return result;
-            //};
-
             self.getBestelLopen = function (postcode6GroepSectie)
             {
                 var result = [];
@@ -128,10 +180,10 @@
                 {
                     var lopen =
                     [
-                        { Id: 1, Postcode6GroepSectieId: 1, Adres: 'Kerkweg 22', Lat: '52.367443', Long: '4.865275' },
-                        { Id: 2, Postcode6GroepSectieId: 1, Adres: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217' },
-                        { Id: 3, Postcode6GroepSectieId: 1, Adres: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482' },
-                        { Id: 4, Postcode6GroepSectieId: 1, Adres: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694' }
+                        { Id: 1, Postcode6GroepSectieId: 1, Adres: 'Kerkweg 22', Lat: '52.367443', Long: '4.865275', Selected: false },
+                        { Id: 2, Postcode6GroepSectieId: 1, Adres: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217', Selected: false },
+                        { Id: 3, Postcode6GroepSectieId: 1, Adres: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482', Selected: false },
+                        { Id: 4, Postcode6GroepSectieId: 1, Adres: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694', Selected: false }
                     ];
                     result = self.filterRecordsBasedOnParentId('Postcode6GroepSectieId', postcode6GroepSectie.Id, lopen);
                 }
@@ -244,9 +296,15 @@
         var viewModel = kendo.observable({
             bestelLopen: dataService.getEmptyDataSource(),
             bezorggebieden: dataService.getEmptyDataSource(),
-            executeClickHandler: function (e)
+            highLightGridRow: function(marker)
             {
-                this.locaties.data()[0].set('Naam', 'Test');
+                if (viewModel.selectedMarker)
+                {
+                    viewModel.selectedMarker.bestelLoop.set('Selected', false);
+                }
+
+                viewModel.selectedMarker = marker;
+                viewModel.selectedMarker.bestelLoop.set('Selected', true);
             },
             initializeMap: function ()
             {
@@ -259,16 +317,6 @@
             },
             locaties: new kendo.data.DataSource({ data: dataService.getLocaties() }),
             map: null,
-            markerClickHandler: function ()
-            {
-            },
-            markerDragHandler: function ()
-            {
-                var marker = this;
-                var position = marker.getPosition();
-                marker.bestelLoop.set('Lat', position.lat());
-                marker.bestelLoop.set('Long', position.lng())
-            },
             markers: null,
             postcode6Groepen: dataService.getEmptyDataSource(),
             postcode6GroepSecties: dataService.getEmptyDataSource(),
@@ -284,6 +332,10 @@
                 this.set('postcode6GroepSecties', dataService.getEmptyDataSource());
                 console.log('Bezorggebied veranderd.');
             },
+            onExecuteClick: function (e)
+            {
+                this.locaties.data()[0].set('Naam', 'Test');
+            },
             onLocatieChange: function ()
             {
                 this.set('selectedBestelLoop', null);
@@ -297,6 +349,23 @@
                 this.set('postcode6Groepen', dataService.getEmptyDataSource());
                 this.set('postcode6GroepSecties', dataService.getEmptyDataSource());
                 console.log('Locatie veranderd.');
+            },
+            onMarkerClick: function ()
+            {
+                var marker = this;
+                viewModel.highLightGridRow(marker);
+            },
+            onMarkerDrag: function ()
+            {
+                var marker = this;
+                var position = marker.getPosition();
+                marker.bestelLoop.set('Lat', position.lat());
+                marker.bestelLoop.set('Long', position.lng());
+            },
+            onMarkerDragStart: function ()
+            {
+                var marker = this;
+                viewModel.highLightGridRow(marker);
             },
             onPostcode6GroepChange: function ()
             {
@@ -342,6 +411,7 @@
             selectedBezorggebied: null,
             selectedBestelLoop: null,
             selectedLocatie: null,
+            selectedMarker: null,
             selectedPostcode6Groep: null,
             selectedPostcode6GroepSectie: null,
             selectedVervoerType: dataService.getVervoerTypen()[0],
@@ -366,8 +436,9 @@
                                 bestelLoop: bestelLoop
                             });
 
-                            google.maps.event.addListener(marker, 'click', this.markerClickHandler);
-                            google.maps.event.addListener(marker, 'drag', this.markerDragHandler);
+                            google.maps.event.addListener(marker, 'click', this.onMarkerClick);
+                            google.maps.event.addListener(marker, 'drag', this.onMarkerDrag);
+                            google.maps.event.addListener(marker, 'dragstart', this.onMarkerDragStart);
                         }
                     }
                 }
