@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Fix table-cell height.</title>
+    <style>
+        /* Resets */
+        *, *:after, *:before {
+            margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+            padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within de width and height of de element. */
+        }
+
+        html, body {
+            height: 100%;
+            max-height: 100%;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .table, .row, .cell {
+            outline: none;
+            border: none;
+            outline-style: none;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .table {
+            border-collapse: collapse;
+            display: table;
+            table-layout: fixed; /* This will ensure the cells within the table will keep there width. */
+            width: 100%;
+        }
+
+        .row {
+            display: table-row;
+            width: 100%;
+        }
+
+        .cell {
+            display: table-cell;
+            white-space: nowrap; /* This property is used to show ellipses, when the content within de cell is overflown. */
+            overflow: hidden; /* This property is used to show ellipses, when the content within de cell is overflown. */
+            -ms-text-overflow: ellipsis; /* This property is used to show ellipses, when the content within de cell is overflown. */
+            -o-text-overflow: ellipsis; /* This property is used to show ellipses, when the content within de cell is overflown. */
+            text-overflow: ellipsis; /* This property is used to show ellipses, when the content within de cell is overflown. */
+        }
+    </style>
+    <script src="/Client/Libraries/Live/head.min.js"></script>
+    <script src="/Client/Libraries/Live/live.js"></script>
+</head>
+<body>
+    <div class="container" style="display: block; height: 100%;">
+        <div class="table" style="height: 100%;">
+            <!-- Header -->
+            <div class="row" style="height: 10%; border-top: 1px solid #000000;border-left: 1px solid #000000;border-right: 1px solid #000000;">
+                <div class="cell" style="vertical-align: middle; text-align: center;">
+                    Header
+                </div>
+            </div>
+            <div class="row" style="height: 80%;">
+                <div class="table" style="height: 100%;">
+                    <div class="row">
+                        <div class="cell" style="border: 1px solid #000000; padding: 10px;">Cell 1</div>
+                        <div class="cell" style="border: 1px solid #000000; padding: 10px;">
+                            <!-- Use inner div's with position relative and absolute, to fix cell height,
+                                 making it overflow correctly. -->
+                            <div style="position:relative; height: 100%">
+                                <div style="overflow-y: scroll; position: absolute; top: 0; right:0; bottom: 0; left: 0;">
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                    <div>Some text.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell" style="border: 1px solid #000000; padding: 10px;">Cell 3</div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+            <div class="row" style="height: 10%; border-bottom: 1px solid #000000;border-left: 1px solid #000000;border-right: 1px solid #000000;">
+                <div class="cell" style="vertical-align: middle; text-align: center;">
+                    Footer
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
