@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>General research page containing only vanilla.js.</title>
+    <style type="text/css">
+        /* Resets */
+        *, *:after, *:before {
+            margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+            padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within de width and height of de element. */
+        }
+
+        html, body {
+            height: 100%;
+            max-height: 100%;
+        }
+
+        body {
+            padding: 20px;
+        }
+        button {
+            padding: 2px 4px 2px 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+</head>
+<body>
+    <button onclick="app.onExecuteClick(event);">Execute</button>
+
+    <script type="text/javascript">
+        var app = (function ()
+        {
+            var self = {};
+
+            self.onExecuteClick = function (e)
+            {
+                debugger;
+            };
+
+            return self;
+        })();
+    </script>
+</body>
+</html>
