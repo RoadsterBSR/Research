@@ -119,11 +119,13 @@
     <Content Include="Client\Core\app.js" />
     <Content Include="Client\Features\Plunker\GoogleMapsKendoGridBinding.html" />
     <Content Include="Client\Features\Plunker\FullScreenHeightApp.html" />
+    <Content Include="Client\Features\Research\Kendo.html" />
     <Content Include="Client\Features\Research\KendoWidgetBinding.html" />
     <Content Include="Client\Features\Plunker\KendoElementBinding.html" />
     <Content Include="Client\Features\Research\BasicStyling.html" />
     <Content Include="Client\Features\Research\RebindGrid.html" />
     <Content Include="Client\Features\Research\ResearchVanilla.html" />
+    <Content Include="Client\Features\Research\test.js" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
     <Content Include="Client\Libraries\Jasmine\UnitTests.html" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />
@@ -1077,6 +1079,7 @@
     <Content Include="Client\Libraries\Jasmine\console.js" />
     <Content Include="Client\Libraries\Jasmine\jasmine-html.js" />
     <Content Include="Client\Libraries\Jasmine\jasmine.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
     <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web.Debug.config">
