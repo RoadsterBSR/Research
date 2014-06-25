@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>General research page containing only vanilla.js.</title>
+<style type="text/css">
+/* Resets */
+*, *:after, *:before {
+    margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+    padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within de width and height of de element. */
+}
+
+html, body {
+    height: 100%;
+    max-height: 100%;
+}
+
+body {
+    padding: 20px;
+}
+button {
+    padding: 2px 4px 2px 4px;
+    cursor: pointer;
+}
+</style>
+<script type="text/javascript" src="/Client/Libraries/jQuery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+<script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+</head>
+<body>
+<button onclick="app.onExecuteClick(event);">Execute</button>
+
+<script type="text/javascript">
+
+    $.whenall = function ($promises)
+    {
+    // promises: is aan array of promises.
+    return $.when.apply($, $promises).then(function ()
+    {
+        // Convert the special "arguments" object to a real "Array".
+        var args = Array.prototype.slice.call(arguments);
+
+        // When the promisses array contains just one element, [args] will be an array containing 3 records: ["array of items", "promises status", "promise"].
+        // When the promisses array contains more then one element, [args] will be an array of arrays, where each array 3 records: ["array of items", "promises status", "promise"].
+        // This is handled by only handeling args items that are of type "Array" and foreach handled "Array", we check if the first item is of type "Array".
+        var merged = [];
+        for (var i = 0, len = args.length; i < len; i++)
+        {
+            var record = args[i];
+
+            // Only handle args items, that are of type "Array".
+            if (record && Array.isArray(record) && record.length > 0)
+            {
+                // Check if first item is of type "Array".
+                var firstItem = record[0];
+                if (Array.isArray(firstItem))
+                {
+                    merged = merged.concat(firstItem);
+                } else
+                {
+                    merged = merged.concat(record);
+                }
+            }
+        }
+
+        return merged;
+    });
+};
+
+
+var app = (function ()
+{
+    var self = {};
+                
+    self.handleRestSponse = function (data)
+    {
+        console.log(data);
+    };
+
+    self.onExecuteClick = function (e)
+    {
+        console.log('onExecuteClick start.');
+
+        var promises = [];
+        promises.push(
+            $.ajax({
+                url: 'https://api.github.com/users/roelvanlisdonk/repos',
+                type: 'GET'
+            })
+        );
+        promises.push(
+            $.ajax({
+                url: 'https://api.github.com/users/roelvanlisdonk/repos',
+                type: 'GET'
+            })
+        );
+
+        $.whenall(promises).then(self.handleRestSponse);
+
+        console.log('onExecuteClick end.');
+    };
+
+    return self;
+})();
+</script>
+</body>
+</html>
