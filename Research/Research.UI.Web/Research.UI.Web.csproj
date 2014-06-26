@@ -126,7 +126,6 @@
     <Content Include="Client\Features\Research\RebindGrid.html" />
     <Content Include="Client\Features\Research\ResearchJQuery.html" />
     <Content Include="Client\Features\Research\ResearchVanilla.html" />
-    <Content Include="Client\Features\Research\test.js" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
     <Content Include="Client\Libraries\Jasmine\UnitTests.html" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />

@@ -443,4 +443,3 @@
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zh.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu-za.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu.min.js" />
-/// <reference path="../client/features/research/test.js" />

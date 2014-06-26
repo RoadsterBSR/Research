@@ -1,29 +1,60 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Kendo element binding research page.</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+<title>Kendo element binding research page.</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            padding: 20px;
-        }
-    </style>
-    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
-    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />    
-    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
+body {
+    padding: 20px;
+}
+</style>
+<link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />    
+<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
     
-    <script src="/Client/Libraries/Live/head.min.js"></script>
-    <script src="/Client/Libraries/Live/live.js"></script>
+<script src="/Client/Libraries/Live/head.min.js"></script>
+<script src="/Client/Libraries/Live/live.js"></script>
 </head>
 <body>
-    <div>
-        test
-    </div>
-    <script type="text/javascript" src="test.js"></script>
+<div id="page">
+    <button onclick="app.onExecuteClick(event);">Execute</button>
+</div>
+<script type="text/javascript">
+var app = (function ()
+{
+    var self = {};
+
+    var _products = null;
+    var _observableProducts = null;
+
+    self.onExecuteClick = function (e)
+    {
+        _observableProducts[0].set('ProductName', 'test');
+        debugger;
+    };
+
+    self.start = function (e)
+    {
+        _products = [
+            { Id: 1, ProductName: 'Product1', UnitPrice: 200 },
+            { Id: 2, ProductName: 'Product2', UnitPrice: 300 },
+            { Id: 3, ProductName: 'Product3', UnitPrice: 400 }
+        ];
+
+        _observableProducts = new kendo.data.ObservableArray(_products);
+
+        //kendo.bind($("#page"), viewModel);
+    };
+
+    return self;
+})();
+
+app.start();
+</script>
 </body>
 </html>
