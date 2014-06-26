@@ -1,49 +1,82 @@
 ﻿<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>General research page containing only vanilla.js.</title>
-    <style type="text/css">
-        /* Resets */
-        *, *:after, *:before {
-            margin: 0; /* Margin zero is used to prevent unnecessary white space. */
-            padding: 0; /* Padding zero is used to prevent unnecessary white space. */
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within de width and height of de element. */
-        }
+<meta charset="utf-8">
+<title>General research page containing only vanilla.js.</title>
+<style type="text/css">
+    /* Resets */
+    *, *:after, *:before {
+        margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+        padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* Border boxing is used, so the padding, margin and borders are within the width and height of de element. */
+        box-sizing: border-box; 
+    }
 
-        html, body {
-            height: 100%;
-            max-height: 100%;
-        }
+    html, body {
+        height: 100%;
+        max-height: 100%;
+    }
 
-        body {
-            padding: 20px;
-        }
-        button {
-            padding: 2px 4px 2px 4px;
-            cursor: pointer;
-        }
-    </style>
-    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
-    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    body {
+        padding: 20px;
+    }
+    button {
+        padding: 2px 4px 2px 4px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-    <button onclick="app.onExecuteClick(event);">Execute</button>
+<button onclick="app.onExecuteClick(event);">Execute</button>
 
-    <script type="text/javascript">
-        var app = (function ()
+<script type="text/javascript">
+    var app = (function ()
+    {
+        var self = {};
+
+        self.onExecuteClick = function (e)
         {
-            var self = {};
+            var array1 = [{ Id: 1, Name: 'Name1' }, { Id: 2, Name: 'Name2' }, { Id: 3, Name: 'Name3' }, { Id: 4, Name: 'Name4' }];
+            var array2 = [{ Id: 1, Name: 'Name1' }, { Id: 2, Name: 'Name2' }, { Id: 3, Name: 'Name3' }];
 
-            self.onExecuteClick = function (e)
+            debugger;
+            var differences = self.getDifferences(array1, array2, "Id");
+            differences = self.getDifferences(array2, array1, "Id");
+
+        };
+
+        self.getDifferences = function (array1, array2, key)
+        {
+            // Directly return arrays, when one array contains elements and the other is empty.
+            var array1HasValues = (array1 && array1.length && array1.length > 0);
+            var array2HasValues = (array2 && array2.length && array2.length > 0);
+            if (array1HasValues && !array2HasValues) { return array1; }
+            if (!array1HasValues && array2HasValues) { return array2; }
+
+            // Determine biggest and smallest array.
+            var biggestArray = (array1.length >= array2.length) ? array1 : array2;
+            var smallestArray = (array1.length >= array2.length) ? array2 : array1;               
+
+            // Make hashtable of properties "key" in smallestArray
+            var smallestKeys = {}
+            smallestArray.forEach(function (obj)
             {
-                debugger;
-            };
+                smallestKeys[obj[key]] = obj;
+            });
 
-            return self;
-        })();
-    </script>
+            // Return all elements in biggestArray, unless in smallestArray.
+            var differences = biggestArray.filter(function (obj)
+            {
+                return !(obj[key] in smallestKeys);
+            });
+
+            return differences;
+        }
+
+        return self;
+    })();
+</script>
 </body>
 </html>
