@@ -3,456 +3,66 @@
 <head>
     <title>Kendo element binding research page.</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        /* Resets */
+        *, *:after, *:before {
+            margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+            padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            /* Border boxing is used, so the padding, margin and borders are within the width and height of de element. */
+            box-sizing: border-box; 
         }
+
+        html, body {
+            height: 100%;
+            max-height: 100%;
+        }
+
         body {
             padding: 20px;
         }
 
-        .gridRow {
-            /*border-collapse: separate;*/
-            border: 0 solid rgb(219, 219, 222);
-        }
-        /*#bestelLoopGrid table { 
-            border-collapse: collapse; 
-        }*/
-        table tr.gridRowHighlighted td {
-            border-top: 1px solid rgba(142, 188, 0, 0.85);
-            border-bottom: 1px solid rgba(142, 188, 0, 0.85);
-            /*border-collapse: collapse;
-            background-color: rgba(142, 188, 0, 0.85);*/
-        }
-
-        table tr.gridRowHighlighted td:first-child {
-            border-left: 1px solid rgba(142, 188, 0, 0.85);
-        }
-
-        table tr.gridRowHighlighted td:last-child {
-            border-right: 1px solid rgba(142, 188, 0, 0.85);
+        .info {
+            border: 1px solid rgb(128, 128, 128);
+            box-shadow: rgba(0, 0, 0, 0.298039) 0 2px 6px 0, rgba(0, 0, 0, 0.2) 0 -3px 8px 0;
+            padding: 10px;
         }
     </style>
     <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCVeZ9BBU496eCD_UW356Qdc_-jz2C5VBs&sensor=false&libraries=geometry"></script>
-    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
-    <script src="/Client/Libraries/Live/head.min.js"></script>
-    <script src="/Client/Libraries/Live/live.js"></script>
+    
 </head>
 <body>
     <div id="view">
         <div><button id="Execute" data-bind="click: onExecuteClick">Execute</button></div>
-        <div id="filters">
-            <input data-role="dropdownlist"
-                   data-placeholder="Type een vervoertype."
-                   data-suggest="true"
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-bind="  value: selectedVervoerType,
-                                source: vervoerTypen,
-                                events: {
-                                    change: onVervoerTypeChange
-                                }"
-                   style="width: 100px" />
-
-            <input data-role="dropdownlist"
-                   data-placeholder="Type een volgorde."
-                   data-suggest="true"
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-bind="  value: selectedVolgorde,
-                                source: volgorden,
-                                events: {
-                                    change: onVolgordeChange
-                                }"
-                   style="width: 110px" />
-
-            <input data-role="combobox"
-                   data-placeholder="Type een locatienaam."
-                   data-suggest="true"
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-bind="  value: selectedLocatie,
-                                source: locaties,
-                                events: {
-                                    change: onLocatieChange
-                                }" />
-
-            <input data-role="combobox"
-                   data-placeholder="Type een bezorggebiednaam."
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-suggest="true"
-                   data-bind="  value: selectedBezorggebied,
-                                source: bezorggebieden,
-                                events: {
-                                    change: onBezorggebiedChange
-                                }"
-                   style="width: 220px" />
-
-            <input data-role="combobox"
-                   data-placeholder="Type een postcode6Groep."
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-suggest="true"
-                   data-bind="  value: selectedPostcode6Groep,
-                                source: postcode6Groepen,
-                                events: {
-                                    change: onPostcode6GroepChange
-                                }"
-                   style="width: 210px" />
-
-            <input data-role="combobox"
-                   data-placeholder="Type een Postcode6GroepSectie."
-                   data-text-field="Naam"
-                   data-value-field="Id"
-                   data-suggest="true"
-                   data-bind="  value: selectedPostcode6GroepSectie,
-                                source: postcode6GroepSecties,
-                                events: {
-                                    change: onPostcode6GroepSectieChange
-                                }"
-                   style="width: 250px" />
-        </div>
-        <div id="bestelLoopGrid" data-role="grid"
-             data-row-template="bestelLoopRowTemplate"
-             data-columns="[
+        <div class="info">
+            <script id="sectiesRowTemplate" type="text/x-kendo-tmpl">
+                <tr data-uid="#: uid#">
+                    <td>
+                        #: Adres#
+                    </td>
+                    <td>
+                        #: Lat#
+                    </td>
+                    <td>
+                        #: Long#
+                    </td>
+                </tr>
+            </script>
+            <div id="sectiesGrid" data-role="grid"
+                 data-row-template="sectiesRowTemplate"
+                 data-columns="[
                                     { 'field': 'Adres' },
                                     { 'field': 'Lat' },
                                     { 'field': 'Long' }
                                ]"
-             data-bind="source: bestelLopen"></div>
-        <div id="mapCanvas" style="height: 800px;"></div>
+                 data-bind="source: secties"></div>
+        </div>
     </div>
-    <script id="bestelLoopRowTemplate" type="text/x-kendo-tmpl">
-        <tr data-uid="#: uid #"
-            data-bind="cssToggle: Selected"
-            data-enabled-css="gridRowHighlighted"
-            data-disabled-css="gridRow">
-            <td>
-                #: Adres#
-            </td>
-            <td>
-                #: Lat#
-            </td>
-            <td>
-                #: Long#
-            </td>
-        </tr>
-    </script>
-    <script>
-        kendo.data.binders.cssToggle = kendo.data.Binder.extend({
-            init: function (element, bindings, options)
-            {
-                kendo.data.Binder.fn.
-                            init.call(
-                             this, element, bindings, options
-                           );
-
-                var target = $(element);
-                this.enabledCss = target.data("enabledCss");
-                this.disabledCss = target.data("disabledCss");
-            },
-            refresh: function ()
-            {
-                if (this.bindings.cssToggle.get())
-                {
-                    $(this.element).addClass(this.enabledCss);
-                    $(this.element).removeClass(this.disabledCss);
-                } else
-                {
-                    $(this.element).addClass(this.disabledCss);
-                    $(this.element).removeClass(this.enabledCss);
-                }
-            }
-        });
-
-        var dataService = (function (){
-            var self = {};
-            
-            self.getBestelLopen = function (postcode6GroepSectie)
-            {
-                var result = [];
-
-                if (postcode6GroepSectie)
-                {
-                    var lopen =
-                    [
-                        { Id: 1, Postcode6GroepSectieId: 1, Adres: 'Kerkweg 22', Lat: '52.367443', Long: '4.865275', Selected: false },
-                        { Id: 2, Postcode6GroepSectieId: 1, Adres: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217', Selected: false },
-                        { Id: 3, Postcode6GroepSectieId: 1, Adres: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482', Selected: false },
-                        { Id: 4, Postcode6GroepSectieId: 1, Adres: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694', Selected: false }
-                    ];
-                    result = self.filterRecordsBasedOnParentId('Postcode6GroepSectieId', postcode6GroepSectie.Id, lopen);
-                }
-
-                return result;
-            };
-
-            self.getBezorgGebieden = function (locatie) {
-                var result = [];
-
-                if (locatie)
-                {
-                    var gebieden =
-                    [
-                        { Id: 1, LocatieId: 1, Naam: '1100' },
-                        { Id: 2, LocatieId: 1, Naam: '1200' },
-                        { Id: 3, LocatieId: 1, Naam: '1300' },
-                        { Id: 4, LocatieId: 1, Naam: '1400' },
-                        { Id: 5, LocatieId: 2, Naam: '6800' },
-                        { Id: 6, LocatieId: 2, Naam: '6900' },
-                        { Id: 7, LocatieId: 2, Naam: '7000' },
-                        { Id: 8, LocatieId: 2, Naam: '7100' }
-                    ];
-                    result = self.filterRecordsBasedOnParentId('LocatieId', locatie.Id, gebieden);
-                }
-                
-                return result;
-            };
-
-            self.getEmptyDataSource = function ()
-            {
-                return new kendo.data.DataSource({ data: [] });
-            };
-
-            self.getLocaties = function () {
-                return [
-                    { Id: 1, Naam: 'Amsterdam' },
-                    { Id: 2, Naam: 'Leeuwarden' }
-                ];
-            };
-
-            self.getPostcode6Groepen = function (bezorggebied)
-            {
-                var result = [];
-
-                if (bezorggebied)
-                {
-                    var groepen =
-                    [
-                        { Id: 1, Naam: '1101', BezorggebiedId: 1 },
-                        { Id: 2, Naam: '1102', BezorggebiedId: 1 },
-                        { Id: 2, Naam: '6801', BezorggebiedId: 5 },
-                        { Id: 2, Naam: '6802', BezorggebiedId: 5 }
-                    ];
-                    result = self.filterRecordsBasedOnParentId('BezorggebiedId', bezorggebied.Id, groepen);
-                }
-                return result;
-            };
-
-            self.getPostcode6Secties = function (postcode6Groep)
-            {
-                var result = [];
-
-                if (postcode6Groep)
-                {
-                    var secties =
-                    [
-                        { Id: 1, Naam: '1101AA', Postcode6GroepId: 1 },
-                        { Id: 2, Naam: '1101AB', Postcode6GroepId: 1 },
-                        { Id: 2, Naam: '1102AA', Postcode6GroepId: 2 },
-                        { Id: 2, Naam: '1102AB', Postcode6GroepId: 2 }
-                    ];
-                    result = self.filterRecordsBasedOnParentId('Postcode6GroepId', postcode6Groep.Id, secties);
-                }
-                return result;
-            };
-            
-            self.getVervoerTypen = function ()
-            {
-                return [
-                    { Id: 1, Naam: 'Auto' },
-                    { Id: 2, Naam: 'Brommer' }
-                ];
-            };
-
-            self.getVolgorden = function ()
-            {
-                return [
-                    { Id: 1, Naam: 'Aflopen' },
-                    { Id: 2, Naam: 'Oplopend' }
-                ];
-            };
-
-            self.filterRecordsBasedOnParentId = function (parentFieldName, parentFieldValue, records) {
-                var result = [];
-
-                for (var i = 0, len = records.length; i < len; i++) {
-                    var record = records[i];
-                    if (record && record[parentFieldName] === parentFieldValue) {
-                        result.push(record);
-                    }
-                }
-
-                return result;
-            };
-
-            return self;
-        })();
-
-        var viewModel = kendo.observable({
-            bestelLopen: dataService.getEmptyDataSource(),
-            bezorggebieden: dataService.getEmptyDataSource(),
-            highLightGridRow: function(marker)
-            {
-                if (viewModel.selectedMarker)
-                {
-                    viewModel.selectedMarker.bestelLoop.set('Selected', false);
-                }
-
-                viewModel.selectedMarker = marker;
-                viewModel.selectedMarker.bestelLoop.set('Selected', true);
-            },
-            initializeMap: function ()
-            {
-                var centerNL = new google.maps.LatLng(52.3837847076631, 4.91142800421774);
-                this.map = new google.maps.Map(document.getElementById('mapCanvas'), {
-                    zoom: 8,
-                    center: centerNL,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-            },
-            locaties: new kendo.data.DataSource({ data: dataService.getLocaties() }),
-            map: null,
-            markers: null,
-            postcode6Groepen: dataService.getEmptyDataSource(),
-            postcode6GroepSecties: dataService.getEmptyDataSource(),
-            onBezorggebiedChange: function ()
-            {
-                this.set('selectedBestelLoop', null);
-                this.set('selectedPostcode6Groep', null);
-                this.set('selectedPostcode6GroepSectie', null);
-                this.set('bestelLopen', dataService.getEmptyDataSource());
-                this.set('postcode6Groepen', new kendo.data.DataSource({
-                    data: dataService.getPostcode6Groepen(viewModel.get('selectedBezorggebied'))
-                }));
-                this.set('postcode6GroepSecties', dataService.getEmptyDataSource());
-                console.log('Bezorggebied veranderd.');
-            },
-            onExecuteClick: function (e)
-            {
-                this.locaties.data()[0].set('Naam', 'Test');
-            },
-            onLocatieChange: function ()
-            {
-                this.set('selectedBestelLoop', null);
-                this.set('selectedBezorggebied', null);
-                this.set('selectedPostcode6Groep', null);
-                this.set('selectedPostcode6GroepSectie', null);
-                this.set('bestelLopen', dataService.getEmptyDataSource());
-                this.set('bezorggebieden', new kendo.data.DataSource({
-                    data: dataService.getBezorgGebieden(viewModel.get('selectedLocatie'))
-                }));
-                this.set('postcode6Groepen', dataService.getEmptyDataSource());
-                this.set('postcode6GroepSecties', dataService.getEmptyDataSource());
-                console.log('Locatie veranderd.');
-            },
-            onMarkerClick: function ()
-            {
-                var marker = this;
-                viewModel.highLightGridRow(marker);
-            },
-            onMarkerDrag: function ()
-            {
-                var marker = this;
-                var position = marker.getPosition();
-                marker.bestelLoop.set('Lat', position.lat());
-                marker.bestelLoop.set('Long', position.lng());
-            },
-            onMarkerDragStart: function ()
-            {
-                var marker = this;
-                viewModel.highLightGridRow(marker);
-            },
-            onPostcode6GroepChange: function ()
-            {
-                this.set('selectedBestelLoop', null);
-                this.set('selectedPostcode6GroepSectie', null);
-                this.set('bestelLopen', dataService.getEmptyDataSource());
-                this.set('postcode6GroepSecties', new kendo.data.DataSource({
-                    data: dataService.getPostcode6Secties(viewModel.get('selectedPostcode6Groep'))
-                }));
-                console.log('Postcode6Groep veranderd.');
-            },
-            onPostcode6GroepSectieChange: function ()
-            {
-                this.removeMarkers();
-                this.set('selectedBestelLoop', null);
-                this.set('bestelLopen', new kendo.data.DataSource({
-                    data: dataService.getBestelLopen(viewModel.get('selectedPostcode6GroepSectie'))
-                }));
-                this.showMarkers(this.bestelLopen);
-                console.log('Postcode6GroeSectiep veranderd.');
-            },
-            onVervoerTypeChange: function ()
-            {
-                console.log('VervoerType veranderd.');
-            },
-            onVolgordeChange: function ()
-            {
-                console.log('Volgorde veranderd.');
-            },
-            removeMarkers: function ()
-            {
-                if (this.markers)
-                {
-                    for (var i = 0, len = this.markers.length; i < len; i++)
-                    {
-                        var marker = this.markers[i];
-                        marker.setMap(null);
-                        marker = null;
-                    }
-                }
-                this.set('markers', null);
-            },
-            selectedBezorggebied: null,
-            selectedBestelLoop: null,
-            selectedLocatie: null,
-            selectedMarker: null,
-            selectedPostcode6Groep: null,
-            selectedPostcode6GroepSectie: null,
-            selectedVervoerType: dataService.getVervoerTypen()[0],
-            selectedVolgorde: dataService.getVolgorden()[1],
-            showMarkers: function (dataSource)
-            {
-                if (dataSource)
-                {
-                    var data = dataSource.data();
-                    if (data)
-                    {
-                        for (var i = 0, len = data.length; i < len; i++)
-                        {
-                            var bestelLoop = data[i];
-
-                            var latLng = new google.maps.LatLng(bestelLoop.get('Lat'), bestelLoop.get('Long'));
-                            var marker = new google.maps.Marker({
-                                position: latLng,
-                                title: bestelLoop.get('Adres'),
-                                map: this.map,
-                                draggable: true,
-                                bestelLoop: bestelLoop
-                            });
-
-                            google.maps.event.addListener(marker, 'click', this.onMarkerClick);
-                            google.maps.event.addListener(marker, 'drag', this.onMarkerDrag);
-                            google.maps.event.addListener(marker, 'dragstart', this.onMarkerDragStart);
-                        }
-                    }
-                }
-            },
-            vervoerTypen: new kendo.data.DataSource({
-                data: dataService.getVervoerTypen()
-            }),
-            volgorden: new kendo.data.DataSource({
-                data: dataService.getVolgorden()
-            })
-        });
-
-        kendo.bind($("#view"), viewModel);
-        viewModel.initializeMap();
-    </script>
+    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
+    <script src="/Client/Libraries/Live/head.min.js"></script>
+    <script src="/Client/Libraries/Live/live.js"></script>
+    <script src="KendoWidgetBinding.js"></script>
 </body>
 </html>
