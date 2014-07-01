@@ -28,9 +28,9 @@
             padding: 10px;
         }
     </style>
-    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
-    <link href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.silver.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Bootstrap/bootstrap-switch.css" />
 </head>
 <body>
     <div id="view">
@@ -38,6 +38,9 @@
         <div class="info">
             <script id="sectiesRowTemplate" type="text/x-kendo-tmpl">
                 <tr data-uid="#: uid#">
+                    <td>
+                        <input type="checkbox" class="lock-switch" data-size="large" data-on-text="&lt;span class='fa fa-lock fa-lg'&gt;&lt;/span&gt;" data-off-text="&lt;span class='fa fa-unlock fa-lg'&gt;&lt;/span&gt;" />
+                    </td>
                     <td>
                         #: Adres#
                     </td>
@@ -59,10 +62,11 @@
                  data-bind="source: secties"></div>
         </div>
     </div>
-    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
-    <script src="/Client/Libraries/Live/head.min.js"></script>
-    <script src="/Client/Libraries/Live/live.js"></script>
-    <script src="KendoWidgetBinding.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="../../Libraries/Bootstrap/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript" src="KendoWidgetBinding.js"></script>
 </body>
 </html>

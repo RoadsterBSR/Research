@@ -405,9 +405,18 @@
     <Content Include="Client\Libraries\Angular\i18n\angular-locale_zu-za.js" />
     <Content Include="Client\Libraries\Angular\i18n\angular-locale_zu.js" />
     <Content Include="Client\Libraries\Angular\version.json" />
+    <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.css" />
+    <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.js" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
     <Content Include="Client\Libraries\Flexgrid\flexgrid.css" />
+    <Content Include="Client\Libraries\FontAwesome\css\font-awesome.css" />
+    <Content Include="Client\Libraries\FontAwesome\css\font-awesome.min.css" />
+    <Content Include="Client\Libraries\FontAwesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Client\Libraries\FontAwesome\version_4.1.0.txt" />
     <Content Include="Client\Libraries\Jasmine\UnitTests.html" />
+    <None Include="Client\Libraries\jQuery\jquery-2.1.1.intellisense.js" />
+    <Content Include="Client\Libraries\jQuery\jquery-2.1.1.js" />
+    <Content Include="Client\Libraries\jQuery\jquery-2.1.1.min.js" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\imagebrowser.png" />
     <Content Include="Client\Libraries\Kendo\css\Black\indeterminate.gif" />
@@ -586,6 +595,36 @@
     <None Include="Client\Libraries\Breeze\breeze.intellisense.js" />
     <Content Include="Client\Libraries\Breeze\breeze.debug.js" />
     <Content Include="Client\Libraries\Breeze\breeze.min.js" />
+    <Content Include="Client\Libraries\FontAwesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Client\Libraries\FontAwesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Client\Libraries\FontAwesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Client\Libraries\FontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="Client\Libraries\FontAwesome\less\bordered-pulled.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\core.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\fixed-width.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\font-awesome.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\icons.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\larger.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\list.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\mixins.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\path.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\rotated-flipped.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\spinning.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\stacked.less" />
+    <Content Include="Client\Libraries\FontAwesome\less\variables.less" />
+    <Content Include="Client\Libraries\FontAwesome\scss\font-awesome.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_bordered-pulled.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_core.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_fixed-width.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_icons.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_larger.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_list.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_mixins.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_path.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_rotated-flipped.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_spinning.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_stacked.scss" />
+    <Content Include="Client\Libraries\FontAwesome\scss\_variables.scss" />
     <None Include="Client\Libraries\jQuery\jquery-1.9.1.intellisense.js" />
     <Content Include="Client\Libraries\jQuery\jquery-1.9.1.js" />
     <Content Include="Client\Libraries\jQuery\jquery-1.9.1.min.js" />
@@ -1083,6 +1122,7 @@
     <Content Include="Client\Libraries\Jasmine\console.js" />
     <Content Include="Client\Libraries\Jasmine\jasmine-html.js" />
     <Content Include="Client\Libraries\Jasmine\jasmine.js" />
+    <Content Include="Client\Libraries\jQuery\jquery-2.1.1.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Client\Libraries\Modernizr\modernizr-2.7.2.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
@@ -1122,7 +1162,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Client\Features\Tests\" />
-    <Folder Include="Client\Libraries\Bootstrap\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Research.Core\Research.Core.csproj">
