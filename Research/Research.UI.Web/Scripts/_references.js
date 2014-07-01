@@ -1,4 +1,5 @@
-﻿/// <autosync enabled="true" />
+﻿/// <reference path="jquery-2.1.1.js" />
+/// <autosync enabled="true" />
 /// <reference path="../client/core/app.js" />
 /// <reference path="../client/libraries/angular/angular-animate.js" />
 /// <reference path="../client/libraries/angular/angular-cookies.js" />
@@ -17,7 +18,6 @@
 /// <reference path="../client/libraries/jasmine/console.js" />
 /// <reference path="../client/libraries/jasmine/jasmine-html.js" />
 /// <reference path="../client/libraries/jasmine/jasmine.js" />
-/// <reference path="../client/libraries/jquery/jquery-1.9.1.js" />
 /// <reference path="../client/libraries/live/head.min.js" />
 /// <reference path="../client/libraries/live/live.js" />
 /// <reference path="../client/libraries/q/q.js" />
@@ -443,3 +443,8 @@
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zh.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu-za.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu.min.js" />
+
+ 
+ / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
+ 
+ 
