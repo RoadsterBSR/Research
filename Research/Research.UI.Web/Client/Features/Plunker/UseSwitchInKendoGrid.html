@@ -44,11 +44,7 @@
             padding: 0;
             margin: 0;
         }
-
-            .addressRow input {
-                font-family: FontAwesome;
-            }
-
+        
         #addressGrid tr > td {
             height: 1.6em;
             line-height: 1.6em;
@@ -102,31 +98,23 @@
         <div class="info">
             <script id="addressRowTemplate" type="text/x-kendo-tmpl">
                 <tr data-uid="#: uid#" class="addressRow">
+                    <td>#: Volgorde#</td>
                     <td>
                         <input data-role="switch" data-on-label="" data-off-label="" data-bind="checked: IsFixed">
                     </td>
-                    <td>
-                        #: Address#
-                    </td>
-                    <td>
-                        #: Lat#
-                    </td>
-                    <td>
-                        #: Long#
-                    </td>
-                    <td>
-                        <input data-role="switch" data-on-label="Y" data-off-label="N" data-bind="checked: IsFixed">
-                    </td>
+                    <td>#: Address#</td>
+                    <td>#: Lat#</td>
+                    <td>#: Long#</td>
                 </tr>
             </script>
             <div id="addressGrid" data-role="grid"
                  data-row-template="addressRowTemplate"
                  data-columns="[
-                                    { 'field': 'IsFixed' },
-                                    { 'field': 'Address' },
-                                    { 'field': 'Lat' },
-                                    { 'field': 'Long' },
-                                    { 'field': 'Selected' }
+                                    { 'field': 'Volgorde', title: 'Volgorde' },
+                                    { 'field': 'IsFixed', title: 'Gesloten' },
+                                    { 'field': 'Address', title: 'Adres' },
+                                    { 'field': 'Lat', title: 'Lat' },
+                                    { 'field': 'Long', title: 'Long' }
                                ]"
                  data-bind="source: addresses"></div>
         </div>
@@ -154,12 +142,19 @@
                 {
                     var srcUid = e.draggable.element.data("uid");
                     var dstUid = e.dropTarget.data("uid");
-                    var ds = $(gridId).data("kendoGrid").dataSource;
-                    var srcItem = ds.getByUid(srcUid);
-                    var dstItem = ds.getByUid(dstUid);
-                    var dstIdx = ds.indexOf(dstItem);
-                    ds.remove(srcItem);
-                    ds.insert(dstIdx, srcItem);
+                    var dataSource = $(gridId).data("kendoGrid").dataSource;
+                    var srcItem = dataSource.getByUid(srcUid);
+                    var dstItem = dataSource.getByUid(dstUid);
+                    var dstIdx = dataSource.indexOf(dstItem);
+
+                    dataSource.remove(srcItem);
+                    dataSource.insert(dstIdx, srcItem);
+
+                    var data = dataSource.data();
+                    data.forEach(function (element, index)
+                    {
+                        element.set('Volgorde', index + 1);
+                    });
                     e.draggable.destroy();
                     kendo.addDragAndDropToGrid(gridId, rowClass, viewModel, validateDropTargetFunc);
                 }
@@ -175,10 +170,10 @@
             {
                 var data = new kendo.data.ObservableArray(
                 [
-                    { Id: 1, Address: 'Kerkweg 22',   Lat: '52.367443', Long: '4.865275', Selected: false, IsFixed: false },
-                    { Id: 2, Address: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217', Selected: false, IsFixed: true },
-                    { Id: 3, Address: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482', Selected: false, IsFixed: false },
-                    { Id: 4, Address: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694', Selected: false, IsFixed: true }
+                    { Id: 1, Volgorde: 1, Address: 'Kerkweg 22',   Lat: '52.367443', Long: '4.865275', Selected: false, IsFixed: false },
+                    { Id: 2, Volgorde: 2, Address: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217', Selected: false, IsFixed: true },
+                    { Id: 3, Volgorde: 3, Address: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482', Selected: false, IsFixed: false },
+                    { Id: 4, Volgorde: 4, Address: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694', Selected: false, IsFixed: true }
                 ]);
 
                 // Manual create a promise, so this function mimicks an Ajax call.

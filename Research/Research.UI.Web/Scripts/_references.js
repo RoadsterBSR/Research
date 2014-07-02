@@ -1,6 +1,4 @@
-﻿/// <reference path="modernizr-2.7.2.js" />
-/// <reference path="jquery-2.1.1.js" />
-/// <autosync enabled="true" />
+﻿/// <autosync enabled="true" />
 /// <reference path="../client/core/app.js" />
 /// <reference path="../client/libraries/angular/angular-animate.js" />
 /// <reference path="../client/libraries/angular/angular-cookies.js" />
@@ -444,6 +442,12 @@
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zh.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu-za.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu.min.js" />
+/// <reference path="../client/features/research/kendowidgetbinding.js" />
+/// <reference path="../client/libraries/bootstrap/bootstrap-switch.js" />
+/// <reference path="../client/libraries/jquery/jquery-1.9.1.js" />
+/// <reference path="../client/libraries/jquery/jquery-2.1.1.js" />
+/// <reference path="../client/libraries/modernizr/modernizr-2.7.2.js" />
+/// <reference path="../client/features/research/researchunittest.js" />
 
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
