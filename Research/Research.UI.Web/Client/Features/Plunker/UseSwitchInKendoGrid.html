@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Kendo element binding research page.</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.metro.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.metro.mobile.min.css" />
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <style>
+        /* Resets */
+        * {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of de element. */
+            color: rgb(112, 112, 112);
+            font-family: Arial, Helvetica, sans-serif; /* For know use default fonts used on google.com stackoverflow.com, telerik.com etc. */
+            font-size: 13px;
+            margin: 0; /* Margin zero is used to prevent unnecessary white space. */
+            padding: 0; /* Padding zero is used to prevent unnecessary white space. */
+        }
+
+        html, body {
+            height: 100%;
+            max-height: 100%;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .info {
+            border: 1px solid rgb(128, 128, 128);
+            box-shadow: rgba(0, 0, 0, 0.298039) 0 2px 6px 0, rgba(0, 0, 0, 0.2) 0 -3px 8px 0;
+            padding: 10px;
+        }
+
+        .addressRow {
+            cursor: move;
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+            height: 10px;
+            line-height: 10px;
+            padding: 0;
+            margin: 0;
+        }
+
+            .addressRow input {
+                font-family: FontAwesome;
+            }
+
+        #addressGrid tr > td {
+            height: 1.6em;
+            line-height: 1.6em;
+            padding: 1px 4px 1px 4px;
+            margin: 0;
+        }
+
+        #addressGrid tr > th {
+            font-weight: bold;
+            height: 1.6em;
+            line-height: 1.6em;
+            margin: 0;
+            padding: 1px 4px 1px 4px;
+        }
+
+        #addressGrid tr > td:first-child, #addressGrid tr > th:first-child {
+            width: 56px;
+        }
+
+        #addressGrid tr:last-child td {
+            padding-bottom: 3px;
+        }
+
+        .km-switch {
+            cursor: pointer;
+            height: 1.6em;
+            line-height: 1.6em;
+            margin: 0;
+            padding: 0;
+        }
+
+        #addressGrid tr > td:first-child .km-switch-label-on, #addressGrid tr > td:first-child .km-switch-label-off {
+            font-family: FontAwesome;
+            color: rgb(112, 112, 112);
+            height: 1.6em;
+            line-height: 1.6em;
+        }
+
+        #addressGrid tr > td:first-child .km-switch-label-on:before {
+            content: "\f023";
+        }
+
+        #addressGrid tr > td:first-child .km-switch-label-off:before {
+            content: "\f09c";
+        }
+    </style>
+
+</head>
+<body>
+    <div id="view">
+        <div class="info">
+            <script id="addressRowTemplate" type="text/x-kendo-tmpl">
+                <tr data-uid="#: uid#" class="addressRow">
+                    <td>
+                        <input data-role="switch" data-on-label="" data-off-label="" data-bind="checked: IsFixed">
+                    </td>
+                    <td>
+                        #: Address#
+                    </td>
+                    <td>
+                        #: Lat#
+                    </td>
+                    <td>
+                        #: Long#
+                    </td>
+                    <td>
+                        <input data-role="switch" data-on-label="Y" data-off-label="N" data-bind="checked: IsFixed">
+                    </td>
+                </tr>
+            </script>
+            <div id="addressGrid" data-role="grid"
+                 data-row-template="addressRowTemplate"
+                 data-columns="[
+                                    { 'field': 'IsFixed' },
+                                    { 'field': 'Address' },
+                                    { 'field': 'Lat' },
+                                    { 'field': 'Long' },
+                                    { 'field': 'Selected' }
+                               ]"
+                 data-bind="source: addresses"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.kendostatic.com/2014.1.528/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript">
+        kendo.addDragAndDropToGrid = function (gridId, rowClass, viewModel, validateDropTargetFunc)
+        {
+            if (!gridId) { throw "Parameter [gridId] is not set."; }
+            if (!rowClass) { throw "Parameter [rowClass] is not set."; }
+
+            $(rowClass).kendoDraggable({
+                hint: function (element)
+                {
+                    return element.clone();
+                }
+            });
+
+            $(gridId).kendoDropTargetArea({
+                filter: rowClass,
+                drop: function (e)
+                {
+                    var srcUid = e.draggable.element.data("uid");
+                    var dstUid = e.dropTarget.data("uid");
+                    var ds = $(gridId).data("kendoGrid").dataSource;
+                    var srcItem = ds.getByUid(srcUid);
+                    var dstItem = ds.getByUid(dstUid);
+                    var dstIdx = ds.indexOf(dstItem);
+                    ds.remove(srcItem);
+                    ds.insert(dstIdx, srcItem);
+                    e.draggable.destroy();
+                    kendo.addDragAndDropToGrid(gridId, rowClass, viewModel, validateDropTargetFunc);
+                }
+            });
+        };
+
+        var dataService = (function ()
+        {
+            "use strict";
+            var self = {};
+
+            self.getAddresses = function ()
+            {
+                var data = new kendo.data.ObservableArray(
+                [
+                    { Id: 1, Address: 'Kerkweg 22',   Lat: '52.367443', Long: '4.865275', Selected: false, IsFixed: false },
+                    { Id: 2, Address: 'Peilstraat 3', Lat: '52.367967', Long: '4.866217', Selected: false, IsFixed: true },
+                    { Id: 3, Address: 'Bakkerloop 35', Lat: '52.367946', Long: '4.865482', Selected: false, IsFixed: false },
+                    { Id: 4, Address: 'Eikenlaan 1', Lat: '52.368237', Long: '4.866694', Selected: false, IsFixed: true }
+                ]);
+
+                // Manual create a promise, so this function mimicks an Ajax call.
+                var dfd = new $.Deferred();
+                dfd.resolve(data);
+
+                return dfd.promise();
+            };
+
+            return self;
+        })(kendo);
+
+        var viewModel = new kendo.observable({
+            addresses: new kendo.data.DataSource({ data: [] })
+        });
+
+        var controller = (function (dataService, viewModel)
+        {
+            "use strict";
+            var _dataService = dataService;            
+            var _vm = viewModel;
+            var self = {};
+                        
+            self.handleAdressesRefresh = function (data)
+            {
+                _vm.set("addresses", new kendo.data.DataSource({ data: data }));
+                kendo.bind($(".info"), _vm);
+                kendo.addDragAndDropToGrid("#addressGrid", ".addressRow", _vm);
+            };
+
+            self.show = function ()
+            {
+                $.when(_dataService.getAddresses())
+                .then(self.handleAdressesRefresh);
+            };
+
+            return self;
+        })(dataService, viewModel);
+
+        controller.show();
+    </script>
+</body>
+</html>

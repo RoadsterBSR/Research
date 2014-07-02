@@ -121,6 +121,7 @@
     <Content Include="Client\Core\app.js" />
     <Content Include="Client\Features\Plunker\GoogleMapsKendoGridBinding.html" />
     <Content Include="Client\Features\Plunker\FullScreenHeightApp.html" />
+    <Content Include="Client\Features\Plunker\UseSwitchInKendoGrid.html" />
     <Content Include="Client\Features\Research\Kendo.html" />
     <Content Include="Client\Features\Research\KendoWidgetBinding.js" />
     <Content Include="Client\Features\Research\KendoWidgetBinding.html" />

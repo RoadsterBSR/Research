@@ -6,18 +6,19 @@
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.rtl.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.metro.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.1.528/styles/kendo.metro.mobile.min.css" />
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <style>
         /* Resets */
-        *, *:after, *:before {
+        * {
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
             box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of de element. */
-            color: rgba(112, 112, 112, 1);
+            color: rgb(112, 112, 112);
             font-family: Arial, Helvetica, sans-serif; /* For know use default fonts used on google.com stackoverflow.com, telerik.com etc. */
             font-size: 13px;
             margin: 0; /* Margin zero is used to prevent unnecessary white space. */
             padding: 0; /* Padding zero is used to prevent unnecessary white space. */
-        }
+        }        
 
         html, body {
             height: 100%;
@@ -44,6 +45,10 @@
             margin: 0;
         }
 
+        .sectieRow input {
+            font-family: FontAwesome;
+        }
+
         #sectiesGrid tr > td  {
             height: 1.6em;
             line-height: 1.6em;
@@ -62,7 +67,7 @@
         #sectiesGrid tr > td:first-child, #sectiesGrid tr > th:first-child {
             width: 56px;
         }
-
+                
         #sectiesGrid tr:last-child td {
             padding-bottom: 3px;
         }
@@ -76,19 +81,29 @@
         }
 
         .km-switch-label-on, .km-switch-label-off {
+            font-family: FontAwesome;
+            color: rgb(112, 112, 112);
             height: 1.6em;
             line-height: 1.6em;
         }
+
+        .km-switch-label-on:before {
+            content: "\f023";
+        }
+
+        .km-switch-label-off:before {
+            content: "\f09c";
+        }
     </style>
+    
 </head>
 <body>
     <div id="view">
-        <!--<div><button id="Execute" data-bind="click: onExecuteClick">Execute</button></div>-->
-        <div class="info">
+        <div class="info">            
             <script id="sectiesRowTemplate" type="text/x-kendo-tmpl">
                 <tr data-uid="#: uid#" class="sectieRow">
                     <td>
-                        <input data-role="switch" data-onlabel="YES" data-offlabel="NO" data-bind="checked: IsFixed">
+                        <input data-role="switch" data-on-label="" data-off-label="" data-bind="checked: IsFixed">
                     </td>
                     <td>
                         #: Adres#
