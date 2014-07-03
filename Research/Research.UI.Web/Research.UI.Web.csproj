@@ -119,13 +119,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
+    <Content Include="Client\Features\Kendo\kendo.extensions.js" />
+    <Content Include="Client\Features\Kendo\UnitTests.html" />
+    <Content Include="Client\Features\Kendo\UnitTests.js" />
     <Content Include="Client\Features\Plunker\GoogleMapsKendoGridBinding.html" />
     <Content Include="Client\Features\Plunker\FullScreenHeightApp.html" />
     <Content Include="Client\Features\Plunker\UseSwitchInKendoGrid.html" />
-    <Content Include="Client\Features\Research\Kendo.html" />
     <Content Include="Client\Features\Research\ResearchUnitTest.js" />
-    <Content Include="Client\Features\Research\KendoWidgetBinding.js" />
-    <Content Include="Client\Features\Research\KendoWidgetBinding.html" />
+    <Content Include="Client\Features\Kendo\KendoWidgetBinding.js" />
+    <Content Include="Client\Features\Kendo\KendoWidgetBinding.html" />
     <Content Include="Client\Features\Plunker\KendoElementBinding.html" />
     <Content Include="Client\Features\Research\BasicStyling.html" />
     <Content Include="Client\Features\Research\RebindGrid.html" />
@@ -416,8 +418,9 @@
     <Content Include="Client\Libraries\FontAwesome\css\font-awesome.min.css" />
     <Content Include="Client\Libraries\FontAwesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Client\Libraries\FontAwesome\version_4.1.0.txt" />
-    <Content Include="Client\Libraries\Jasmine\UnitTests.html" />
+    <Content Include="Client\Features\Tests\UnitTests.html" />
     <None Include="Client\Libraries\jQuery\jquery-2.1.1.intellisense.js" />
+    <Content Include="Client\Features\Tests\UnitTests.js" />
     <Content Include="Client\Libraries\jQuery\jquery-2.1.1.js" />
     <Content Include="Client\Libraries\jQuery\jquery-2.1.1.min.js" />
     <Content Include="Client\Libraries\Kendo\css\Black\editor.png" />
@@ -1164,7 +1167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Client\Features\Tests\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Research.Core\Research.Core.csproj">

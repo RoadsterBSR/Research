@@ -5,7 +5,7 @@
     <link href="../../Libraries/Flexgrid/flexgrid.css" rel="stylesheet" />
     <style>
         /* Resets */
-        *, *:after, *:before {
+        html, body, div, span, p, i, b, ul, li, select, input, button, textarea  {
             margin: 0; /* Margin zero is used to prevent unnecessary white space. */
             padding: 0; /* Padding zero is used to prevent unnecessary white space. */
             -moz-box-sizing: border-box;
@@ -21,6 +21,14 @@
 
         body {
             padding: 20px;
+        }
+
+        .page {
+            border: 1px solid rgb(128, 128, 128);
+            height: 100%;
+            max-height: 100%;
+            padding: 20px;
+            position: relative;
         }
 
         .info {
@@ -39,11 +47,17 @@
     <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
 </head>
 <body>
-    <div class="info container">
-        <div class="row"><div class="span6">Info cell 1.1</div><div class="span6">Info cell 1.2</div></div>
-        <div class="row"><div class="span4">2.1</div><div class="span4">2.2</div><div class="span4">2.3</div></div>
-        <div class="row"><div class="span4">2.1</div><div class="span4">2.2</div><div class="span4">2.3</div></div>
-        <div class="row"><div class="span12">Info cell 4</div></div>
+    <div class="page">
+        <div class="info container">
+            <div class="row"><div class="span6">Info cell 1.1</div><div class="span6">Info cell 1.2</div></div>
+            <div class="row"><div class="span4">2.1</div><div class="span4">2.2</div><div class="span4">2.3</div></div>
+            <div class="row"><div class="span4">2.1</div><div class="span4">2.2</div><div class="span4">2.3</div></div>
+            <div class="row"><div class="span12">Info cell 4</div></div>
+            <div class="row"><div class="span12">Info cell 4</div></div>
+            <div class="row"><div class="span12">Info cell 4</div></div>
+            <div class="row"><div class="span12">Info cell 4</div></div>
+            <div class="row"><div class="span12">Info cell 4</div></div>
+        </div>
     </div>
 </body>
 </html>
