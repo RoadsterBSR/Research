@@ -120,14 +120,14 @@
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
     <Content Include="Client\Features\Kendo\kendo.extensions.js" />
+    <Content Include="Client\Features\Kendo\kendo-controller.js" />
     <Content Include="Client\Features\Kendo\UnitTests.html" />
     <Content Include="Client\Features\Kendo\UnitTests.js" />
     <Content Include="Client\Features\Plunker\GoogleMapsKendoGridBinding.html" />
     <Content Include="Client\Features\Plunker\FullScreenHeightApp.html" />
     <Content Include="Client\Features\Plunker\UseSwitchInKendoGrid.html" />
     <Content Include="Client\Features\Research\Example.js" />
-    <Content Include="Client\Features\Kendo\KendoWidgetBinding.js" />
-    <Content Include="Client\Features\Kendo\KendoWidgetBinding.html" />
+    <Content Include="Client\Features\Kendo\kendo-view.html" />
     <Content Include="Client\Features\Plunker\KendoElementBinding.html" />
     <Content Include="Client\Features\Research\BasicStyling.html" />
     <Content Include="Client\Features\Research\RebindGrid.html" />

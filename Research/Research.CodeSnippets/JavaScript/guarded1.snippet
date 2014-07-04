@@ -23,7 +23,7 @@
     </Declarations>
     <Code Language="JavaScript">
       <![CDATA[function $name$($arg1$) {
-    if ($arg1$ == null) { throw new Error("Variable [$arg1$] is null or undefined."); }
+    if (!$arg1$) { throw new Error("Variable [$arg1$] is null or undefined."); }
     
 }]]></Code>
   </Snippet>

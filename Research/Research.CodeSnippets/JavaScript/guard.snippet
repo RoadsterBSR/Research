@@ -17,6 +17,6 @@
         <Default>arg1</Default>
       </Literal>
     </Declarations>
-    <Code Language="JavaScript"><![CDATA[if ($arg1$ == null) { throw new Error("Variable [$arg1$] is null or undefined."); $selected$$end$}]]></Code>
+    <Code Language="JavaScript"><![CDATA[if (!$arg1$) { throw new Error("Variable [$arg1$] is null or undefined."); $selected$$end$}]]></Code>
   </Snippet>
 </CodeSnippet>

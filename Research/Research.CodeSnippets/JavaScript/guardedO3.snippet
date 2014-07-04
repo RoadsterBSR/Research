@@ -28,9 +28,9 @@
     </Declarations>
     <Code Language="JavaScript">
       <![CDATA[function ($arg1$, $arg2$, $arg3$) {
-    if ($arg1$ == null) { throw new Error("Variable [$arg1$] is null or undefined."); }
-    if ($arg2$ == null) { throw new Error("Variable [$arg2$] is null or undefined."); }
-    if ($arg3$ == null) { throw new Error("Variable [$arg3$] is null or undefined."); }
+    if (!$arg1$) { throw new Error("Variable [$arg1$] is null or undefined."); }
+    if (!$arg2$) { throw new Error("Variable [$arg2$] is null or undefined."); }
+    if (!$arg3$) { throw new Error("Variable [$arg3$] is null or undefined."); }
     
 }]]></Code>
   </Snippet>
