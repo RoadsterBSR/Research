@@ -50,6 +50,7 @@
     <None Include="JavaScript\for.snippet" />
     <None Include="JavaScript\forin.snippet" />
     <None Include="JavaScript\forr.snippet" />
+    <None Include="JavaScript\comment.snippet" />
     <None Include="JavaScript\guarded3.snippet" />
     <None Include="JavaScript\guarded2.snippet" />
     <None Include="JavaScript\module.snippet" />

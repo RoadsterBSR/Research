@@ -1,0 +1,25 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>comment</Title>
+    <Author>ADA</Author>
+    <Shortcut>comment</Shortcut>
+    <Description>Insert visual studio comments for a function.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>arg1</ID>
+        <ToolTip>The parameter to comment on.</ToolTip>
+        <Default>arg1</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+      <![CDATA[/// <summary></summary>
+  /// <param name="$arg1$" type="int"></param>
+  /// <returns>A promise.</returns>]]></Code>
+  </Snippet>
+</CodeSnippet>
