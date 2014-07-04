@@ -1,0 +1,35 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>module</Title>
+    <Author>ADA</Author>
+    <Shortcut>module</Shortcut>
+    <Description>Code snippet for creating a module as an immediately-invoked function expression.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>root</ID>
+        <ToolTip>Namespace root.</ToolTip>
+        <Default>app</Default>
+      </Literal>
+      <Literal>
+        <ID>name</ID>
+        <ToolTip>Module name.</ToolTip>
+        <Default>module1</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+      <![CDATA[
+  var $root$ = $root$ || {};
+  $root$.$name$ = (function () {
+    var self = {};
+    
+    
+    
+    return self;
+})();]]></Code>
+  </Snippet>
+</CodeSnippet>

@@ -1,0 +1,22 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>guard</Title>
+    <Author>ADA</Author>
+    <Shortcut>guard</Shortcut>
+    <Description>Code snippet for an guard statement.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>parameter</ID>
+        <ToolTip>The parameter to validate.</ToolTip>
+        <Default>arg1</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="JavaScript"><![CDATA[if ($arg1$ == null) { throw new Error("Variable [$arg1$] is null or undefined."); $selected$$end$}]]></Code>
+  </Snippet>
+</CodeSnippet>

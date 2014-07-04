@@ -1,0 +1,37 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>guardedO3</Title>
+    <Author>ADA</Author>
+    <Shortcut>guardedO3</Shortcut>
+    <Description>Code snippet for a object function with gaurds foreach parameter</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>arg1</ID>
+        <ToolTip>First parameter.</ToolTip>
+        <Default>arg1</Default>
+      </Literal>
+      <Literal>
+        <ID>arg2</ID>
+        <ToolTip>Second parameter.</ToolTip>
+        <Default>arg2</Default>
+      </Literal>
+      <Literal>
+        <ID>arg3</ID>
+        <ToolTip>Third parameter.</ToolTip>
+        <Default>arg3</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+      <![CDATA[function ($arg1$, $arg2$, $arg3$) {
+    if ($arg1$ == null) { throw new Error("Variable [$arg1$] is null or undefined."); }
+    if ($arg2$ == null) { throw new Error("Variable [$arg2$] is null or undefined."); }
+    if ($arg3$ == null) { throw new Error("Variable [$arg3$] is null or undefined."); }
+    
+}]]></Code>
+  </Snippet>
+</CodeSnippet>
