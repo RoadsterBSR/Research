@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <title data-ng-bind="title">Hot Towel Angular</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <!-- Libraries -->
+    <link rel="stylesheet" type="text/css" href="../../Libraries/FontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Toastr/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Flexgrid/flexgrid.css" />
+
+    <!-- App -->
+    <link rel="stylesheet" type="text/css" href="app.css" />
+</head>
+<body>
+    <div data-ng-controller="admin as vm">
+        <div>{{vm.title}}</div>
+        <ul ng-repeat="employee in vm.employees">
+            <li>
+                {{employee.firstName}}
+            </li>
+        </ul>
+    </div>
+    
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="../../Libraries/jQuery/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="../../Libraries/Angular/angular.js"></script>
+    <script type="text/javascript" src="../../Libraries/Angular/angular-animate.js"></script>
+    <script type="text/javascript" src="../../Libraries/Angular/angular-route.js"></script>
+    <script type="text/javascript" src="../../Libraries/Angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="../../Libraries/Q/q.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.min.js"></script>
+    <script type="text/javascript" src="../../Libraries/Toastr/toastr.js"></script>
+    <script type="text/javascript" src="../../Libraries/Moment/moment.js"></script>
+    <script type="text/javascript" src="../../Libraries/Spin/spin.js"></script>
+
+    <!-- App -->
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
