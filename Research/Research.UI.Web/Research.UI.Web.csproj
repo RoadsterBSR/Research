@@ -135,6 +135,10 @@
     <Content Include="Client\Features\Research\ResearchJQuery.html" />
     <Content Include="Client\Features\Spa\app.css" />
     <Content Include="Client\Features\Spa\app.js" />
+    <Content Include="Client\Features\Spa\breeze.extensions.js" />
+    <Content Include="Client\Features\Spa\crud.css" />
+    <Content Include="Client\Features\Spa\crud.html" />
+    <Content Include="Client\Features\Spa\crud.js" />
     <Content Include="Client\Features\Spa\index.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.js" />

@@ -27,35 +27,31 @@
 
     function admin($scope)
     {
+        var manager = null;
         var vm = this;
         vm.title = 'Admin test page.';
         vm.employees = [];
 
-        breeze.NamingConvention.camelCase.setAsDefault();
-        var manager = new breeze.EntityManager('/breeze/breeze');
-
-        var query = new breeze.EntityQuery()
-            .from("Employee");
-
-        manager.executeQuery(query).then(handleRefreshEmployees).fail(function (e)
+        function initialize()
         {
-            alert(e);
-        });
+            breeze.NamingConvention.camelCase.setAsDefault();
+            manager = new breeze.EntityManager('/breeze/breeze');
+
+            var query = new breeze.EntityQuery().from("Employee");
+            manager.executeQuery(query).then(handleRefreshEmployees).fail(showError);
+        }
 
         function handleRefreshEmployees(data)
         {
-            //vm.employees = [{ firstName: 'Test' }, { firstName: 'Test2' }];
             vm.employees = data.results;
             $scope.$apply();
-            //$scope.$apply(function ()
-            //{
-            //    refreshEmployees(data);
-            //});
+        }
+        
+        function showError(e)
+        {
+            alert(e);
         }
 
-        function refreshEmployees(data)
-        {
-            vm.employees = [{ firstName: 'Test' }, { firstName: 'Test2' }];
-        }
+        initialize();
     }
 })();
