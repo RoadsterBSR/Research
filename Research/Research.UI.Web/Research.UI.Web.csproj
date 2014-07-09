@@ -136,9 +136,9 @@
     <Content Include="Client\Features\Spa\app.css" />
     <Content Include="Client\Features\Spa\app.js" />
     <Content Include="Client\Features\Spa\breeze.extensions.js" />
-    <Content Include="Client\Features\Spa\crud.css" />
-    <Content Include="Client\Features\Spa\crud.html" />
-    <Content Include="Client\Features\Spa\crud.js" />
+    <Content Include="Client\Features\Spa\Crud\crud.css" />
+    <Content Include="Client\Features\Spa\Crud\crud.html" />
+    <Content Include="Client\Features\Spa\Crud\crud.js" />
     <Content Include="Client\Features\Spa\index.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.js" />
@@ -422,6 +422,9 @@
     <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.css" />
     <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.js" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.saveErrorExtensions.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.savequeuing.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.to%24q.shim.js" />
     <Content Include="Client\Libraries\Flexgrid\flexgrid.css" />
     <Content Include="Client\Libraries\FontAwesome\css\font-awesome.css" />
     <Content Include="Client\Libraries\FontAwesome\css\font-awesome.min.css" />
@@ -606,6 +609,7 @@
     <Content Include="Client\Libraries\Jasmine\jasmine_favicon.png" />
     <Content Include="Client\Libraries\Toastr\toastr.css" />
     <Content Include="Client\Libraries\Toastr\toastr.min.css" />
+    <Content Include="content\breeze.directives.css" />
     <Content Include="packages.config" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.woff" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.ttf" />
@@ -1153,6 +1157,8 @@
     <Content Include="Client\Libraries\Moment\moment.min.js" />
     <Content Include="Client\Libraries\Spin\spin.js" />
     <Content Include="Client\Libraries\Spin\spin.min.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.angular.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.directives.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
     <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web.Debug.config">

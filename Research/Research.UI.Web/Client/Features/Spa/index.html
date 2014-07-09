@@ -13,32 +13,60 @@
 
     <!-- App -->
     <link rel="stylesheet" type="text/css" href="app.css" />
-    <link rel="stylesheet" type="text/css" href="crud.css" />
 </head>
 <body>
-    <div data-ng-controller="admin as vm">
-        <div>{{vm.title}}</div>
-        <ul ng-repeat="employee in vm.employees">
-            <li>
-                {{employee.firstName}}
-            </li>
-        </ul>
+    <div class="spa-page" data-ng-controller="admin as vm">
+        <div class="spa-crud-overview">
+            <a class="spa-action-link" ng-click="vm.create()">create</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="entity in vm.entities">
+                        <td>{{ entity.firstName }}</td>
+                        <td>{{ entity.lastName }}</td>
+                        <td><a class="spa-action-link" ng-click="vm.edit(entity)">edit</a></td>
+                        <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="spa-crud-edit" ng-show="vm.showEdit">
+            <div>
+                <div><span>Title</span><a class="spa-action-link" ng-click="vm.close()">close</a></div>
+                <div>
+                    <p>Dit is wat content.</p>
+                    <p>Dit is wat content.</p>
+                    <p>Dit is wat content.</p>
+                    <p>Dit is wat content.</p>
+                    <p>Dit is wat content.</p>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- Libraries -->
-    <script type="text/javascript" src="../../Libraries/jQuery/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="../../Libraries/Angular/angular.js"></script>
-    <script type="text/javascript" src="../../Libraries/Angular/angular-animate.js"></script>
-    <script type="text/javascript" src="../../Libraries/Angular/angular-route.js"></script>
-    <script type="text/javascript" src="../../Libraries/Angular/angular-sanitize.js"></script>
-    <script type="text/javascript" src="../../Libraries/Q/q.js"></script>
-    <script type="text/javascript" src="../../Libraries/Breeze/breeze.min.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.debug.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.angular.js"></script>
+
+    <!-- Add toastr which needs jQuery (Breeze does not need jQuery) -->
+    <script type="text/javascript" src="../../Libraries/jQuery/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="../../Libraries/Toastr/toastr.js"></script>
     <script type="text/javascript" src="../../Libraries/Moment/moment.js"></script>
     <script type="text/javascript" src="../../Libraries/Spin/spin.js"></script>
-
+            
+    <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q)-->
+    <script type="text/javascript" src="../../Libraries/Q/q.min.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.savequeuing.js"></script>
+    
     <!-- App -->
     <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="crud.js"></script>
 </body>
 </html>
