@@ -19,7 +19,5 @@ namespace Research.UI.Web.Server.Model
         [StringLength(maximumLength : 20, MinimumLength = 1)]
         public string PhoneNumber { get; set; }
         List<Declaration> Declarations { get; set; }
-        [Foreignekyname ('Naam'_]
-        Land
     }
 }

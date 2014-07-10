@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <title data-ng-bind="title">Research page</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <!-- Libraries -->
+    <link rel="stylesheet" type="text/css" href="../../Libraries/FontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Toastr/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Flexgrid/flexgrid.css" />
+
+    <!-- App -->
+    <style>
+        /* Resets */
+        html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var,
+        b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,
+        time, mark, audio, video {
+            border: 0;              /* Prevent unnecessary white space. */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
+            margin: 0;              /* Prevent unnecessary white space. */
+            outline: 0;             /* Prevent unnecessary white space. */
+            padding: 0;             /* Prevent unnecessary white space. */
+            font-size: 100%;
+            vertical-align: baseline;
+        }
+
+        html, body {
+            height: 100%;       /* Full screen single page app. */
+            max-height: 100%;   /* Full screen single page app. */
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        a.spa-action-link {
+            color: #428bca;
+            text-decoration: none;
+        }
+
+        a.spa-action-link:hover, a.spa-action-link:focus {
+            color: #2a6496;
+            text-decoration: underline;
+        }
+
+        div.spa-page {
+            border: 1px solid rgb(212, 212, 212);
+            height: 100%;       /* Full screen single page app. */
+            max-height: 100%;   /* Full screen single page app. */
+            padding: 20px;
+            position: relative;
+        }
+
+        div.spa-page > a {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="spa-page" data-ng-controller="admin as vm">
+        <a class="spa-action-link" ng-click="vm.save()">save</a>
+        <table>
+            <thead>
+                <tr>
+                    <th ng-repeat='(key, prop) in vm.entityFields'>{{ prop.name }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in vm.entities">
+                    <td ng-repeat='(key, prop) in vm.entityFields'><input ng-disabled="{{vm.isReadOnlyField(prop.name)}}" type='text' ng-model='entity[prop.name]'></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Libraries -->
+    <script type="text/javascript" src="../../Libraries/Angular/angular.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.debug.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.angular.js"></script>
+
+    <!-- Add toastr which needs jQuery (Breeze does not need jQuery) -->
+    <script type="text/javascript" src="../../Libraries/jQuery/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="../../Libraries/Toastr/toastr.js"></script>
+    <script type="text/javascript" src="../../Libraries/Moment/moment.js"></script>
+    <script type="text/javascript" src="../../Libraries/Spin/spin.js"></script>
+            
+    <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q)-->
+    <script type="text/javascript" src="../../Libraries/Q/q.min.js"></script>
+    <script type="text/javascript" src="../../Libraries/Breeze/breeze.savequeuing.js"></script>
+    
+    <!-- App -->
+    <script type="text/javascript">
+
+        // Use namespaces to prevent pollution of the global namespace.
+        var spa = spa || {};
+        spa.controllers = spa.controllers || {};
+
+        // Angular module [app].
+        spa.app = (function ()
+        {
+            'use strict';
+
+            var app = angular.module('app', [
+                'breeze.angular' // The breeze service module.
+            ]);
+        })();
+
+        // Angular controller [admin].
+        spa.controllers.admin = (function ()
+        {
+            'use strict';
+            var controllerId = 'admin';
+            angular.module('app').controller(controllerId, ['breeze', admin]);
+
+            function admin(breeze)
+            {
+                var manager = null;
+                var entityTypeName = "Employee";
+
+                var vm = this;
+                vm.entities = [];
+                vm.entityFields = null;
+                vm.isReadOnlyField = function (name)
+                {
+                    // Make 'id' fields read-only.
+                    return (name === 'id');
+                };
+                vm.save = function ()
+                {
+                    manager.saveChanges().then(showInfo).catch(showError);
+                };
+                
+                function initialize()
+                {
+                    // Use camel case for entity properties.
+                    breeze.NamingConvention.camelCase.setAsDefault();
+
+                    // Configure and create EntityManager (double breeze is needed, because of .
+                    manager = new breeze.EntityManager('/breeze/breeze');
+                    manager.enableSaveQueuing(true);
+
+                    // Get entities from the server.
+                    var query = new breeze.EntityQuery().from(entityTypeName);
+                    manager.executeQuery(query).then(handleRefresh).catch(showError);
+                }
+
+                function handleRefresh(data)
+                {
+                    // Get entity fields from metadata.
+                    var entityMetaData = manager.metadataStore.getEntityType(entityTypeName);
+                    vm.entityFields = entityMetaData.dataProperties;
+
+                    // Show the enties from the server.
+                    vm.entities = data.results;
+                }
+
+                function showError(e)
+                {
+                    // Show xhr error.
+                    toastr.error(e);
+                }
+
+                function showInfo()
+                {
+                    // Show info message.
+                    toastr.info(entityTypeName + " saved!");
+                }
+
+                initialize();
+            }
+        })();
+    </script>
+</body>
+</html>
