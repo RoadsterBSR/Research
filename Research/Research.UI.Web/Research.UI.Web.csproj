@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
+    <Content Include="Client\Features\Breeze\Automatic_data_bind_entity_fields.html" />
     <Content Include="Client\Features\Kendo\kendo.extensions.js" />
     <Content Include="Client\Features\Kendo\kendo-controller.js" />
     <Content Include="Client\Features\Kendo\UnitTests.html" />
@@ -1195,7 +1196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Client\Features\Breeze\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Research.Core\Research.Core.csproj">

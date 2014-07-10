@@ -59,6 +59,7 @@ namespace Research.UI.Web.Server.Controllers
         [HttpGet]
         public IQueryable<Employee> Employee()
         {
+            
             return _contextProvider.Context.Employees;
         }
 

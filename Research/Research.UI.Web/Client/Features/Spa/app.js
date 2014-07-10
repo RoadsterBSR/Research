@@ -49,9 +49,21 @@ spa.controllers.admin = (function ()
         {
             vm.showEdit = true;
             vm.selected.entity = entity;
+
+            var entityMetaData = manager.metadataStore.getEntityType(entityTypeName);
+            vm.selected.entityFields = entityMetaData.dataProperties;
+            var variable = null;
+            for (variable in entity)
+            {
+                if (entity.hasOwnProperty(variable))
+                {
+                    console.log(entity[variable]);
+                }
+            }
         };
         vm.selected = {};
         vm.selected.entity = null;
+        vm.selected.entityFields = null;
         vm.showEdit = false;
 
         function initialize()
