@@ -8,6 +8,7 @@ namespace Research.UI.Web.Server.Controllers
     using Research.UI.Web.Migrations;
     using Research.UI.Web.Server.Components;
     using Research.UI.Web.Server.Model;
+    using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Web.Http;
 
@@ -64,16 +65,20 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
-        public void ResetData()
-        {
-            var configuration = new Research.UI.Web.Migrations.Configuration();
-            configuration.SeedManual(_contextProvider.Context);
-        }
-
-        [HttpGet]
         public void ResetCustomMetaData()
         {
             _customMetaData = _customMetaDataBuilder.GetCustomMetaData(_contextProvider.Context);
+        }
+        
+        [HttpGet]
+        public void ReSeed()
+        {
+            var configuration = new Research.UI.Web.Migrations.Configuration();
+            configuration.ContextType = typeof(ResearchDbContext);
+            var migrator = new DbMigrator(configuration);
+
+            // This will run the migration update script and will run Seed() method.
+            migrator.Update();
         }
 
         [HttpGet]

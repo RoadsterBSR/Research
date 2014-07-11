@@ -16,10 +16,11 @@
 </head>
 <body>
     <div class="spa-page" data-ng-controller="admin as vm">
-        <a class="spa-action-link" ng-click="vm.save()">save</a>
-        <table>
+        <div class="spa-grid-toolbar"><a class="spa-action-link" ng-click="vm.save()">save</a> | <a class="spa-action-link" ng-click="vm.reset()">reset</a> | <a class="spa-action-link" ng-click="vm.create()">create</a> <i class="fa fa-exclamation-circle" title="Some data has change. Press save to save the changes to the server!" ng-show="vm.isDirty"></i></div>
+        <table class="spa-grid">
             <thead>
                 <tr>
+                    <th> </th>
                     <th ng-repeat='(key, prop) in vm.entityFields'>{{ prop.name }}</th>
                 </tr>
             </thead>

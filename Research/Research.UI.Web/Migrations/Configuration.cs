@@ -6,6 +6,9 @@ namespace Research.UI.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+    /// <summary>
+    /// This class is made plublic, so the seed method can be run in the breeze controller.
+    /// </summary>
     public sealed class Configuration : DbMigrationsConfiguration<Research.UI.Web.Server.Model.ResearchDbContext>
     {
         public Configuration()
@@ -15,22 +18,6 @@ namespace Research.UI.Web.Migrations
         }
 
         protected override void Seed(Research.UI.Web.Server.Model.ResearchDbContext context)
-        {
-            // All seed code is moved to a extension method, so seeding can be called manual.
-            this.SeedManual(context);
-        }
-    }
-
-    public static class ConfigurationExtensions
-    {
-        /// <summary>
-        /// This extension method is created, so the seed of the database can be manual excuted.
-        /// </summary>
-        /// <remarks>
-        /// This method will be called after migrating to the latest version.
-        /// You can use the DbSet<T>.AddOrUpdate() helper extension method to avoid creating duplicate seed data. E.g.
-        /// </remarks>
-        public static void SeedManual(this Configuration configuration, Research.UI.Web.Server.Model.ResearchDbContext context)
         {
             context.Employees.AddOrUpdate(
               e => e.Id,
@@ -55,5 +42,5 @@ namespace Research.UI.Web.Migrations
               new Setting { Id = 1, Key = "Research.Web.UI.RefreshRate", Value = "1000" }
             );
         }
-    }   
+    }
 }

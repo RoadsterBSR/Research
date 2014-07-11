@@ -49,3 +49,11 @@ div.spa-page {
 div.spa-page > a {
     margin-bottom: 10px;
 }
+
+div.spa-grid-toolbar i.fa-exclamation-circle {
+    margin-left: 10px;
+}
+
+.spa-grid input[type="text"] {
+    padding-left: 2px;
+}
