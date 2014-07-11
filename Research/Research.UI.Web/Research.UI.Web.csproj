@@ -120,7 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
-    <Content Include="Client\Features\Breeze\Automatic_data_bind_entity_fields.html" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part1\index.html" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.css" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.js" />
     <Content Include="Client\Features\Kendo\kendo.extensions.js" />
     <Content Include="Client\Features\Kendo\kendo-controller.js" />
     <Content Include="Client\Features\Kendo\UnitTests.html" />
