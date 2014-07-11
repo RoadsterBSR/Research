@@ -19,5 +19,8 @@ namespace Research.UI.Web.Server.Model
         public decimal ValueIncludingTax { get; set; }
         public DateTime DateTime { get; set; }
         public bool Approved { get; set; }
+
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; }
     }
 }

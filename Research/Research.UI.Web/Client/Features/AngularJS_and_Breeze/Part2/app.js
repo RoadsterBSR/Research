@@ -77,7 +77,7 @@ spa.controllers.admin = (function () {
             // Get entity fields from metadata.
             var entityMetaData = manager.metadataStore.getEntityType(entityTypeName);
             vm.entityFields = entityMetaData.dataProperties;
-
+            
             // Show the enties from the server.
             vm.entities = data.results;
             vm.isDirty = false;

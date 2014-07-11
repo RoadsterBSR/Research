@@ -5,6 +5,7 @@ namespace Research.UI.Web.Server.Model
     using Research.UI.Web.Validation.FieldValidators;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Employee
     {
@@ -18,6 +19,5 @@ namespace Research.UI.Web.Server.Model
         public string LastName { get; set; }
         [StringLength(maximumLength : 20, MinimumLength = 1)]
         public string PhoneNumber { get; set; }
-        List<Declaration> Declarations { get; set; }
     }
 }
