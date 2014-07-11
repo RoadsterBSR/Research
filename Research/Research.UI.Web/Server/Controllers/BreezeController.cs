@@ -40,11 +40,13 @@ namespace Research.UI.Web.Server.Controllers
         [HttpGet]
         public void ReSeed()
         {
+            // Remove all records from the "Employees" table.
+            _contextProvider.Context.Database.ExecuteSqlCommand("truncate table Employees");
+
+            // Run an "Update-Database" EF migrations command, this will update the database schema to the latest state and run the Seed() method.
             var configuration = new Research.UI.Web.Migrations.Configuration();
             configuration.ContextType = typeof(ResearchDbContext);
             var migrator = new DbMigrator(configuration);
-
-            // This will run the migration update script and will run the migrations Seed() method.
             migrator.Update();
         }        
 
