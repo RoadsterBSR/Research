@@ -1188,6 +1188,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Server\Components\CustomMetaDataBuilder.cs" />
+    <Compile Include="Server\Controllers\BreezeCustomMetadataController.cs" />
     <Compile Include="Server\Controllers\BreezeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Controllers\WebApiController.cs" />

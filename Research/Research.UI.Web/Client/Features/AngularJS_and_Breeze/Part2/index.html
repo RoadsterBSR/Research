@@ -16,7 +16,14 @@
 </head>
 <body>
     <div class="spa-page" data-ng-controller="admin as vm">
-        <div class="spa-grid-toolbar"><a class="spa-action-link" ng-click="vm.save()">save</a> | <a class="spa-action-link" ng-click="vm.reset()">reset</a> | <a class="spa-action-link" ng-click="vm.create()">create</a> <i class="fa fa-exclamation-circle" title="Some data has change. Press save to save the changes to the server!" ng-show="vm.isDirty"></i></div>
+        <div class="spa-grid-toolbar">
+            <a class="spa-action-link" ng-click="vm.save()">save</a> |
+            <a class="spa-action-link" ng-click="vm.reset()">reset</a> |
+            <a class="spa-action-link" ng-click="vm.create()">create</a>
+            <i class="fa fa-exclamation-circle" 
+               title="Some data has change. Press save to save the changes to the server!" 
+               ng-show="vm.isDirty"></i>
+        </div>
         <table class="spa-grid">
             <thead>
                 <tr>
@@ -27,12 +34,16 @@
             <tbody>
                 <tr ng-repeat="entity in vm.entities">
                     <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
-                    <td ng-repeat='(key, prop) in vm.entityFields'><input ng-disabled="{{vm.isReadOnlyField(prop.name)}}" type='text' ng-model='entity[prop.name]'></td>
+                    <td ng-repeat='(key, prop) in vm.entityFields'>
+                        <input ng-disabled="{{vm.isReadOnlyField(prop.name)}}" 
+                               type='text' 
+                               ng-model='entity[prop.name]'>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
+
     <!-- Libraries -->
     <script type="text/javascript" src="../../../Libraries/Angular/angular.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.debug.js"></script>
@@ -43,11 +54,11 @@
     <script type="text/javascript" src="../../../Libraries/Toastr/toastr.js"></script>
     <script type="text/javascript" src="../../../Libraries/Moment/moment.js"></script>
     <script type="text/javascript" src="../../../Libraries/Spin/spin.js"></script>
-            
+
     <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q)-->
     <script type="text/javascript" src="../../../Libraries/Q/q.min.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.savequeuing.js"></script>
-    
+
     <!-- App -->
     <script type="text/javascript" src="app.js"></script>
 </body>
