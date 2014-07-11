@@ -5,6 +5,7 @@ namespace Research.UI.Web.Server.Controllers
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
     using Newtonsoft.Json.Linq;
+    using Research.UI.Web.Migrations;
     using Research.UI.Web.Server.Components;
     using Research.UI.Web.Server.Model;
     using System.Linq;
@@ -34,12 +35,6 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
-        public void ResetCustomMetaData()
-        {
-            _customMetaData = _customMetaDataBuilder.GetCustomMetaData(new ResearchDbContext());
-        }
-
-        [HttpGet]
         public string CustomMetaData()
         {
             if (string.IsNullOrWhiteSpace(_customMetaData))
@@ -50,6 +45,18 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Declaration> Declaration()
+        {
+            return _contextProvider.Context.Declarations;
+        }
+
+        [HttpGet]
+        public IQueryable<Employee> Employee()
+        {
+            return _contextProvider.Context.Employees;
+        }
+
+        [HttpGet]
         public string Metadata()
         {
             string result = _contextProvider.Metadata();
@@ -57,16 +64,16 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
-        public IQueryable<Employee> Employee()
+        public void ResetData()
         {
-            
-            return _contextProvider.Context.Employees;
+            var configuration = new Research.UI.Web.Migrations.Configuration();
+            configuration.SeedManual(_contextProvider.Context);
         }
 
         [HttpGet]
-        public IQueryable<Declaration> Declaration()
+        public void ResetCustomMetaData()
         {
-            return _contextProvider.Context.Declarations;
+            _customMetaData = _customMetaDataBuilder.GetCustomMetaData(_contextProvider.Context);
         }
 
         [HttpGet]

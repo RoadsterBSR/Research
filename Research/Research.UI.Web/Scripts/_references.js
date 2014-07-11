@@ -468,6 +468,7 @@
 /// <reference path="../client/libraries/breeze/breeze.to$q.shim.js" />
 /// <reference path="../client/libraries/breeze/breeze.savequeuing.js" />
 /// <reference path="../client/features/angularjs_and_breeze/part1/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part2/app.js" />
 
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 

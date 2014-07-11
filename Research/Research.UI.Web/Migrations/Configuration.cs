@@ -6,7 +6,7 @@ namespace Research.UI.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Research.UI.Web.Server.Model.ResearchDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<Research.UI.Web.Server.Model.ResearchDbContext>
     {
         public Configuration()
         {
@@ -16,11 +16,25 @@ namespace Research.UI.Web.Migrations
 
         protected override void Seed(Research.UI.Web.Server.Model.ResearchDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method to avoid creating duplicate seed data. E.g.
+            // All seed code is moved to a extension method, so seeding can be called manual.
+            this.SeedManual(context);
+        }
+    }
+
+    public static class ConfigurationExtensions
+    {
+        /// <summary>
+        /// This extension method is created, so the seed of the database can be manual excuted.
+        /// </summary>
+        /// <remarks>
+        /// This method will be called after migrating to the latest version.
+        /// You can use the DbSet<T>.AddOrUpdate() helper extension method to avoid creating duplicate seed data. E.g.
+        /// </remarks>
+        public static void SeedManual(this Configuration configuration, Research.UI.Web.Server.Model.ResearchDbContext context)
+        {
             context.Employees.AddOrUpdate(
               e => e.Id,
-              new Employee { Id = 1, FirstName = "John", LastName = "Do",       PhoneNumber = "00311234567890" },
+              new Employee { Id = 1, FirstName = "John", LastName = "Do", PhoneNumber = "00311234567890" },
               new Employee { Id = 2, FirstName = "Harry", LastName = "Stone", PhoneNumber = "00311234567890" },
               new Employee { Id = 3, FirstName = "Marc", LastName = "Polo", PhoneNumber = "00311234567890" },
               new Employee { Id = 4, FirstName = "Barbara", LastName = "Shine", PhoneNumber = "00311234567890" },
@@ -36,12 +50,10 @@ namespace Research.UI.Web.Migrations
               new Declaration { Id = 3, Approved = true, DateTime = new DateTime(2014, 6, 25, 10, 0, 0), Description = "Mouse", EmployeeId = 2, ValueIncludingTax = 30 }
             );
 
-
             context.Settings.AddOrUpdate(
               s => s.Id,
               new Setting { Id = 1, Key = "Research.Web.UI.RefreshRate", Value = "1000" }
             );
-            
         }
-    }
+    }   
 }

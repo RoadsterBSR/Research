@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <title data-ng-bind="title">Angular and Breeze</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <!-- Libraries -->
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/FontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/Toastr/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/Flexgrid/flexgrid.css" />
+
+    <!-- App -->
+    <link rel="stylesheet" type="text/css" href="app.css" />
+</head>
+<body>
+    <div class="spa-page" data-ng-controller="admin as vm">
+        <a class="spa-action-link" ng-click="vm.save()">save</a>
+        <table>
+            <thead>
+                <tr>
+                    <th ng-repeat='(key, prop) in vm.entityFields'>{{ prop.name }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in vm.entities">
+                    <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
+                    <td ng-repeat='(key, prop) in vm.entityFields'><input ng-disabled="{{vm.isReadOnlyField(prop.name)}}" type='text' ng-model='entity[prop.name]'></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Libraries -->
+    <script type="text/javascript" src="../../../Libraries/Angular/angular.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Breeze/breeze.debug.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Breeze/breeze.angular.js"></script>
+
+    <!-- Add toastr which needs jQuery (Breeze does not need jQuery) -->
+    <script type="text/javascript" src="../../../Libraries/jQuery/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Toastr/toastr.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Moment/moment.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Spin/spin.js"></script>
+            
+    <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q)-->
+    <script type="text/javascript" src="../../../Libraries/Q/q.min.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Breeze/breeze.savequeuing.js"></script>
+    
+    <!-- App -->
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
