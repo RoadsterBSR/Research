@@ -1,0 +1,78 @@
+﻿/* Resets */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, 
+figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    border: 0;              /* Prevent unnecessary white space. */
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; /*  Border boxing is used, so the padding, margin and borders are within 
+                                the width and height of the element. */
+    margin: 0;              /* Prevent unnecessary white space. */
+    outline: 0;             /* Prevent unnecessary white space. */
+    padding: 0;             /* Prevent unnecessary white space. */
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+html, body {
+    height: 100%;       /* Full screen single page app. */
+    max-height: 100%;   /* Full screen single page app. */
+}
+
+body {
+    padding: 20px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.container {
+    display: flex; /* or inline-flex */
+    -ms-flex-flow: row;
+    flex-flow: row;
+}
+
+a.spa-action-link {
+    color: #428bca;
+    text-decoration: none;
+}
+
+a.spa-action-link:hover, a.spa-action-link:focus {
+    color: #2a6496;
+    text-decoration: underline;
+}
+
+div.spa-page {
+    border: 1px solid rgb(212, 212, 212);
+    height: 100%;       /* Full screen single page app. */
+    max-height: 100%;   /* Full screen single page app. */
+    padding: 20px;
+    position: relative;
+}
+
+div.spa-page-sidebar {
+    border: 1px solid rgb(212, 212, 212);
+    padding: 10px;
+    flex: 1 10%;
+    margin-right: 10px;
+}
+
+div.spa-page-content {
+    border: 1px solid rgb(212, 212, 212);
+    flex: 1 90%;
+    padding: 10px;
+}
+
+div.spa-grid-toolbar > a {
+    margin-bottom: 10px;
+}
+
+div.spa-grid-toolbar i.fa-exclamation-circle {
+    margin-left: 10px;
+}
+
+.spa-grid input[type="text"] {
+    padding-left: 2px;
+}
