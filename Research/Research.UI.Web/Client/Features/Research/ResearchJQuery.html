@@ -5,7 +5,7 @@
 <title>General research page containing only vanilla.js.</title>
 <style type="text/css">
 /* Resets */
-*, *:after, *:before {
+div {
     margin: 0; /* Margin zero is used to prevent unnecessary white space. */
     padding: 0; /* Padding zero is used to prevent unnecessary white space. */
     -moz-box-sizing: border-box;
@@ -21,90 +21,56 @@ html, body {
 body {
     padding: 20px;
 }
-button {
-    padding: 2px 4px 2px 4px;
-    cursor: pointer;
-}
 </style>
-<script type="text/javascript" src="/Client/Libraries/jQuery/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
-<script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+<script type="text/javascript" src="/Client/Libraries/jQuery/jquery-2.1.1.js"></script>
 </head>
 <body>
-<button onclick="app.onExecuteClick(event);">Execute</button>
 
 <script type="text/javascript">
-
-    $.whenall = function ($promises)
-    {
-    // promises: is aan array of promises.
-    return $.when.apply($, $promises).then(function ()
-    {
-        // Convert the special "arguments" object to a real "Array".
-        var args = Array.prototype.slice.call(arguments);
-
-        // When the promisses array contains just one element, [args] will be an array containing 3 records: ["array of items", "promises status", "promise"].
-        // When the promisses array contains more then one element, [args] will be an array of arrays, where each array 3 records: ["array of items", "promises status", "promise"].
-        // This is handled by only handeling args items that are of type "Array" and foreach handled "Array", we check if the first item is of type "Array".
-        var merged = [];
-        for (var i = 0, len = args.length; i < len; i++)
-        {
-            var record = args[i];
-
-            // Only handle args items, that are of type "Array".
-            if (record && Array.isArray(record) && record.length > 0)
-            {
-                // Check if first item is of type "Array".
-                var firstItem = record[0];
-                if (Array.isArray(firstItem))
-                {
-                    merged = merged.concat(firstItem);
-                } else
-                {
-                    merged = merged.concat(record);
-                }
-            }
-        }
-
-        return merged;
-    });
-};
-
 
 var app = (function ()
 {
     var self = {};
-                
-    self.handleRestSponse = function (data)
-    {
-        console.log(data);
+    
+    self.handleGetResult = function (data) {
+        var resultHandler = this;
+        var additionalData = resultHandler.getAdditionalData();
+
+        // Do something with the result from the server and the additional data.
     };
 
-    self.onExecuteClick = function (e)
-    {
-        console.log('onExecuteClick start.');
+    self.ResultHandler = function (additionalData, handleResultFunc) {
+        var self = this;
+        var _additionalData = additionalData;
+        var _handleResultFunc = handleResultFunc;
 
-        var promises = [];
-        promises.push(
-            $.ajax({
-                url: 'https://api.github.com/users/roelvanlisdonk/repos',
-                type: 'GET'
-            })
-        );
-        promises.push(
-            $.ajax({
-                url: 'https://api.github.com/users/roelvanlisdonk/repos',
-                type: 'GET'
-            })
-        );
+        self.getAdditionalData = function () {
+            return _additionalData;
+        };
 
-        $.whenall(promises).then(self.handleRestSponse);
+        self.handleResult = function (data) {
+            _handleResultFunc.call(self, data);
+        };
 
-        console.log('onExecuteClick end.');
+        return self;
     };
+
+    self.start = function ()
+    {
+        var promise = $.ajax({
+            url: 'https://api.github.com/users/roelvanlisdonk/repos',
+            type: 'GET'
+        });
+
+        var handler = new self.ResultHandler("Some extra data", self.handleGetResult);
+        $.when(promise).then(handler.handleResult);
+    };
+
+    self.start();
 
     return self;
 })();
+    
 </script>
 </body>
 </html>

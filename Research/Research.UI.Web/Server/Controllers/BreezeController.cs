@@ -25,6 +25,12 @@ namespace Research.UI.Web.Server.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Declaration> Declaration()
+        {
+            return _contextProvider.Context.Declarations;
+        }
+        
+        [HttpGet]
         public IQueryable<Employee> Employee()
         {
             return _contextProvider.Context.Employees;
@@ -54,6 +60,12 @@ namespace Research.UI.Web.Server.Controllers
         public SaveResult SaveChanges(JObject saveBundle)
         {
             return _contextProvider.SaveChanges(saveBundle);
+        }
+
+        [HttpGet]
+        public IQueryable<Setting> Setting()
+        {
+            return _contextProvider.Context.Settings;
         }
     }
 }
