@@ -129,6 +129,8 @@
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\index.html" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.css" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.js" />
+    <Content Include="Client\Features\Kendo\Confirm\app.js" />
+    <Content Include="Client\Features\Kendo\Confirm\index.html" />
     <Content Include="Client\Features\Kendo\kendo.extensions.js" />
     <Content Include="Client\Features\Kendo\kendo-controller.js" />
     <Content Include="Client\Features\Kendo\UnitTests.html" />
