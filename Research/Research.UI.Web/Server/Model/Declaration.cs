@@ -16,6 +16,7 @@ namespace Research.UI.Web.Server.Model
         [StringLengthRange(Minimum = 1, Maximum = 30)]
         public string Description { get; set; }
         [Required]
+        [Display(Name = "Value including tax")]
         public decimal ValueIncludingTax { get; set; }
         public DateTime DateTime { get; set; }
         public bool Approved { get; set; }

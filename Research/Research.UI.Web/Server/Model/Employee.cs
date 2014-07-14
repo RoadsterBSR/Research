@@ -7,6 +7,7 @@ namespace Research.UI.Web.Server.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    [DisplayColumn("FirstName")]
     public class Employee
     {
         [Key]
