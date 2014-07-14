@@ -40,9 +40,6 @@
                         <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
                         <td ng-repeat='(key, prop) in vm.entityDataFields'>
                             <div ng-field></div>
-                            <!--<input ng-disabled="{{vm.isKeyField(prop)}}"
-                                   type='text'
-                                   ng-model='entity[prop.name]'>-->
                         </td>
                     </tr>
                 </tbody>

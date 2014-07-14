@@ -11,8 +11,6 @@ kendo.controller = (function () {
         _confirm =  $("#confirm").kendoWindow({
             title: "Delete record",
             visible: false, // The window will not appear before its .open method is called.
-            width: "230px",
-            height: "100px",
         }).data("kendoWindow");
         _confirmTemplate = kendo.template($("#confirmTemplate").html());
         _vm = new kendo.data.ObservableObject({

@@ -18,7 +18,7 @@ spa.controllers.admin = (function () {
     'use strict';
     var controllerId = 'admin';
     angular.module('app').controller(controllerId, ['$http', '$q', 'breeze', admin]);
-
+    
     function admin($http, $q, breeze) {
         var entityChangedToken = null;
         var _entityTypeName = "Employee";
@@ -173,16 +173,12 @@ spa.app.directive('ngField',['$compile', function ($compile) {
             var html = '<input ng-disabled="{{vm.isKeyField(prop)}}" type="text" ng-model="entity[prop.name]">';
             if ($scope.prop.relatedNavigationProperty) {
                 var relatedTableName = $scope.prop.relatedNavigationProperty.nameOnServer;
-                // <select ng-model="myColor" ng-options="color.name for color in colors"></select>
-                // <input ng-disabled="{{vm.isKeyField(prop)}}" type="text" ng-model="entity[prop.name]">
                 html = '<select ng-model="entity[prop.name]" ng-options="record.id as record.firstName for record in vm[\'' + relatedTableName + '\']"></select>';
             }
             var compiled = $compile(html)($scope);
             element.replaceWith(compiled);
             element = compiled;
-        },
-        
-        //template: '<input ng-disabled="{{vm.isKeyField(prop)}}" type="text" ng-model="entity[prop.name]">'
+        }
     };
     
     return directive;
