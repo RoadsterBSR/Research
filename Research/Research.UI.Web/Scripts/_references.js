@@ -9,9 +9,13 @@
 /// <reference path="../client/features/vanilla/unittests.js" />
 /// <reference path="../client/features/vanilla/vanilla.js" />
 /// <reference path="../client/features/spa/breeze.extensions.js" />
-/// <reference path="../client/features/spa/crud/crud.js" />
 /// <reference path="../client/features/angularjs_and_breeze/part1/app.js" />
 /// <reference path="../client/features/angularjs_and_breeze/part2/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part3/app.js" />
+/// <reference path="../client/features/kendo/confirm/app.js" />
+/// <reference path="../client/features/kendo/kendowidgetbinding.js" />
+/// <reference path="../client/features/spa/crud/crud.js" />
+/// <reference path="../client/libraries/angular/_references.js" />
 /// <reference path="../client/libraries/angular/angular-animate.js" />
 /// <reference path="../client/libraries/angular/angular-cookies.js" />
 /// <reference path="../client/libraries/angular/angular-kendo.js" />
@@ -467,8 +471,6 @@
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zh.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu-za.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu.min.js" />
-/// <reference path="../client/features/angularjs_and_breeze/part3/app.js" />
-/// <reference path="../client/features/kendo/confirm/app.js" />
 
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
