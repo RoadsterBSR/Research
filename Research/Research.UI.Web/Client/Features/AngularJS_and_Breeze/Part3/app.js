@@ -192,9 +192,12 @@ spa.app.directive('ngField',['$compile', function ($compile) {
 
             if ($scope.prop.relatedNavigationProperty) {
                 var relatedTableName = $scope.prop.relatedNavigationProperty.nameOnServer;
-                html = '<select ng-model="entity[prop.name]" ng-options="record.id as record.firstName for record in vm[\'' + relatedTableName + '\']"></select>';
+                html = '<select kendo-combo-box ng-model="entity[prop.name]" ng-options="record.id as record.firstName for record in vm[\'' + relatedTableName + '\']"></select>';
             } else if ($scope.prop.dataType.name === "DateTime") {
                 html = '<input kendo-date-picker k-ng-model="entity[prop.name]" k-format="\'dd-MMM-yyyy\'" />';
+            } else if ($scope.prop.dataType.name === "Boolean")
+            {
+                html = '<input kendo-mobile-switch k-on-label="\'YES\'" k-off-label="\'NO\'" />';
             }
 
             var compiled = $compile(html)($scope);

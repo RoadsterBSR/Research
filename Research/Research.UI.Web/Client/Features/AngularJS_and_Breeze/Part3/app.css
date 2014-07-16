@@ -1,16 +1,18 @@
 ﻿/* Reset */
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,
-del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset,
-form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, 
-figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, span {
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code, textarea
+del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, keygen
+form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, select, button
+figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, span, input {
     border: 0;              /* Prevent unnecessary white space. */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
+    color: rgb(50, 50, 50);
+    font-family: Arial, Helvetica, sans-serif; /* For know use default fonts used on google.com stackoverflow.com, telerik.com etc. */
+    font-size: 13px;
     margin: 0;              /* Prevent unnecessary white space. */
     outline: 0;             /* Prevent unnecessary white space. */
     padding: 0;             /* Prevent unnecessary white space. */
-    font-size: 100%;
     vertical-align: baseline;
 }
 
@@ -48,6 +50,15 @@ a.spa-action-link:hover, a.spa-action-link:focus {
     margin-right: 10px;
 }
 
+div.spa-page-sidebar > div {
+    padding-bottom: 2px;
+}
+
+div.spa-page-sidebar > div:first-child {
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
 .spa-page-content {
     border: 1px solid rgb(212, 212, 212);
     flex: 1 90%;
@@ -62,6 +73,59 @@ a.spa-action-link:hover, a.spa-action-link:focus {
     margin-left: 10px;
 }
 
-.spa-grid input[type="text"] {
-    padding-left: 2px;
+.spa-grid td > input[type="text"] {
+    border: 1px solid rgb(218, 218, 218);
+    padding: 4px;
+    height: 21px;
+    line-height: 21px;
+    min-height: 21px;
+}
+
+.spa-grid td:first-child {
+    padding-right: 4px;
+}
+
+.spa-grid td > select {
+    border: 1px solid rgb(218, 218, 218);
+}
+
+/* Kendo overwrites */
+
+span.k-picker-wrap {
+    color: rgb(50, 50, 50);
+    height: 19px;
+    line-height: 19px;
+    min-height: 19px;
+    margin-top: -2px;
+}
+
+span.k-combobox, span.k-combobox > span, span.k-combobox  > span > input.k-input, span.k-combobox > span > span.k-select  {
+    color: rgb(50, 50, 50);
+    height: 19px;
+    line-height: 19px;
+    min-height: 19px;
+    padding: 0;
+    margin: 0;
+    vertical-align: baseline;
+}
+
+span.k-picker-wrap input.k-input, span.k-picker-wrap span.k-select {
+    color: rgb(50, 50, 50);
+    height: 19px;
+    line-height: 19px;
+    min-height: 19px;
+    padding: 0;
+}
+
+span.km-switch-wrapper {
+    height: 22px;
+    line-height: 22px;
+    min-height: 22px;
+}
+
+span.km-switch-container {
+    cursor: pointer;
+    height: 22px;
+    line-height: 22px;
+    min-height: 22px;
 }
