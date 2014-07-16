@@ -23,7 +23,7 @@ spa.services.dataService = (function ()
     angular.module('app').factory('dataService', ['$http', '$q', 'breeze', function dataService($http, $q, breeze)
     {
         var service = {
-        }
+        };
 
         return service;
     }]);
@@ -179,7 +179,6 @@ spa.controllers.admin = (function () {
         initialize();
     }]);
 })();
-
 
 // Function responisble for supplying additional data to a promise "then" function.
 spa.ResultHandler = function (additionalData, handleResultFunc) {
