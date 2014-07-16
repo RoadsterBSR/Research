@@ -1,6 +1,7 @@
 ﻿// Use namespaces to prevent pollution of the global namespace.
 var spa = spa || {};
 spa.controllers = spa.controllers || {};
+spa.services = spa.services || {};
 
 // Angular module [app].
 spa.app = (function () {
@@ -14,7 +15,21 @@ spa.app = (function () {
     return app;
 })();
 
-// Angular controller [admin].
+// Angular service [dataService] responsible for the interaction with the server.
+spa.services.dataService = (function ()
+{
+    'use strict';
+
+    angular.module('app').factory('dataService', ['$http', '$q', 'breeze', function dataService($http, $q, breeze)
+    {
+        var service = {
+        }
+
+        return service;
+    }]);
+})();
+
+// Angular controller [admin], responsible for the interaction between the [viewModel] and the [dataService].
 spa.controllers.admin = (function () {
     'use strict';
 
@@ -165,6 +180,8 @@ spa.controllers.admin = (function () {
     }]);
 })();
 
+
+// Function responisble for supplying additional data to a promise "then" function.
 spa.ResultHandler = function (additionalData, handleResultFunc) {
     var self = this;
     var _additionalData = additionalData;
@@ -182,6 +199,7 @@ spa.ResultHandler = function (additionalData, handleResultFunc) {
     return self;
 };
 
+// Angular directive [ngField] responsible for generating grid cell controls.
 spa.app.directive('ngField',['$compile', function ($compile) {
 
     var directive = {
