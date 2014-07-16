@@ -471,6 +471,7 @@
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zh.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu-za.min.js" />
 /// <reference path="../client/libraries/kendo/js/cultures/kendo.culture.zu.min.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part4/app.js" />
 
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
