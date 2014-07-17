@@ -120,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part5\app.css" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part5\app.js" />
+    <Content Include="Client\Features\AngularJS_and_Breeze\Part5\index.html" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part4\app.css" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part4\app.js" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part4\index.html" />
