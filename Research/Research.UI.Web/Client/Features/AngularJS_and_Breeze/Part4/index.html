@@ -78,7 +78,7 @@
                     <tr ng-repeat="entity in vm.entities">
                         <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
                         <td ng-repeat='(key, prop) in vm.entityDataFields'>
-                            <div ng-field></div>
+                            <div spa-field></div>
                         </td>
                     </tr>
                 </tbody>
@@ -86,27 +86,23 @@
         </div>
     </div>
 
-    <!-- Libraries -->
+    <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="../../../Libraries/FontAwesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="../../../Libraries/Toastr/toastr.min.css" />
-
-    <!-- App -->
-    <link rel="stylesheet" type="text/css" href="app.css" />
-
-    <!-- Libraries -->
-    <script type="text/javascript" src="../../../Libraries/jQuery/jquery-2.1.1.js"></script>
-    <script type="text/javascript" src="../../../Libraries/Angular/angular.js"></script>
-
-    <!-- Kendo -->
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/Breeze/breeze.directives.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.common.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.rtl.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.metro.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.metro.mobile.min.css" />
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    
+    <!-- Scripts -->
+    <script type="text/javascript" src="../../../Libraries/jQuery/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Angular/angular.js"></script>
     <script type="text/javascript" src="//cdn.kendostatic.com/2014.2.625/js/kendo.all.min.js"></script>
-
-    <!-- Breeze -->
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.debug.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.angular.js"></script>
+    <script type="text/javascript" src="../../../Libraries/Breeze/breeze.directives.js"></script>
 
     <!-- Add toastr which needs jQuery (Breeze does not need jQuery). -->
     <script type="text/javascript" src="../../../Libraries/Toastr/toastr.js"></script>
@@ -117,7 +113,6 @@
     <script type="text/javascript" src="../../../Libraries/Q/q.min.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.savequeuing.js"></script>
 
-    <!-- App -->
     <script type="text/javascript" src="app.js"></script>
 </body>
 </html>

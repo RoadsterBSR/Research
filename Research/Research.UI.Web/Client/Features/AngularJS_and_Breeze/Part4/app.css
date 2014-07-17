@@ -89,6 +89,17 @@ div.spa-page-sidebar > div:first-child {
     border: 1px solid rgb(218, 218, 218);
 }
 
+/* Toastr overwrites */
+div.toast-message {
+    color: rgb(255,255,255);
+}
+
+/* Breeze overwrites */
+input:invalid, select:invalid {
+    border: red solid 1px !important;
+    border-left: 1px solid red !important;
+}
+
 /* Kendo overwrites */
 
 span.k-picker-wrap {

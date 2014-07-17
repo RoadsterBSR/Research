@@ -42,15 +42,15 @@
   <ItemGroup>
     <Reference Include="Breeze.ContextProvider, Version=1.4.0.0, Culture=neutral, PublicKeyToken=f6085f1a45e2ac59, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Breeze.Server.ContextProvider.1.4.14\lib\Breeze.ContextProvider.dll</HintPath>
+      <HintPath>..\..\packages\Breeze.Server.ContextProvider.1.4.16\lib\Breeze.ContextProvider.dll</HintPath>
     </Reference>
     <Reference Include="Breeze.ContextProvider.EF6, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f6085f1a45e2ac59, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Breeze.Server.ContextProvider.EF6.1.4.14\lib\Breeze.ContextProvider.EF6.dll</HintPath>
+      <HintPath>..\..\packages\Breeze.Server.ContextProvider.EF6.1.4.16\lib\Breeze.ContextProvider.EF6.dll</HintPath>
     </Reference>
     <Reference Include="Breeze.WebApi2, Version=1.4.0.0, Culture=neutral, PublicKeyToken=f6085f1a45e2ac59, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Breeze.Server.WebApi2.1.4.14\lib\Breeze.WebApi2.dll</HintPath>
+      <HintPath>..\..\packages\Breeze.Server.WebApi2.1.4.16\lib\Breeze.WebApi2.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -435,6 +435,7 @@
     <Content Include="Client\Libraries\Angular\version.json" />
     <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.css" />
     <Content Include="Client\Libraries\Bootstrap\bootstrap-switch.js" />
+    <Content Include="Client\Libraries\Breeze\breeze.directives.css" />
     <Content Include="Client\Libraries\Breeze\breeze.extensions.js" />
     <Content Include="Client\Libraries\Breeze\breeze.saveErrorExtensions.js" />
     <Content Include="Client\Libraries\Breeze\breeze.savequeuing.js" />
@@ -1173,6 +1174,7 @@
     <Content Include="Client\Libraries\Spin\spin.min.js" />
     <Content Include="Client\Libraries\Breeze\breeze.angular.js" />
     <Content Include="Client\Libraries\Breeze\breeze.directives.js" />
+    <Content Include="Scripts\breeze.directives.js" />
     <Content Include="Server\Model\CustomMetaData.json" />
     <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web.Debug.config">

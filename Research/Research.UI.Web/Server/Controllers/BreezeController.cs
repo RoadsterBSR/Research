@@ -46,8 +46,10 @@ namespace Research.UI.Web.Server.Controllers
         [HttpGet]
         public void ReSeed()
         {
-            // Remove all records from the "Employees" table.
-            _contextProvider.Context.Database.ExecuteSqlCommand("truncate table Employees");
+            // Remove all data from database.
+            _contextProvider.Context.Database.ExecuteSqlCommand("truncate table Declarations");
+            _contextProvider.Context.Database.ExecuteSqlCommand("delete from Employees; DBCC CHECKIDENT ('Employees', RESEED, 0)");
+            _contextProvider.Context.Database.ExecuteSqlCommand("truncate table Settings");
 
             // Run an "Update-Database" EF migrations command, this will update the database schema to the latest state and run the Seed() method.
             var configuration = new Research.UI.Web.Migrations.Configuration();

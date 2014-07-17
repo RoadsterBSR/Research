@@ -13,8 +13,7 @@
  * Author: Ward Bell
  */
 
-(function ()
-{
+(function () {
     'use strict';
 
     var module = angular.module('breeze.directives', [])
@@ -43,21 +42,18 @@
     *   Add the directive to an input tag bound to a floating point property
     *     <input data-ng-model='vm.product.unitPrice' data-z-float />
     */
-    function zFloat()
-    {
+    function zFloat() {
         return {
             restrict: 'A',
             require: 'ngModel',
 
-            link: function (scope, elm, attr, ngModelCtrl)
-            {
+            link: function(scope, elm, attr, ngModelCtrl) {
                 if (attr.type === 'radio' || attr.type === 'checkbox') return;
                 ngModelCtrl.$formatters.push(equivalenceFormatter);
-
-                function equivalenceFormatter(value)
-                {
-                    var viewValue = ngModelCtrl.$viewValue // could have used 'elm.val()'
-                    return (value === +viewValue) ? viewValue : value;
+                
+                function equivalenceFormatter(value){
+                   var viewValue = ngModelCtrl.$viewValue // could have used 'elm.val()'
+                   return (value === +viewValue) ? viewValue : value;
                 }
             }
         };
@@ -96,8 +92,7 @@
     *
     * Learn more at http://www.breezejs.com/breeze-labs/breezedirectivesvalidationjs
     */
-    function zValidate(config, validateInfo)
-    {
+    function zValidate(config, validateInfo) {
         var directive = {
             link: link,
             restrict: 'A',
@@ -106,8 +101,7 @@
 
         return directive;
 
-        function link(scope, element, attrs)
-        {
+        function link(scope, element, attrs) {
             // get validation info for bound element and entity property
             var info = validateInfo.create(
                 scope,
@@ -125,8 +119,7 @@
 
             // directive is on an input element, so use templates for
             // required and validation display
-            function linkForInput()
-            {
+            function linkForInput() {
                 var valTemplate = config.zValidateTemplate;
                 var requiredTemplate = config.zRequiredTemplate || '';
                 var decorator = angular.element('<span class="z-decorator"></span>');
@@ -138,13 +131,11 @@
 
                 // update the message in the validation template
                 // when a validation error changes on an input control 
-                function valErrsChanged(newValue)
-                {
+                function valErrsChanged(newValue) {
 
                     // HTML5 custom validity
                     // http://dev.w3.org/html5/spec-preview/constraints.html#the-constraint-validation-api
-                    if (domEl.setCustomValidity)
-                    {
+                    if (domEl.setCustomValidity) {
                         /* only works in HTML 5. Maybe should throw if not available. */
                         domEl.setCustomValidity(newValue);
                     }
@@ -160,15 +151,13 @@
             // so set scope variables and let existing elements display validation
             // TODO: learn to discover the ngModel in the interior of the element
             //       rather than oblige developer to repeat it in the ngModel of this element
-            function linkForNonInput()
-            {
+            function linkForNonInput() {
 
                 scope.$watch(info.getValErrs, valErrsChanged);
 
                 // update the message in the z_invalid and z_error properties in the scope
                 // when a validation error changes on a non-input control 
-                function valErrsChanged(newValue)
-                {
+                function valErrsChanged(newValue) {
                     var errorMsg = newValue ? newValue : "";
                     scope.z_error = errorMsg;
                     scope.z_invalid = !!errorMsg;
@@ -181,8 +170,7 @@
     // Service to extract validation information from a zValidate data binding
     // Although built for Angular, it is designed to be used 
     // in alternative zValidate directive implementations
-    function zValidateInfo()
-    {
+    function zValidateInfo() {
 
         // Info describing a bound entity's property's validation
         // 'scope' is the scope of the binding
@@ -195,8 +183,7 @@
         //
         // 'validationPath' is an alternative specification of the entity property
         // from which validation information should be obtained.
-        function Info(scope, modelPath, validationPath)
-        {
+        function Info(scope, modelPath, validationPath) {
 
             // need some path info from either of these attrs or it's pointless
             if (!modelPath && !validationPath) { return; }
@@ -228,22 +215,17 @@
         /*** zValidateInfo implementation ***/
 
         // Create info about the data bound entity property
-        function create(scope, modelPath, validationPath)
-        {
+        function create(scope, modelPath, validationPath) {
             return new Info(scope, modelPath, validationPath);
         }
 
         // Create the 'getValErrs' function that will be watched
-        function createGetValErrs(info)
-        {
-            return function ()
-            {
+        function createGetValErrs(info) {
+            return function () {
                 var aspect = info.getEntityAspect();
-                if (aspect)
-                {
+                if (aspect) {
                     var errs = aspect.getValidationErrors(info.propertyPath);
-                    if (errs.length)
-                    {
+                    if (errs.length) {
                         return errs
                             // concatenate all errors into a single string
                             .map(function (e) { return e.errorMessage; })
@@ -258,26 +240,21 @@
             };
         }
 
-        function getEntityAspect(info)
-        {
-            return function ()
-            {
+        function getEntityAspect(info) {
+            return function () {
                 return info.scope.entityAspect;
             }
         }
 
-        function getEntityAspectFromEntityPath(info)
-        {
-            return function ()
-            {
+        function getEntityAspectFromEntityPath(info) {
+            return function () {
                 try { return info.scope.$eval(info.entityPath)['entityAspect']; }
                 catch (_) { return undefined; }
             }
         }
 
         // determine if bound property is required.
-        function getIsRequired()
-        {
+        function getIsRequired() {
             var info = this;
             if (info.isRequired !== undefined) { return info.isRequired; }
 
@@ -287,8 +264,7 @@
             //       which is why you MUST call 'getIsRequired' 
             //       inside 'valErrsChanged' rather than in the link function
             var entityType = info.getType();
-            if (entityType)
-            { // the bound entity is known
+            if (entityType) { // the bound entity is known
                 var requiredProperties =
                     getRequiredPropertiesForEntityType(entityType);
 
@@ -297,8 +273,7 @@
             return undefined; // don't know yet
         }
 
-        function getType()
-        {
+        function getType() {
             var aspect = this.getEntityAspect();
             return aspect ? aspect.entity.entityType : null;
         }
@@ -309,31 +284,25 @@
         * Creates that hash lazily and adds it to the
         * entityType's metadata for easier access by this directive
         */
-        function getRequiredPropertiesForEntityType(type)
-        {
-            if (type.custom && type.custom.required)
-            {
+        function getRequiredPropertiesForEntityType(type) {
+            if (type.custom && type.custom.required) {
                 return type.custom.required;
             }
 
             // Don't yet know the required properties for this type
             // Find out now
-            if (!type.custom)
-            {
+            if (!type.custom) {
                 type.custom = {};
             }
             var required = {};
             type.custom.required = required;
             var props = type.getProperties();
-            props.forEach(function (prop)
-            {
+            props.forEach(function (prop) {
                 var vals = prop.validators;
-                for (var i = vals.length; i--;)
-                {
+                for (var i = vals.length; i--;) {
                     var val = vals[i];
                     // Todo: add the 'isRequired' property to breeze.Validator.required validator
-                    if (val.context.isRequired || val.name === 'required')
-                    {
+                    if (val.context.isRequired || val.name === 'required') {
                         required[prop.name] = true;
                         break;
                     }
@@ -342,15 +311,13 @@
             return required;
         }
 
-        function setEntityAndPropertyPaths(info, modelPath, validationPath)
-        {
+        function setEntityAndPropertyPaths(info, modelPath, validationPath) {
 
             // examples:
             //   'productId'               // property only
             //   'vm.order.delivery'       // entity path and property
             //   'vm.order["delivery"]'    // entity path and indexed property
-            if (modelPath)
-            {
+            if (modelPath) {
                 parsePath(modelPath);
             }
             // validationPath can override either entity or property path; 
@@ -364,38 +331,31 @@
             // examples:
             //   'vm.order,address.street' // entity w/ complex prop 
             //   'vm.order,address[street]' // entity w/ complex indexed prop 
-            if (validationPath)
-            {
+            if (validationPath) {
                 // Look for ',' syntax
                 var paths = validationPath.split(',');
                 var pPath = paths.pop(); // after ','
                 var ePath = paths.pop(); // before ','
                 if (ePath) { info.entityPath = ePath.trim(); }
 
-                if (info.entityPath)
-                {
+                if (info.entityPath) {
                     info.propertyPath = pPath;
-                } else
-                {
+                } else {
                     // Didn't use ',' syntax and didn't specify entityPath in model.
                     // Therefore entire path spec must be in pPath; parse it.
                     parsePath(pPath);
                 }
             }
 
-            function parsePath(path)
-            {
-                if (path[path.length - 1] === ']')
-                {
+            function parsePath(path) {
+                if (path[path.length - 1] === ']') {
                     parseIndexedPaths(path);
-                } else
-                {
+                } else {
                     parseDottedPath(path);
                 }
             }
 
-            function parseDottedPath(path)
-            {
+            function parseDottedPath(path) {
                 // ex: 'vm.order.delivery'
                 // propertyPath should be 'delivery'
                 // entityPath should be 'vm.order'
@@ -405,8 +365,7 @@
             }
 
             // extract paths from strings using square-bracket notation, e.g. 'vm.order[delivery]'
-            function parseIndexedPaths(path)
-            {
+            function parseIndexedPaths(path) {
                 var opensb = path.lastIndexOf('[');
                 info.entityPath = path.substring(0, opensb);  // path to entity is before last [
                 var propertyPath = path.substring(opensb + 1, path.length - 1); // property is between [ ]
@@ -440,8 +399,7 @@
     *              'So sad!!! %error%</span>';
     *      }]);
     */
-    function zDirectivesConfig()
-    {
+    function zDirectivesConfig() {
         // The default zValidate template for display of validation errors
         this.zValidateTemplate =
             '<span class="invalid">%error%</span>';
@@ -451,8 +409,7 @@
         this.zRequiredTemplate =
             '<span class="icon-asterisk-invalid z-required" title="Required">*</span>';
 
-        this.$get = function ()
-        {
+        this.$get = function () {
             return {
                 zValidateTemplate: this.zValidateTemplate,
                 zRequiredTemplate: this.zRequiredTemplate

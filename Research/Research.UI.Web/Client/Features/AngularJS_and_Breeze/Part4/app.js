@@ -9,8 +9,16 @@ spa.app = (function () {
 
     var app = angular.module('app', [
         'kendo.directives',
-        'breeze.angular'
-    ]);
+        'breeze.angular',
+        'breeze.directives'
+    ]).config(['zDirectivesConfigProvider', function (cfg)
+    {
+        // Custom template with warning icon before the error message
+        cfg.zValidateTemplate = '<span class="invalid"><i class="icon-warning-sign icon-white"></i>%error%</span>';
+    }]);
+
+    //Configure the Breeze Validation Directive for bootstrap 2
+    
 
     return app;
 })();
@@ -20,10 +28,77 @@ spa.services.dataService = (function ()
 {
     'use strict';
 
-    angular.module('app').factory('dataService', ['$http', '$q', 'breeze', function dataService($http, $q, breeze)
+    angular.module('app').factory('dataService', ['$http', 'breeze', function dataService($http, breeze)
     {
-        var service = {
+        // All private variables start with a "_".
+        var _entityChangedToken = null;
+        var _manager = null;
+
+        function createEntity(entityTypeName)
+        {
+            var entity = _manager.createEntity(entityTypeName);
+            return entity;
         }
+
+        function getEntities(entityTypeName)
+        {
+            // Get entities from the server, based on the given entity type name.
+            var query = new breeze.EntityQuery().from(entityTypeName);
+            return _manager.executeQuery(query);
+        }
+
+        function getEntityType(entityTypeName)
+        {
+            // Get metadata for the given entitytype.
+            return _manager.metadataStore.getEntityType(entityTypeName);
+        }
+
+        function getEntityTypes()
+        {
+            return _manager.metadataStore.getEntityTypes();
+        }
+
+        function initialize()
+        {
+            // Use camel case for entity properties.
+            breeze.NamingConvention.camelCase.setAsDefault();
+
+            // Configure and create EntityManager (double breeze is needed, because of .
+            _manager = new breeze.EntityManager('/breeze/breeze');
+            _manager.enableSaveQueuing(true);
+        }
+
+        function registerForStateChange(stateChangedHandler)
+        {
+            // Make sure to only subscribe once.
+            if (_entityChangedToken) { return; }
+
+            // Register for state change.
+            _entityChangedToken = _manager.entityChanged.subscribe(stateChangedHandler);
+        }
+
+        function resetDatabase()
+        {
+            // Re-seed database and refetch data.
+            return $http.get('/breeze/breeze/ReSeed');
+        }
+
+        function saveChanges()
+        {
+            return _manager.saveChanges();
+        }
+        
+        var service = {
+            createEntity: createEntity,
+            getEntities: getEntities,
+            getEntityType: getEntityType,
+            getEntityTypes: getEntityTypes,
+            registerForStateChange: registerForStateChange,
+            resetDatabase: resetDatabase,
+            saveChanges: saveChanges
+        };
+        
+        initialize();
 
         return service;
     }]);
@@ -33,18 +108,17 @@ spa.services.dataService = (function ()
 spa.controllers.admin = (function () {
     'use strict';
 
-    angular.module('app').controller('admin', ['dataService', function admin(dataService)
+    angular.module('app').controller('admin', ['$q', 'dataService', function admin($q, dataService)
     {
-        // All private variables start with a "-".
-        var _entityChangedToken = null;
-        var _entityTypeName = "Employee";
-        var _manager = null;
-
+        // All private variables start with a "_".
+        var _entityTypeName = "Employee"; // Default startpage.
+        
         var vm = this;
         vm.create = function ()
         {
             // Create entity by breeze.
-            var entity = _manager.createEntity(_entityTypeName);
+            var entity = dataService.createEntity(_entityTypeName);
+
             // Show entity to user.
             vm.entities.push(entity);
         };
@@ -70,77 +144,73 @@ spa.controllers.admin = (function () {
         {
             // Refresh content for given entityType.
             _entityTypeName = entityType.shortName;
-            getData(_entityTypeName);
+            refreshGrid();
         };
         vm.reset = function ()
         {
-            // Re-seed database and refetch data.
-            $http.get('/breeze/breeze/ReSeed').then(getData(_entityTypeName)).then(handleResetResult).catch(showError);
+            dataService.resetDatabase().then(refreshGrid).then(showReseedInfo);
         };
         vm.save = function ()
         {
-            _manager.saveChanges().then(handleSaveResult).catch(showError);
+            dataService.saveChanges().then(handleSaveResult).catch(showError);
         };
-
-        function handleStateChange()
+        
+        function refreshGrid()
         {
-            vm.isDirty = true;
-        }
-
-        function getData(entityTypeName)
-        {
-            // Get entities from the server.
-            var query = new breeze.EntityQuery().from(entityTypeName);
-            var resultHandler = new spa.ResultHandler(entityTypeName, handleGetDataResult);
-            return _manager.executeQuery(query).then(resultHandler.handleResult).catch(showError);
+            return dataService.getEntities(_entityTypeName).then(handleGetEntitiesResult).catch(showError);
         }
 
         function getEntityTypes()
         {
-            vm.entityTypes = _manager.metadataStore.getEntityTypes();
+            vm.entityTypes = dataService.getEntityTypes();
         }
 
         function getForeignKeyData(entityTypeName)
         {
-            // Get entities from the server.
-            var query = new breeze.EntityQuery().from(entityTypeName);
-            var resultHandler = new spa.ResultHandler(entityTypeName, handleGetForeignKeyDataResult);
-            return _manager.executeQuery(query).then(resultHandler.handleResult).catch(showError);
+            // Get entities from the server to populate the foreignkey comboboxes.
+            // Use $q.all to pass the given [entityTypeName] and the result of the [dataService.getEntities].
+            return $q.all({ 
+                        entityTypeName: $q.when(entityTypeName),
+                        entities: dataService.getEntities(entityTypeName)
+                    }).then(handleGetForeignKeyDataResult).catch(showError);
         }
 
-        function handleGetDataResult(data)
+        function handleGetForeignKeyDataResult(data)
         {
-            // Get entity fields from metadata.
-            var resultHandler = this;
-            var entityMetaData = _manager.metadataStore.getEntityType(resultHandler.getAdditionalData());
+            var entityTypeName = data.entityTypeName;
+            vm[entityTypeName] = data.entities.results;
+        }
 
-            vm.entityForeignkeyFields = entityMetaData.foreignKeyProperties;
+        function handleGetForeignKeysDataResult(data)
+        {
+            vm.entityDataFields = data.dataProperties;
+            vm.entities = data.entities;
+            vm.isDirty = false;
+        }
+
+        function handleGetEntitiesResult(data)
+        {
+            // We cache the result and set vm.entities at the end of the proces, 
+            // when all foreignkeydata is received, to prevent [ngField] not showing foreignkey data.
+            var entities = data.results;
+
+            // Get metadata for entity.
+            var entityType = dataService.getEntityType(_entityTypeName);
+
+            // Handle foreignkeys
+            vm.entityForeignkeyFields = entityType.foreignKeyProperties;
             var promises = [];
             for (var i = 0, len = vm.entityForeignkeyFields.length; i < len; i += 1)
             {
                 var foreignKey = vm.entityForeignkeyFields[i];
                 promises.push(getForeignKeyData(foreignKey.relatedNavigationProperty.nameOnServer));
             }
-            $q.all(promises).then(function ()
-            {
-                vm.entityDataFields = entityMetaData.dataProperties;
-                // Show the enties from the server.
-                vm.entities = data.results;
-                vm.isDirty = false;
-            });
-        }
 
-        function handleGetForeignKeyDataResult(data)
-        {
-            var resultHandler = this;
-            var entityTypeName = resultHandler.getAdditionalData();
-            vm[entityTypeName] = data.results;
-        }
-
-        function handleResetResult()
-        {
-            vm.isDirty = false;
-            toastr.info("Database re-seeded.");
+            $q.all({
+                foreignkeysData: $q.all(promises),
+                dataProperties: $q.when(entityType.dataProperties),
+                entities: $q.when(entities)
+            }).then(handleGetForeignKeysDataResult);
         }
 
         function handleSaveResult()
@@ -149,26 +219,18 @@ spa.controllers.admin = (function () {
             toastr.info("Changes saved to the server.");
         }
 
-        function initialize()
+        function handleStateChange()
         {
-            // Use camel case for entity properties.
-            breeze.NamingConvention.camelCase.setAsDefault();
-
-            // Configure and create EntityManager (double breeze is needed, because of .
-            _manager = new breeze.EntityManager('/breeze/breeze');
-            _manager.enableSaveQueuing(true);
-            registerForStateChange();
-
-            getData(_entityTypeName).then(getEntityTypes);
+            vm.isDirty = true;
         }
 
-        function registerForStateChange()
+        function initialize()
         {
-            // Make sure to only subscribe once.
-            if (_entityChangedToken) { return; }
+            // Register for "Is dirty" checking.
+            dataService.registerForStateChange(handleStateChange);
 
-            // Register for state change.
-            _entityChangedToken = _manager.entityChanged.subscribe(handleStateChange);
+            // Fill grid.
+            refreshGrid(_entityTypeName).then(getEntityTypes);
         }
 
         function showError(e)
@@ -177,37 +239,23 @@ spa.controllers.admin = (function () {
             toastr.error(e);
         }
 
+        function showReseedInfo()
+        {
+            toastr.info("Database re-seeded.");
+        }
+
         initialize();
     }]);
 })();
 
-
-// Function responisble for supplying additional data to a promise "then" function.
-spa.ResultHandler = function (additionalData, handleResultFunc) {
-    var self = this;
-    var _additionalData = additionalData;
-    var _handleResultFunc = handleResultFunc;  
-
-    self.getAdditionalData = function () {
-        return _additionalData;
-    };
-
-    self.handleResult = function (data)
-    {
-        _handleResultFunc.call(self, data);
-    };
-
-    return self;
-};
-
-// Angular directive [ngField] responsible for generating grid cell controls.
-spa.app.directive('ngField',['$compile', function ($compile) {
-
+// Angular directive [spaField] responsible for generating grid cell controls.
+spa.app.directive('spaField', ['$compile', function ($compile)
+{
     var directive = {
-        restrict: 'A', /* restrict this directive to elements */
-
+        restrict: 'A', /* Restrict this directive to attributes.  */
+        replace: true, /* The given element will be replaced in the link function. */
         link: function ($scope, element, attrs) {
-            var html = '<input ng-disabled="{{vm.isKeyField(prop)}}" type="text" ng-model="entity[prop.name]">';
+            var html = '<input ng-disabled="{{vm.isKeyField(prop)}}" type="text" data-ng-model="entity[prop.name]" data-z-validate>';
 
             if ($scope.prop.relatedNavigationProperty) {
                 var relatedTableName = $scope.prop.relatedNavigationProperty.nameOnServer;
@@ -220,8 +268,10 @@ spa.app.directive('ngField',['$compile', function ($compile) {
             }
 
             var compiled = $compile(html)($scope);
+            var span = compiled[0].parentNode.children[1];
             element.replaceWith(compiled);
             element = compiled;
+            element.parent().append(span);
         }
     };
     
