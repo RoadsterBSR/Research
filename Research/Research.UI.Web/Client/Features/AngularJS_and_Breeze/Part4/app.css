@@ -95,6 +95,23 @@ div.toast-message {
 }
 
 /* Breeze overwrites */
+
+.icon-asterisk-invalid {
+    color: red;
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.z-required {
+    margin-left: 2px;
+    margin-right: 4px;
+}
+
+input + .z-decorator > .z-required {
+    top: 0;
+}
+
 input:invalid, select:invalid {
     border: red solid 1px !important;
     border-left: 1px solid red !important;
