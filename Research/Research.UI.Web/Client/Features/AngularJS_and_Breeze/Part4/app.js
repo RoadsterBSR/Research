@@ -17,9 +17,6 @@ spa.app = (function () {
         cfg.zValidateTemplate = '<span class="invalid"><i class="icon-warning-sign icon-white"></i>%error%</span>';
     }]);
 
-    //Configure the Breeze Validation Directive for bootstrap 2
-    
-
     return app;
 })();
 
@@ -254,7 +251,9 @@ spa.app.directive('spaField', ['$compile', function ($compile)
     var directive = {
         restrict: 'A', /* Restrict this directive to attributes.  */
         replace: true, /* The given element will be replaced in the link function. */
-        link: function ($scope, element, attrs) {
+        link: function ($scope, element, attrs)
+        {
+            // The data-z-validate directive will append a [span class="z-decorator"] to the following [input] element, by using the jquery "append" function.
             var html = '<input ng-disabled="{{vm.isKeyField(prop)}}" type="text" data-ng-model="entity[prop.name]" data-z-validate>';
 
             if ($scope.prop.relatedNavigationProperty) {
@@ -267,10 +266,18 @@ spa.app.directive('spaField', ['$compile', function ($compile)
                 html = '<input kendo-mobile-switch k-on-label="\'YES\'" k-off-label="\'NO\'" />';
             }
 
+            // Apply scope to the created html fragment.
             var compiled = $compile(html)($scope);
+
+            // Get the [<span class="z-decorator"] appended to the input element by the z-validate directive.
             var span = compiled[0].parentNode.children[1];
+
+            // The following 2 lines will only add the input element to the DOM and not the [span class="z-decorator"], that is added by the z-validate directive.
             element.replaceWith(compiled);
             element = compiled;
+
+            // Add the [span class="z-decorator"] to the current parent element of the input element.
+            element.parent().append(span);
             element.parent().append(span);
         }
     };
