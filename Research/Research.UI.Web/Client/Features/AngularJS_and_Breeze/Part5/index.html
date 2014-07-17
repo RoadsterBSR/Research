@@ -53,39 +53,42 @@
 </head>
 <body>
     <div class="spa-splash" ng-cloak><div>Loading data...</div></div>
-    <div class="spa-page container" data-ng-controller="admin as vm" ng-cloak>
-        <div class="spa-page-sidebar">
-            <div>Tables</div>
-            <div ng-repeat="entityType in vm.entityTypes"><a class="spa-action-link" ng-click="vm.refresh(entityType)">{{ entityType.shortName }}</a></div>
-        </div>
-        <div class="spa-page-content">
-            <div class="spa-grid-toolbar">
-                <a class="spa-action-link" ng-click="vm.save()">save</a> |
-                <a class="spa-action-link" ng-click="vm.reset()">reset</a> |
-                <a class="spa-action-link" ng-click="vm.create()">create</a>
-                <i class="fa fa-exclamation-circle"
-                   title="Some data has change. Press save to save the changes to the server!"
-                   ng-show="vm.isDirty"></i>
+    <div class="spa-page" data-ng-controller="admin as vm" ng-cloak>
+        <div><div spa-loader>Executing ajax call...</div></div>
+        <div class="container">
+            <div class="spa-page-sidebar">
+                <div>Tables</div>
+                <div ng-repeat="entityType in vm.entityTypes"><a class="spa-action-link" ng-click="vm.refresh(entityType)">{{ entityType.shortName }}</a></div>
             </div>
-            <table class="spa-grid">
-                <thead>
-                    <tr>
-                        <th> </th>
-                        <th ng-repeat='(key, prop) in vm.entityDataFields'>{{ prop.name }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="entity in vm.entities">
-                        <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
-                        <td ng-repeat='(key, prop) in vm.entityDataFields'>
-                            <div spa-field></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="spa-page-content">
+                <div class="spa-grid-toolbar">
+                    <a class="spa-action-link" ng-click="vm.save()">save</a> |
+                    <a class="spa-action-link" ng-click="vm.reset()">reset</a> |
+                    <a class="spa-action-link" ng-click="vm.create()">create</a>
+                    <i class="fa fa-exclamation-circle"
+                       title="Some data has change. Press save to save the changes to the server!"
+                       ng-show="vm.isDirty"></i>
+                </div>
+                <table class="spa-grid">
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th ng-repeat='(key, prop) in vm.entityDataFields'>{{ prop.name }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="entity in vm.entities">
+                            <td><a class="spa-action-link" ng-click="vm.delete(entity)">delete</a></td>
+                            <td ng-repeat='(key, prop) in vm.entityDataFields'>
+                                <div spa-field></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
+    
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="../../../Libraries/FontAwesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="../../../Libraries/Toastr/toastr.min.css" />

@@ -33,6 +33,7 @@ namespace Research.UI.Web.Server.Controllers
         [HttpGet]
         public IQueryable<Employee> Employee()
         {
+            System.Threading.Thread.Sleep(3000);
             return _contextProvider.Context.Employees;
         }
 

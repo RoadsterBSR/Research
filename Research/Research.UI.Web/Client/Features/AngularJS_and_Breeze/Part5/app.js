@@ -1,6 +1,7 @@
 ﻿// Use namespaces to prevent pollution of the global namespace.
 var spa = spa || {};
 spa.controllers = spa.controllers || {};
+spa.factories = spa.factories || {};
 spa.services = spa.services || {};
 
 // Angular module [app].
@@ -15,9 +16,143 @@ spa.app = (function () {
     {
         // Custom template with warning icon before the error message
         cfg.zValidateTemplate = '<span class="invalid"><i class="icon-warning-sign icon-white"></i>%error%</span>';
+    }]).config(['$httpProvider', function ($httpProvider)
+    {
+
+        /*
+         Response interceptors are stored inside the 
+         $httpProvider.responseInterceptors array.
+         To register a new response interceptor is enough to add 
+         a new function to that array.
+        */
+
+        $httpProvider.responseInterceptors.push(['$q', function ($q)
+        {
+            var test = '';
+            // More info on $q: docs.angularjs.org/api/ng.$q
+            // Of course it's possible to define more dependencies.
+
+            return function (promise)
+            {
+                test = '';
+                /*
+                 The promise is not resolved until the code defined
+                 in the interceptor has not finished its execution.
+                */
+
+                return promise.then(function (response)
+                {
+
+                    // response.status >= 200 && response.status <= 299
+                    // The http request was completed successfully.
+
+                    /*
+                     Before to resolve the promise 
+                     I can do whatever I want!
+                     For example: add a new property 
+                     to the promise returned from the server.
+                    */
+
+                    response.data.extra = 'Interceptor strikes back';
+
+                    // ... or even something smarter.
+
+                    /*
+                     Return the execution control to the 
+                     code that initiated the request.
+                    */
+
+                    return response;
+
+                }, function (response)
+                {
+
+                    // The HTTP request was not successful.
+
+                    /*
+                     It's possible to use interceptors to handle 
+                     specific errors. For example:
+                    */
+
+                    if (response.status === 401)
+                    {
+
+                        // HTTP 401 Error: 
+                        // The request requires user authentication
+
+                        response.data = {
+                            status: false,
+                            description: 'Authentication required!'
+                        };
+
+                        return response;
+
+                    }
+
+                    /*
+                     $q.reject creates a promise that is resolved as
+                     rejectedwith the specified reason. 
+                     In this case the error callback will be executed.
+                    */
+
+                    return $q.reject(response);
+
+                });
+
+            };
+
+        }]);
+
     }]);
 
     return app;
+})();
+
+// Angular service [dataService] responsible for the interaction with the server.
+spa.factories.requestNotificationChannel = (function ()
+{
+    'use strict';
+
+    angular.module('app').factory('requestNotificationChannel', ['$rootScope', function ($rootScope)
+    {
+        // private notification messages
+        var _START_REQUEST_ = '_START_REQUEST_';
+        var _END_REQUEST_ = '_END_REQUEST_';
+
+        // publish start request notification
+        var requestStarted = function ()
+        {
+            $rootScope.$broadcast(_START_REQUEST_);
+        };
+        // publish end request notification
+        var requestEnded = function ()
+        {
+            $rootScope.$broadcast(_END_REQUEST_);
+        };
+        // subscribe to start request notification
+        var onRequestStarted = function ($scope, handler)
+        {
+            $scope.$on(_START_REQUEST_, function (event)
+            {
+                handler();
+            });
+        };
+        // subscribe to end request notification
+        var onRequestEnded = function ($scope, handler)
+        {
+            $scope.$on(_END_REQUEST_, function (event)
+            {
+                handler();
+            });
+        };
+
+        return {
+            requestStarted: requestStarted,
+            requestEnded: requestEnded,
+            onRequestStarted: onRequestStarted,
+            onRequestEnded: onRequestEnded
+        };
+    }]);
 })();
 
 // Angular service [dataService] responsible for the interaction with the server.
