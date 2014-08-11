@@ -1,0 +1,38 @@
+﻿/* Reset */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code, textarea
+del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, keygen
+form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, select, button
+figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, span, input {
+    border: 0;              /* Prevent unnecessary white space. */
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
+    color: rgb(50, 50, 50);
+    font-family: Arial, Helvetica, sans-serif; /* For know use default fonts used on google.com stackoverflow.com, telerik.com etc. */
+    font-size: 13px;
+    margin: 0;              /* Prevent unnecessary white space. */
+    outline: 0;             /* Prevent unnecessary white space. */
+    padding: 0;             /* Prevent unnecessary white space. */
+    vertical-align: baseline;
+}
+
+a {
+    cursor: pointer;
+}
+
+a.spa-action-link {
+    color: #428bca;
+    text-decoration: none;
+}
+
+a.spa-action-link:hover, a.spa-action-link:focus {
+    color: #2a6496;
+    text-decoration: underline;
+}
+
+.spa-page { 
+    height: 100%;       /* Full screen single page app. */
+    max-height: 100%;   /* Full screen single page app. */
+    padding: 20px;
+    position: relative;
+}

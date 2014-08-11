@@ -157,6 +157,9 @@
     <Content Include="Client\Features\Spa\Crud\crud.html" />
     <Content Include="Client\Features\Spa\Crud\crud.js" />
     <Content Include="Client\Features\Spa\index.html" />
+    <Content Include="Client\Features\Vanilla\app.css" />
+    <Content Include="Client\Features\Vanilla\app.js" />
+    <Content Include="Client\Features\Vanilla\index.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.html" />
     <Content Include="Client\Features\Vanilla\UnitTests.js" />
     <Content Include="Client\Features\Vanilla\vanilla.js" />
