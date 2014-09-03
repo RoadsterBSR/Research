@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Vanilla JavaScript.</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+</head>
+<body>
+    <div class="spa-page">
+        <button onclick="rli.app.onExecuteClick()">Execute</button>
+    </div>
+    <script type="text/javascript">
+        // Use a namespace to prevent pollution of the global namespace.
+        var rli = rli || {};
+
+        // Define application root object.
+        rli.app = (function ()
+        {
+            'use strict';
+
+            var self = {};
+
+            self.makeXmlHttpRequest = function ()
+            {
+                var request = new XMLHttpRequest(); // When "var" is removed from this line, an error is thrown: Uncaught ReferenceError: request is not defined.
+                request.open('GET', '/test/test.html', true);
+
+                request.onload = function ()
+                {
+                    if (this.status >= 200 && this.status < 400)
+                    {
+                        // Success!
+                        var data = JSON.parse(this.response);
+                        console.log(data);
+                    } else
+                    {
+                        debugger;
+                        // We reached our target server, but it returned an error.
+                        console.log("Error status not between 200 and 400.");
+                    }
+                };
+
+                //request.onerror = function (e)
+                //{
+                //    // There was a connection error of some sort.
+                //    debugger;
+                //    console.log(e);
+                //};
+
+                request.send();
+            };
+
+            self.onExecuteClick = function ()
+            {
+                self.makeXmlHttpRequest();
+            };
+
+            self.start = function ()
+            {
+                // Define global exception handler.
+                window.onerror = function (message, file, line, col, error)
+                {
+                    debugger;
+                    var stacktrace = '\nStacktrace:\n'
+                    if (error && error.stack)
+                    {
+                        
+                        stacktrace = stacktrace + error.stack;
+                        console.log(message, "from", stacktrace);
+                    }
+                    
+                };
+            };
+
+            return self;
+        })();
+
+        // Start the application.
+        rli.app.start();
+    </script>
+</body>
+</html>
