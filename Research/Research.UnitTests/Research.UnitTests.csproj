@@ -54,6 +54,7 @@
     <Compile Include="CodeGeneration\VsSolutionTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResearchTester.cs" />
+    <Compile Include="ResearchTemplateTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Research.Core\Research.Core.csproj">
