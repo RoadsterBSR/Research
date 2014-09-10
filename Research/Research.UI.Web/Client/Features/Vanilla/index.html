@@ -9,13 +9,77 @@
 <body>
     <div class="spa-page">
         <h1>Vanilla JavaScript</h1>
-        <button onclick="spa.app.onExecuteClick()">Execute</button>
+        <div id="cmp-details" style="position: absolute;">Details 2</div>
     </div>
     
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="app.css" />
         
     <!-- Scripts -->
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript">
+        // Use namespaces to prevent pollution of the global namespace.
+        var spa = spa || {};
+
+        spa.app = (function ()
+        {
+            'use strict';
+
+            var self = {};
+
+            self.initializeGlobalExceptionHandler = function ()
+            {
+                window.onerror = function (message, file, line, col, error)
+                {
+                    console.log(message, "from", error.stack);
+                };
+            };
+
+            self.start = function ()
+            {
+                spa.app.initializeGlobalExceptionHandler();
+
+                var offSet = getOffSetBasedOnCollapseStatus(20, 0);
+                adjustTop(document.getElementById('cmp-details'), offSet);
+            };
+
+            function adjustDetailsTopOffset(noContentId, contentId, value)
+            {
+                if (noContentId && contentId && value)
+                {
+
+                }
+            }
+
+            function adjustTop(element, value)
+            {
+                if (element && element.offsetTop && value)
+                {
+                    element.style.top = (element.offsetTop + value) + 'px';
+                }
+            }
+
+            
+
+            // Status: 0 = collapsed, 1 = expanded;
+            // When status = 0, then offSet should be positive.
+            // When status = 1, then offSet should be negative.
+            function getOffSetBasedOnCollapseStatus(offSet, status)
+            {
+                var newOffSet = Math.abs(offSet);
+
+                if (offSet && status === 1)
+                {
+                    newOffSet = -newOffSet;
+                }
+
+                return newOffSet;
+            }
+
+            return self;
+        })();
+        spa.app.start();
+    </script>
 </body>
 </html>
