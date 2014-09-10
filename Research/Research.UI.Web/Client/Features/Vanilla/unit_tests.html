@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit Test page for vanilla js code.</title>
+    <link rel="stylesheet" type="text/css" href="../../Libraries/Jasmine/jasmine.css">
+</head>
+<body>
+    <!-- Jasmine -->
+    <script type="text/javascript" src="../../Libraries/Jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="../../Libraries/Jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="../../Libraries/Jasmine/boot.js"></script>
+
+    <!-- Code under test -->
+    <script type="text/javascript">
+        var vanilla = (function ()
+        {
+            var self = {};
+
+            self.isNullOrUndefined = function (arg1)
+            {
+                if (arg1 == null) { throw new Error("Variable [arg1] is null or undefined."); }
+            };
+
+            return self;
+        })();
+    </script>
+
+    <!-- Tests -->
+    <script type="text/javascript">
+        var vanilla = vanilla || {};
+
+        describe("isNullOrUndefined", function ()
+        {
+
+            it('It should fail on undefined, with correct message.', function ()
+            {
+                expect(function ()
+                {
+                    vanilla.isNullOrUndefined();
+                }).toThrowError("Variable [arg1] is null or undefined.");
+            });
+
+            it('It should fail on null, with correct message.', function ()
+            {
+                expect(function ()
+                {
+                    var test = null;
+                    vanilla.isNullOrUndefined(test);
+                }).toThrowError("Variable [arg1] is null or undefined.");
+            });
+        });
+    </script>
+</body>
+</html>
