@@ -67,6 +67,7 @@
     <Compile Include="Components\FileSystemTester.cs" />
     <Compile Include="Extensions\AssemblyExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Research\TemplateTester.cs" />
     <Compile Include="Research\ResearchTester.cs" />
   </ItemGroup>
   <ItemGroup>
