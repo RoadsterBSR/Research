@@ -1,43 +1,27 @@
 ﻿
 namespace Research.UnitTests
 {
-    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using System.IO;
 
     [TestClass]
     public class ResearchTester
     {
         [TestMethod]
-        public void TestWithoutTiming()
+        public void ShouldTrimLineTest()
         {
-            
-        }
+            string line = "1st;2nd;;;;;;;;;;;";
+            string trimmendLine = line.TrimEnd(';');
+            Assert.AreEqual("1st;2nd", trimmendLine);
 
-        [TestMethod]
-        public void TestWithTiming()
-        {
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
-            
-            for (int i = 0; i < 1000000; i++)
-            {
-                // Call function:
-            }
+            line = "1st;2nd";
+            trimmendLine = line.TrimEnd(';');
+            Assert.AreEqual("1st;2nd", trimmendLine);
 
-            watch.Stop();
-            System.Console.WriteLine(watch.Elapsed.TotalMilliseconds);
-        }
+            string delimeter = ";";
+            line = "1st;2nd;;;;;;;;;;;";
+            line = line.TrimEnd(delimeter.ToCharArray());
+            Assert.AreEqual("1st;2nd", line);
 
-        public async Task<string> ReadAllTextAsync(string path)
-        {
-            string result = await Task.Factory.StartNew(() => { return File.ReadAllText(path); });
-            return result;
         }
     }
 }

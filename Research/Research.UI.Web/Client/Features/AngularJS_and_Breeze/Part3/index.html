@@ -6,15 +6,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 
-    <!-- Libraries -->
-    <link rel="stylesheet" type="text/css" href="../../../Libraries/FontAwesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../Libraries/Toastr/toastr.min.css" />
+    <!-- All external resources are moved to the bottom of the page, to allow direct rendering of the [splash screen]. -->
+    <!-- Only the styling for the [loader / splash screen] is included in the head. -->
+    <style type=text/css>
+        html, body {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
+            height: 100%;           /* Full screen single page app. */
+            margin: 0;              /* Prevent unnecessary white space. */
+            max-height: 100%;       /* Full screen single page app. */
+            outline: 0;             /* Prevent unnecessary white space. */
+            padding: 0;             /* Prevent unnecessary white space. */
+        }
 
-    <!-- App -->
-    <link rel="stylesheet" type="text/css" href="app.css" />
+        body {
+            padding: 20px;
+        }
+
+        div.spa-splash {
+            display: none;
+        }
+
+        div.spa-splash, div.spa-splash > div {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
+            height: 100%;           /* Full screen single page app. */
+            max-height: 100%;       /* Full screen single page app. */
+            padding: 20px;            
+        }
+
+        div.spa-splash > div {
+            border: 1px solid rgb(212, 212, 212);
+            padding: 10px;
+        }
+
+        [ng-cloak].spa-splash {
+          display: block !important;
+        }
+
+        [ng-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="spa-page container" data-ng-controller="admin as vm">
+    <div class="spa-splash" ng-cloak><div>Loading data...</div></div>
+    <div class="spa-page container" data-ng-controller="admin as vm" ng-cloak>
         <div class="spa-page-sidebar">
             <div>Tables</div>
             <div ng-repeat="entityType in vm.entityTypes"><a class="spa-action-link" ng-click="vm.refresh(entityType)">{{ entityType.shortName }}</a></div>
@@ -25,8 +64,8 @@
                 <a class="spa-action-link" ng-click="vm.reset()">reset</a> |
                 <a class="spa-action-link" ng-click="vm.create()">create</a>
                 <i class="fa fa-exclamation-circle"
-                    title="Some data has change. Press save to save the changes to the server!"
-                    ng-show="vm.isDirty"></i>
+                   title="Some data has change. Press save to save the changes to the server!"
+                   ng-show="vm.isDirty"></i>
             </div>
             <table class="spa-grid">
                 <thead>
@@ -48,17 +87,33 @@
     </div>
 
     <!-- Libraries -->
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/FontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Libraries/Toastr/toastr.min.css" />
+
+    <!-- App -->
+    <link rel="stylesheet" type="text/css" href="app.css" />
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="../../../Libraries/jQuery/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="../../../Libraries/Angular/angular.js"></script>
+
+    <!-- Kendo -->
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.common.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.metro.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.kendostatic.com/2014.2.625/styles/kendo.metro.mobile.min.css" />
+    <script type="text/javascript" src="//cdn.kendostatic.com/2014.2.625/js/kendo.all.min.js"></script>
+
+    <!-- Breeze -->
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.debug.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.angular.js"></script>
 
-    <!-- Add toastr which needs jQuery (Breeze does not need jQuery) -->
-    <script type="text/javascript" src="../../../Libraries/jQuery/jquery-2.1.1.js"></script>
+    <!-- Add toastr which needs jQuery (Breeze does not need jQuery). -->
     <script type="text/javascript" src="../../../Libraries/Toastr/toastr.js"></script>
     <script type="text/javascript" src="../../../Libraries/Moment/moment.js"></script>
     <script type="text/javascript" src="../../../Libraries/Spin/spin.js"></script>
 
-    <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q)-->
+    <!-- Add breeze.savequeuing which needs Q (Breeze does not need Q). -->
     <script type="text/javascript" src="../../../Libraries/Q/q.min.js"></script>
     <script type="text/javascript" src="../../../Libraries/Breeze/breeze.savequeuing.js"></script>
 

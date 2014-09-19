@@ -2,68 +2,111 @@
 namespace Research.EndToEndTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Newtonsoft.Json;
+    using Research.Core.Components;
+    using Research.UI.Web.Server.Model;
+    using Research.UI.Web.Validation.EntityValidators;
     using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;    
 
     [TestClass]
     public class ResearchTester
     {
-        
         [TestMethod]
-        public void Test()
+        public void TestWithTiming()
         {
-            Reliable_set_window_to_forground();
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+
+            int times = 1;
+            for (int i = 0; i < times; i++)
+            {
+                // Call function:
+            }
+
+            watch.Stop();
+            System.Console.WriteLine(watch.Elapsed.TotalMilliseconds);
+
+            // Only fail, when exception occurs.
             Assert.IsTrue(true);
         }
 
-        public void Reliable_set_window_to_forground()
+        [TestMethod]
+        public void TestWithoutTiming()
         {
-            Process[] processes = Process.GetProcesses();
-            foreach (Process proc in processes)
+            GenerateSprocs();
+
+            // Only fail, when exception occurs.
+            Assert.IsTrue(true);
+        }
+
+        public void GenerateSprocs()
+        {
+            string tepmlate = @"
+if object_id('dbo.{0}') is not null
+begin
+	drop procedure dbo.{0}
+end
+go
+
+create procedure dbo.{0}
+	@ProductieOrder bigint
+as
+begin
+	set nocount on
+
+	
+end
+go
+
+";
+
+            string[] names = {
+"Afkeur7060",
+"AfkeurRegulier",
+"AfkeurVisual",
+"DataTracibilityImport",
+"FeatureImport",
+"FeaturePropertiesImport",
+"FeatureRunDataImport",
+"PartImport",
+"RoutineImport",
+"BC3D1",
+"BC3D2",
+"BC7060",
+"BCPMA",
+"BCVisual",
+"EC3D1",
+"EC3D2",
+"EC7060",
+"ECPMA",
+"ECQV",
+"ECVisual",
+"Meetgegevens",
+"Meetgegevens7060",
+"MeetgegevensVisual",
+"BCQV"
+                             };
+
+            var fs = new FileSystem();
+            string exportFolder = @"C:\Temp\";
+            foreach (string name in names)
             {
-                if (ProcessIsNotepad(proc))
+                var file = new FileInfoDto
                 {
-                    ActivateWindow(proc.MainWindowHandle);
-                }
-            }
-        }
-
-        public bool ProcessIsNotepad(Process proc) 
-        {
-            return proc.MainWindowTitle.EndsWith("Notepad", StringComparison.InvariantCultureIgnoreCase);
-        }
-        
-        private const int ALT = 0xA4;
-        private const int EXTENDEDKEY = 0x1;
-        private const int KEYUP = 0x2;
-        private const int SHOW_MAXIMIZED = 3;
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-        [DllImport("user32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        
-        public static void ActivateWindow(IntPtr mainWindowHandle)
-        {
-            // Guard: check if window already has focus.
-            if (mainWindowHandle == GetForegroundWindow()) return;
-
-            // Show window maximized.
-            ShowWindow(mainWindowHandle, SHOW_MAXIMIZED);
-            
-            // Simulate an "ALT" key press.
-            keybd_event((byte)ALT, 0x45, EXTENDEDKEY | 0, 0);
-                        
-            // Simulate an "ALT" key release.
-            keybd_event((byte)ALT, 0x45, EXTENDEDKEY | KEYUP, 0);
-
-            // Show window in forground.
-            SetForegroundWindow(mainWindowHandle);
+                    Path = "dbo." + Path.Combine(exportFolder, name + ".sql")
+                };
+                file.Content = string.Format(tepmlate, name);
+                Task generateFilesTask = fs.GenerateFileAsync(file);
+                generateFilesTask.Wait();
+            }      
         }
     }
 }

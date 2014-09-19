@@ -291,10 +291,11 @@ begin
         public void AddTextObjectHeader(StringBuilder contentBuilder, string name, string typeName)
         {
             contentBuilder.AppendFormat(@"
-if object_id('{0}') is null
+if object_id('{0}') is not null
 begin
     drop {1} {0}
 end
+go
 ", name, typeName);
         }
 

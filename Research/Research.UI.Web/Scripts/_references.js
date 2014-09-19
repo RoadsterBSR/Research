@@ -7,8 +7,29 @@
 /// <reference path="../client/features/spa/app.js" />
 /// <reference path="../client/features/spa/breeze.extensions.js" />
 /// <reference path="../client/features/tests/unittests.js" />
+/// <reference path="../client/features/vanilla/app.js" />
 /// <reference path="../client/features/vanilla/unittests.js" />
 /// <reference path="../client/features/vanilla/vanilla.js" />
+/// <reference path="angular-animate.js" />
+/// <reference path="angular-cookies.js" />
+/// <reference path="angular-loader.js" />
+/// <reference path="angular-mocks.js" />
+/// <reference path="angular-resource.js" />
+/// <reference path="angular-route.js" />
+/// <reference path="angular-sanitize.js" />
+/// <reference path="angular-scenario.js" />
+/// <reference path="angular-touch.js" />
+/// <reference path="angular.js" />
+/// <reference path="breeze.directives.js" />
+/// <reference path="moment-with-locales.js" />
+/// <reference path="moment.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part1/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part2/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part3/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part4/app.js" />
+/// <reference path="../client/features/angularjs_and_breeze/part5/app.js" />
+/// <reference path="../client/features/kendo/confirm/app.js" />
+/// <reference path="../client/features/spa/crud/crud.js" />
 /// <reference path="../client/libraries/angular/angular-animate.js" />
 /// <reference path="../client/libraries/angular/angular-cookies.js" />
 /// <reference path="../client/libraries/angular/angular-kendo.js" />
@@ -42,11 +63,6 @@
 /// <reference path="../client/libraries/q/q.js" />
 /// <reference path="../client/libraries/spin/spin.js" />
 /// <reference path="../client/libraries/toastr/toastr.js" />
-/// <reference path="../client/features/angularjs_and_breeze/part1/app.js" />
-/// <reference path="../client/features/angularjs_and_breeze/part2/app.js" />
-/// <reference path="../client/features/angularjs_and_breeze/part3/app.js" />
-/// <reference path="../client/features/kendo/confirm/app.js" />
-/// <reference path="../client/features/spa/crud/crud.js" />
 /// <reference path="../client/libraries/kendo/js/jquery.min.js" />
 /// <reference path="../client/libraries/kendo/js/kendo.all.min.js" />
 /// <reference path="../client/libraries/kendo/js/kendo.autocomplete.min.js" />
@@ -473,4 +489,7 @@
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
  
+ 
+ 
+ / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

@@ -1,11 +1,11 @@
 ﻿
 namespace Research.UI.Web.Server.Model
 {
-    using Research.UI.Web.Validation.FieldValidators;
     using Research.UI.Web.Validation.EntityValidators;
+    using Research.UI.Web.Validation.FieldValidators;
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System;
 
     [DeclarationValidator(MaxDeclarationTotal = 10000)]
     public class Declaration
