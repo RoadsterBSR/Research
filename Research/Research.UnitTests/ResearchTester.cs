@@ -6,6 +6,14 @@ namespace Research.UnitTests
     [TestClass]
     public class ResearchTester
     {
+
+        [TestMethod]
+        public void Test()
+        {
+
+
+        }
+
         [TestMethod]
         public void ShouldTrimLineTest()
         {

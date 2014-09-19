@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Layout</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <style>
+        /* Reset */
+        html, body, div, textarea {
+            border: 0;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            box-sizing: border-box;         /* For IE and modern versions of Chrome */
+            -moz-box-sizing: border-box;    /* For Firefox                          */
+            -webkit-box-sizing: border-box; /* For Safari                           */
+        }
+
+        html, body {
+            position: relative;
+            height: 100%;       /* Full screen single page app. */
+            max-height: 100%;   /* Full screen single page app. */
+        }      
+
+        .c-mfs-notes {
+            border: 1px solid gray;
+    		position: absolute;
+            top: 100px;
+            bottom: 20px;
+            right: 20px;
+            left: 300px;
+    	}
+
+        .c-mfs-notes-rows {
+            border: 1px solid #4cff00;
+            position: absolute;
+            width: 100%; /* Is needed, because absolute positioned elements have no height and width. */
+        }
+
+        .c-mfs-notes-row1 {
+            top: 0;
+            height: 24px;
+        }
+
+        .c-mfs-notes-row2 {
+            bottom: 67%;
+            top: 24px;
+        }
+
+        .c-mfs-notes-row3 {
+            bottom: 33%;
+            top: 33%;
+        }
+
+        .c-mfs-notes-row4 {
+            bottom: 0;
+            top: 67%;
+        }
+
+        .c-mfs-notes-row-header {
+            border: 1px solid #4cff00;
+            color: #164692;
+            font-family: Verdana;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            width: 100%; /* Is needed, because absolute positioned elements have no height and width. */
+        }
+
+        div.c-mfs-notes-row-content {
+            color: #253741;
+            font-family: Verdana;
+            font-weight: inherit;
+            border: 1px solid #ff0000;
+            bottom: 0;
+            position: absolute;
+            resize: none;
+            top: 32px;
+            width: 100%; /* Is needed, because absolute positioned elements have no height and width. */
+        }
+    </style>
+</head>
+<body>
+    <div class="c-mfs-notes">
+        <div class="c-mfs-notes-rows c-mfs-notes-row1">test</div>
+        <div class="c-mfs-notes-rows c-mfs-notes-row2">
+            <div class="c-mfs-notes-row-header">Algemene aantekeningen</div>
+            <div class="c-mfs-notes-row-content">
+                <textarea style="position: absolute; width: 100%; height: 100%;"></textarea>
+            </div>
+        </div>
+        <div class="c-mfs-notes-rows c-mfs-notes-row3">
+            <div class="c-mfs-notes-row-header">Professionele aantekeningen</div>
+            <div class="c-mfs-notes-row-content">
+                <textarea style="position: absolute; width: 100%; height: 100%;"></textarea>
+            </div>
+        </div>
+        <div class="c-mfs-notes-rows c-mfs-notes-row4" style="margin-bottom: 50px;">
+            <div class="c-mfs-notes-row-header">Persoonlijke aantekeningen</div>
+            <div class="c-mfs-notes-row-content">
+                <textarea style="position: absolute; width: 100%; height: 100%;"></textarea>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 10px; right: 10px;padding-bottom: 4px; padding-top: 4px;">Bewaar</div>
+    </div>
+    <!-- Scripts -->
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript">
+        var spa = spa || {};
+        var spa = (function () {
+            // Log unhandled exceptions to the console.
+            function initializeGlobalExceptionHandler() {
+                window.onerror = function (message, file, line, col, error) {
+                    console.log(message, "from", error.stack);
+                };
+            }
+
+            function start() {
+                initializeGlobalExceptionHandler();
+            }
+
+            return {
+                start: start
+            };
+        })();
+        spa.start();
+    </script>
+</body>
+</html>

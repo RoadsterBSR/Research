@@ -1,122 +1,91 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Vanilla JavaScript</title>
+    <title>Unit tests</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 </head>
 <body>
-    <div class="spa-page">
-        <h1>Vanilla JavaScript</h1>
-        <div id="cmp-details" style="position: absolute;">Details 2</div>
+    <div>
+        <h1>Unit tests</h1>
     </div>
-    
-    <!-- Styles -->
-    <style type="text/css">
-        /* Reset */
-        html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code, textarea
-        del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, keygen
-        form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, select, button
-        figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, span, input {
-            border: 0;              /* Prevent unnecessary white space. */
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box; /* Border boxing is used, so the padding, margin and borders are within the width and height of the element. */
-            color: rgb(50, 50, 50);
-            font-family: Arial, Helvetica, sans-serif; /* For know use default fonts used on google.com stackoverflow.com, telerik.com etc. */
-            font-size: 13px;
-            margin: 0;              /* Prevent unnecessary white space. */
-            outline: 0;             /* Prevent unnecessary white space. */
-            padding: 0;             /* Prevent unnecessary white space. */
-            vertical-align: baseline;
-        }
-
-        a {
-            cursor: pointer;
-        }
-
-        a.spa-action-link {
-            color: #428bca;
-            text-decoration: none;
-        }
-
-        a.spa-action-link:hover, a.spa-action-link:focus {
-            color: #2a6496;
-            text-decoration: underline;
-        }
-
-        .spa-page { 
-            height: 100%;       /* Full screen single page app. */
-            max-height: 100%;   /* Full screen single page app. */
-            padding: 20px;
-            position: relative;
-        }
-    </style>
-        
+            
     <!-- Scripts -->
     <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
     <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
     <script type="text/javascript">
-        var spa = spa || {};
-        spa.app = (function ()
+
+        // Application
+        var runner = (function ()
         {
-            'use strict';
-
-            var self = {};
-
-            self.initializeGlobalExceptionHandler = function ()
-            {
-                window.onerror = function (message, file, line, col, error)
-                {
-                    console.log(message, "from", error.stack);
-                };
+            // Log unhandled exceptions to the console.
+            window.onerror = function (message, file, line, col, error) {
+                console.log(message, "from", error.stack);
             };
-
-            self.start = function ()
-            {
-                spa.app.initializeGlobalExceptionHandler();
-
-                var offSet = getOffSetBasedOnCollapseStatus(20, 0);
-                adjustTop(document.getElementById('cmp-details'), offSet);
-            };
-
-            function adjustDetailsTopOffset(noContentId, contentId, value)
-            {
-                if (noContentId && contentId && value)
-                {
-
-                }
-            }
-
-            function adjustTop(element, value)
-            {
-                if (element && element.offsetTop && value)
-                {
-                    element.style.top = (element.offsetTop + value) + 'px';
-                }
-            }
-
             
+            function srcContainsYellow_UnitTest() {
+                var actual = srcContainsYellow('');
+                ut.assert.areEqual(false, actual);
+                actual = srcContainsYellow(null);
+                ut.assert.areEqual(false, actual);
+                actual = srcContainsYellow('sdafkjhdskjlds sdklfsdkl Yellow sdfkjdsfljkd');
+                ut.assert.areEqual(true, actual);
+            };
 
-            // Status: 0 = collapsed, 1 = expanded;
-            // When status = 0, then offSet should be positive.
-            // When status = 1, then offSet should be negative.
-            function getOffSetBasedOnCollapseStatus(offSet, status)
-            {
-                var newOffSet = Math.abs(offSet);
+            function srcContainsYellow(src) {
+                return (Boolean(src) && src.toLowerCase().indexOf('yellow') >= 0);
+            }
 
-                if (offSet && status === 1)
-                {
-                    newOffSet = -newOffSet;
+            function getNotesToggleImageSource_UnitTest() {
+                var src = getNotesToggleImageSource(0, 0);
+                ut.assert.areEqual('../Images/collapse.gif', src);
+                src = getNotesToggleImageSource(0, 1);
+                ut.assert.areEqual('../Images/collapseYellow.gif', src);
+                src = getNotesToggleImageSource(1, 0);
+                ut.assert.areEqual('../Images/expand.gif', src);
+                src = getNotesToggleImageSource(1, 1);
+                ut.assert.areEqual('../Images/expandYellow.gif', src);
+            };
+
+            // When [isCollapsed] === 0 and [isYellow] === 0, function should return ['../Images/collapse.gif'].
+            // When [isCollapsed] === 0 and [isYellow] === 1, function should return ['../Images/collapseYellow.gif'].
+            // When [isCollapsed] === 1 and [isYellow] === 0, function should return ['../Images/expand.gif'].
+            // When [isCollapsed] === 1 and [isYellow] === 1, function should return ['../Images/expandYellow.gif'].
+            // When invalid parameter types are given, function should return ['../Images/collapse.gif'].
+            function getNotesToggleImageSource(isCollapsed, isYellow) {
+
+                if (isCollapsed === 0 && isYellow == 0) {
+                    return '../Images/collapse.gif';
                 }
 
-                return newOffSet;
+                if (isCollapsed === 0 && isYellow == 1) {
+                    return '../Images/collapseYellow.gif';
+                }
+
+                if (isCollapsed === 1 && isYellow == 0) {
+                    return '../Images/expand.gif';
+                }
+
+                if (isCollapsed === 1 && isYellow == 1) {
+                    return '../Images/expandYellow.gif';
+                }
+
+                // Invalid parameters.
+                return '../Images/collapse.gif';
             }
+
+            self.runUnitTests = function () {
+                console.log('Unit tests started.')
+                //getNotesToggleImageSource_UnitTest();
+                srcContainsYellow_UnitTest();
+                console.log('Unit tests completed.')
+            };
 
             return self;
         })();
-        spa.app.start();
+        spa.app.initializeGlobalExceptionHandler();
+        spa.app.runUnitTests();
     </script>
 </body>
 </html>

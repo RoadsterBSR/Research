@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Layout</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <style>
+        /* Reset */
+        html, body, div, textarea {
+            border: 0;
+            box-sizing: border-box;         /* For IE and modern versions of Chrome */
+            -moz-box-sizing: border-box;    /* For Firefox                          */
+            -webkit-box-sizing: border-box; /* For Safari                           */
+            margin: 0;
+            outline: 0;
+            padding: 0;
+
+        }
+
+        html, body {
+            height: 100%;       /* Full screen single page app. */
+            max-height: 100%;   /* Full screen single page app. */
+            position: relative;
+        }      
+
+        .c-mfs-notes {
+            border: 1px solid #808080;
+            bottom: 20px;
+            left: 300px;
+    		position: absolute;
+            right: 20px;
+            top: 100px;
+    	}
+
+        .c-mfs-notes-header {
+            border: 1px solid #ff0000;
+            padding-bottom: 2px;
+            padding-top: 2px;
+            position: absolute;
+            width: 100%;
+        }
+
+        #c-mfs-notes-content {
+            border: 1px solid #ffd800;
+            bottom: 0;
+            position: absolute;
+            top: 24px;
+            width: 100%;
+        }
+
+        .c-mfs-notes-row2 {
+            border: 1px solid #0c5f0e;
+            bottom: 66%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        .c-mfs-notes-row3 {
+            border: 1px solid #0c5f0e;
+            bottom: 33%;
+            position: absolute;
+            top: 34%;
+            width: 100%;
+        }
+        .c-mfs-notes-row4 {
+            border: 1px solid #0c5f0e;
+            bottom: 0;
+            margin-bottom: 24px;
+            position: absolute;
+            top: 67%;
+            width: 100%;
+        }
+        .c-mfs-notes-row5 {
+            border: 1px solid #0c5f0e;
+            bottom: 0;
+            padding-bottom: 2px;
+            padding-top: 2px;
+            position: absolute;
+            width: 100%;
+        }
+
+        .c-mfs-notes-row-header {
+            border: 1px solid #0c5f0e;
+            color: #164692;
+            font-weight: bold;
+            padding-bottom: 2px;
+            padding-top: 2px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .c-mfs-notes-row-content {
+            border: 1px solid #0c5f0e;
+            bottom: 0px;
+            margin-top: 24px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .c-mfs-notes-row-content textarea {
+            border: 1px solid #507CD1;
+            color: #253741;
+            font-family: Verdana;
+            height: 100%;
+            position: absolute;
+            resize: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="c-mfs-notes">
+        <div class="c-mfs-notes-header">
+            Aantekeningen <span onclick="spa.toggle(document.getElementById('c-mfs-notes-content'));" style="cursor: pointer;">Toggle</span>
+        </div>
+        <div id="c-mfs-notes-content">
+            <div class="c-mfs-notes-row2">
+                <div class="c-mfs-notes-row-header">Algemene aantekeningen</div>
+                <div class="c-mfs-notes-row-content"><textarea></textarea></div>
+            </div>
+            <div class="c-mfs-notes-row3">
+                <div class="c-mfs-notes-row-header">Profesionele aantekeningen</div>
+                <div class="c-mfs-notes-row-content"><textarea></textarea></div>
+            </div>
+            <div class="c-mfs-notes-row4">
+                <div class="c-mfs-notes-row-header">Persoonelijke aantekeningen</div>
+                <div class="c-mfs-notes-row-content"><textarea></textarea></div>
+            </div>
+            <div class="c-mfs-notes-row5">Bewaar</div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript">
+        var spa = spa || {};
+        var spa = (function () {
+            var _isCollapsed = false;
+            // Log unhandled exceptions to the console.
+            function initializeGlobalExceptionHandler() {
+                window.onerror = function (message, file, line, col, error) {
+                    console.log(message, "from", error.stack);
+                };
+            }
+
+            function start() {
+                initializeGlobalExceptionHandler();
+                toggle(document.getElementById('c-mfs-notes-content'));
+            }
+
+            function toggle(element) {
+                if (!element) { throw "Parameter [element] is not supplied." }
+
+                if (_isCollapsed === true) {
+                    element.style.display = 'block';
+                    element.style.bottom = '0';
+                }
+
+                if (_isCollapsed === false) {
+                    element.style.display = 'none';
+                    element.style.bottom = 'auto';
+                }
+
+                _isCollapsed = !_isCollapsed;
+            }
+            
+            return {
+                start: start,
+                toggle: toggle
+            };
+        })();
+        spa.start();
+    </script>
+</body>
+</html>

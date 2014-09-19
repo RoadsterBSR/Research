@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit tests</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+</head>
+<body>
+    <div>
+        <h1>Unit tests</h1>
+    </div>
+            
+    <!-- Scripts -->
+    <script type="text/javascript" src="/Client/Libraries/Live/head.min.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Live/live.js"></script>
+    <script type="text/javascript" src="/Client/Libraries/Ut/ut.js"></script>
+    <script type="text/javascript">
+
+        // Unit test runner.
+        var runner = (function ()
+        {
+            function srcContainsYellow_test() {
+                var actual = srcContainsYellow('');
+                ut.assert.areEqual(false, actual);
+                actual = srcContainsYellow(null);
+                ut.assert.areEqual(false, actual);
+                actual = srcContainsYellow('sdafkjhdskjlds sdklfsdkl Yellow sdfkjdsfljkd');
+                ut.assert.areEqual(true, actual);
+            };
+
+            function srcContainsYellow(src) {
+                return (Boolean(src) && src.toLowerCase().indexOf('yellow') >= 0);
+            }
+
+            function getNotesToggleImageSource_test() {
+                var actual = getNotesToggleImageSource(false, false);
+                ut.assert.areEqual('../Images/collapse.gif', actual);
+                actual = getNotesToggleImageSource(false, true);
+                ut.assert.areEqual('../Images/collapseYellow.gif', actual);
+                actual = getNotesToggleImageSource(true, false);
+                ut.assert.areEqual('../Images/expand.gif', actual);
+                actual = getNotesToggleImageSource(true, true);
+                ut.assert.areEqual('../Images/expandYellow.gif', actual);
+            };
+
+            // When [isCollapsed] === false and [isYellow] === false, function should return ['../Images/collapse.gif'].
+            // When [isCollapsed] === false and [isYellow] === true, function should return ['../Images/collapseYellow.gif'].
+            // When [isCollapsed] === true and [isYellow] === false, function should return ['../Images/expand.gif'].
+            // When [isCollapsed] === true and [isYellow] === true, function should return ['../Images/expandYellow.gif'].
+            // When invalid parameter types are given, function should return ['../Images/collapse.gif'].
+            function getNotesToggleImageSource(isCollapsed, isYellow) {
+
+                if (isCollapsed === false && isYellow === false) {
+                    return '../Images/collapse.gif';
+                }
+
+                if (isCollapsed === false && isYellow === true) {
+                    return '../Images/collapseYellow.gif';
+                }
+
+                if (isCollapsed === true && isYellow === false) {
+                    return '../Images/expand.gif';
+                }
+
+                if (isCollapsed === true && isYellow === true) {
+                    return '../Images/expandYellow.gif';
+                }
+
+                throw "Parametertype for [isCollapsed] or [isYellow] is invalid.";
+            }
+
+            function getNotesZIndex_test() {
+                var actual = getNotesZIndex(true);
+                ut.assert.areEqual(1, actual);
+                actual = getNotesZIndex(false);
+                ut.assert.areEqual(10, actual);
+            };
+
+            function getNotesZIndex(isCollapsed) {
+                if (isCollapsed === true) {
+                    return 1;
+                }
+
+                if (isCollapsed === false) {
+                    return 10;
+                }
+
+                throw "Parametertype for [isCollapsed] is invalid.";
+            };
+
+
+            function getNotesHeight_test() {
+                var actual = getNotesHeight(true, '30px');
+                ut.assert.areEqual('100%', actual);
+                actual = getNotesHeight(false, '30px');
+                ut.assert.areEqual('30px', actual);
+            };
+
+            function getNotesHeight(isCollapsed, minHeight) {
+                if (isCollapsed === true) {
+                    return '100%';
+                }
+
+                if (isCollapsed === false) {
+                    return minHeight;
+                }
+
+                throw "Parametertype for [isCollapsed] is invalid.";
+            };
+
+            function getNotesInfo_test() {
+                var actual = getNotesInfo(true, '../Images/collapseYellow.gif', '30px');
+                ut.assert.areEqual({
+                    height: '100%',
+                    src: '../Images/expandYellow.gif',
+                    zIndex: 1
+                }, actual);
+            }
+
+            function getNotesInfo(isCollapsed, src, minHeight) {
+                return {
+                    height: getNotesHeight(isCollapsed, minHeight),
+                    src: getNotesToggleImageSource(isCollapsed, srcContainsYellow(src)),
+                    zIndex: getNotesZIndex(isCollapsed)
+                };
+            }
+
+            function isObject_test() {
+                var actual = isObject('');
+                ut.assert.areEqual(false, actual);
+                actual = isObject(0);
+                ut.assert.areEqual(false, actual);
+                actual = isObject(null);
+                ut.assert.areEqual(false, actual);
+                actual = isObject({ a: '' });
+                ut.assert.areEqual(true, actual);
+            }
+
+            function isObject(value) {
+                return (value !== null && typeof(value) === 'object');
+            }
+
+            // Log unhandled exceptions to the console.
+            window.onerror = function (message, file, line, col, error) {
+                console.log(message, "from", error.stack);
+            };
+
+            function run() {
+                console.log('Unit tests started.')
+                getNotesToggleImageSource_test();
+                srcContainsYellow_test();
+                getNotesZIndex_test();
+                getNotesHeight_test();
+                isObject_test();
+                getNotesInfo_test();
+                
+                console.log('Unit tests completed.')
+            };
+
+            return {
+                run: run
+            };
+        })();
+        runner.run();
+    </script>
+</body>
+</html>

@@ -5,14 +5,16 @@ namespace Research.Core.CodeGeneration
     using Microsoft.SqlServer.Management.Smo;
     using Research.Core.CodeGeneration.SqlScriptDtos;
     using Research.Core.Components;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    
+
     public class SqlScriptGenerator
     {
-    
+        private const string tSQLtSchema = "tSQLt";
+
         public SqlScriptGenerator()
         {
         }
@@ -56,15 +58,16 @@ namespace Research.Core.CodeGeneration
 
         public SqlDeployScriptResult GenerateDeployScript(SqlScriptingInput input)
         {
-            var result = new SqlDeployScriptResult();
+            string fileExtension = ".sql";
 
+            var result = new SqlDeployScriptResult();
             var tables = new StringBuilder(string.Empty);
             foreach (SqlTable table in input.Tables)
             {
                 // Ignore "tSQLt" schema.
-                if (!table.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                if (!table.Schema.Equals(tSQLtSchema, System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    string name = string.Format("{0}.{1}", table.Schema, table.Name);
+                    string name = string.Format("{0}.{1}{2}", table.Schema, table.Name, fileExtension);
                     string groupName = "Tables";
                     tables.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine(groupName, name)));
                 }
@@ -74,10 +77,14 @@ namespace Research.Core.CodeGeneration
             var schemas = new StringBuilder(string.Empty);
             foreach (string schema in input.Schemas)
             {
-                schemas.AppendLine(Path.Combine("Schemas", schema));
-                schemas.AppendLine(string.Format(@"{0} ""{1}""", "call :runCmd", Path.Combine("Schemas", schema)));
+                // Ignore "tSQLt" schema.
+                if (!schema.Equals(tSQLtSchema, System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    schemas.AppendLine(Path.Combine("Schemas", schema));
+                    schemas.AppendLine(string.Format(@"{0} ""{1}{2}""", "call :runCmd", Path.Combine("Schemas", schema), fileExtension));
+                }
             }
-            result.Schemas = result.ToString();
+            result.Schemas = schemas.ToString();
 
             var functions = new StringBuilder(string.Empty);
             var views = new StringBuilder(string.Empty);
@@ -85,9 +92,9 @@ namespace Research.Core.CodeGeneration
             foreach (SqlTextObject textObject in input.TextObjects)
             {
                 // Ignore "tSQLt" schema.
-                if (!textObject.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                if (!textObject.Schema.Equals(tSQLtSchema, System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
+                    string name = string.Format("{0}.{1}{2}", textObject.Schema, textObject.Name, fileExtension);
                     string groupName = textObject.GroupName;
 
                     switch (groupName.ToLower())
@@ -122,7 +129,7 @@ namespace Research.Core.CodeGeneration
 
         public void MapSmoTextObjectsToSqlScriptDtos(IEnumerable<object> textObjects, string typeName, string groupName, SqlScriptingInput input)
         {
-            
+
             foreach (object textObject in textObjects)
             {
                 ScriptSchemaObjectBase textObjectAsScriptSchemaObjectBase = (ScriptSchemaObjectBase)textObject;
@@ -154,11 +161,13 @@ namespace Research.Core.CodeGeneration
 
                 foreach (Column column in table.Columns)
                 {
-                    DataType dataType =  column.DataType;
+                    DataType dataType = column.DataType;
+                    string dateTypeName = Enum.GetName(dataType.SqlDataType.GetType(), dataType.SqlDataType).ToLower().Replace("max", string.Empty);
+
                     var sqlColumn = new SqlColumn
                     {
                         DataTypeMaximumLength = dataType.MaximumLength,
-                        DataTypeName = dataType.Name,
+                        DataTypeName = dateTypeName,
                         DataTypeNumericPrecision = dataType.NumericPrecision,
                         DataTypeNumericScale = dataType.NumericScale,
                         IdentityIncrement = column.IdentityIncrement,
@@ -170,14 +179,13 @@ namespace Research.Core.CodeGeneration
                         IsPrimaryKey = (column.InPrimaryKey),
                         Name = column.Name
                     };
-
                     sqlTable.Columns.Add(sqlColumn);
                 }
 
                 foreach (ForeignKey fk in table.ForeignKeys)
                 {
                     ForeignKeyColumn fkc = fk.Columns[0];
-                    
+
                     // TODO: this is not a correct mapping, must be fixed!
                     var sqlForeignKey = new SqlForeignKey
                     {
@@ -186,14 +194,14 @@ namespace Research.Core.CodeGeneration
                         ColumnName = fkc.Name,
                         ReferencedColumnName = fkc.ReferencedColumn
                     };
-                    
+
                     sqlTable.ForeignKeys.Add(sqlForeignKey);
                 }
 
                 input.Tables.Add(sqlTable);
             }
         }
-        
+
         public Server GetServer(string serverName, string userName, string password)
         {
             var connectionInfo = new SqlConnectionInfo();
@@ -221,10 +229,10 @@ namespace Research.Core.CodeGeneration
             foreach (SqlTextObject textObject in textObjects)
             {
                 // Ignore "tSQLt" schema.
-                if (!textObject.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                if (!textObject.Schema.Equals(tSQLtSchema, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     var contentBuilder = new StringBuilder(string.Empty);
-                    string name = string.Format("{0}.{1}", textObject.Schema, textObject.Name);
+                    string name = string.Format("[{0}].[{1}]", textObject.Schema, textObject.Name);
 
                     // Don't add drop statement for schema's.
                     if (!textObject.GroupName.ToLower().Equals("schema"))
@@ -245,10 +253,10 @@ namespace Research.Core.CodeGeneration
             foreach (SqlTable table in tables)
             {
                 // Ignore "tSQLt" schema.
-                if (!table.Schema.Equals("tSQLt", System.StringComparison.InvariantCultureIgnoreCase))
+                if (!table.Schema.Equals(tSQLtSchema, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     var contentBuilder = new StringBuilder(string.Empty);
-                    string name = string.Format("{0}.{1}", table.Schema, table.Name);
+                    string name = string.Format("[{0}].[{1}]", table.Schema, table.Name);
 
                     AddTableHeader(contentBuilder, name, "table");
                     int totalColumnCount = table.Columns.Count;
@@ -256,7 +264,7 @@ namespace Research.Core.CodeGeneration
                     {
                         SqlColumn column = table.Columns[i];
                         var columnBuilder = new StringBuilder(string.Empty);
-                        columnBuilder.AppendFormat("        {0}", column.Name);
+                        columnBuilder.AppendFormat("        [{0}]", column.Name);
                         columnBuilder.AppendFormat(" {0}", column.DataTypeName);
                         HandleDataTypeLength(column, columnBuilder);
                         HandleIdentity(column, columnBuilder);
@@ -297,7 +305,8 @@ go
 
         public void AddTextObjectFooter(StringBuilder contentBuilder)
         {
-            contentBuilder.Append(@"go");
+            contentBuilder.Append(Environment.NewLine);
+            contentBuilder.Append("go");
         }
 
         public void AddTableFooter(StringBuilder contentBuilder)
@@ -308,7 +317,7 @@ go
 ");
         }
 
-        public void AddScriptToResult(string rootFolder, string folderName, string schema, string name , StringBuilder fileContent, SqlScriptingResult result)
+        public void AddScriptToResult(string rootFolder, string folderName, string schema, string name, StringBuilder fileContent, SqlScriptingResult result)
         {
             string fileName = string.Format("{0}.{1}.sql", schema, name);
             string folderPath = string.IsNullOrWhiteSpace(rootFolder) ? folderName : Path.Combine(rootFolder, folderName);
@@ -340,7 +349,9 @@ go
                     if (fk.ColumnName.Equals(column.Name))
                     {
                         // TODO: this will break, when column is part of multiple foreingkeys.
-                        columnBuilder.AppendFormat(" constraint FK_{0}_{1}_{2} foreign key references {3}.{4}({5})", table.Schema, table.Name, column.Name, fk.ReferencedSchemaName, fk.ReferencedTableName, fk.ReferencedColumnName);
+                        string constraint = string.Format(" constraint FK_{0}_{1}_{2} foreign key references {3}.{4}({5})", table.Schema, table.Name, column.Name, fk.ReferencedSchemaName, fk.ReferencedTableName, fk.ReferencedColumnName);
+                        constraint = RemoveInvalidCharacters(constraint);
+                        columnBuilder.Append(constraint);
                         break;
                     }
                 }
@@ -352,8 +363,79 @@ go
             if (column.IsDefault)
             {
                 // TODO: this will break, when column is foreignkey and default.
-                columnBuilder.AppendFormat(" constraint DF_{0}_{1}_{2} default {3}", table.Schema, table.Name, column.Name, column.DefaultText);
+                string defaultText = GetDefaultText(column.DataTypeName, column.DefaultText);
+                string constraint = string.Format(" constraint DF_{0}_{1}_{2} default ({3})", table.Schema, table.Name, column.Name, defaultText);
+                constraint = RemoveInvalidCharacters(constraint);
+                columnBuilder.Append(constraint);
             }
+        }
+
+        public string RemoveInvalidCharacters(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)){ throw new ArgumentException("Parameter can't be null, empty or contain only whitespaces.", "value"); }
+            string result = value;
+            result = result.Replace("&", string.Empty);
+            result = result.Replace("-", string.Empty);
+            return result;
+        }
+
+        /// <summary>
+        /// NOTE: the following code is a hack. This should be generated by SMO, but I don't have the time to investigate the correct way.
+        /// </summary>
+        public string GetDefaultText(string dataTypeName, string defaultText)
+        {
+            if (string.IsNullOrWhiteSpace(dataTypeName)) { throw new ArgumentException("Parameter can't be null, empty or contain only whitespaces", "dataTypeName"); }
+
+            if (
+                dataTypeName.Equals("date", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("datetime", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("datetime2", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("datetimeoffset", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("smalldatetime", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("time", System.StringComparison.InvariantCultureIgnoreCase)
+            )
+            {
+                return "getdate()";
+            }
+
+            if (dataTypeName.Equals("varchar", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("char", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("nchar", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("nvarchar", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("text", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("ntext", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "''";
+            }
+
+            if (
+                dataTypeName.Equals("bigint", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("bit", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("decimal", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("int", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("money", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("numeric", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("smallint", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("smallmoney", System.StringComparison.InvariantCultureIgnoreCase) ||
+                dataTypeName.Equals("tinyint", System.StringComparison.InvariantCultureIgnoreCase)
+            )
+            {
+                return "0";
+            }
+
+            if (
+                dataTypeName.Equals("uniqueidentifier", System.StringComparison.InvariantCultureIgnoreCase)
+            )
+            {
+                return "newid()";
+            }           
+
+            if (string.IsNullOrWhiteSpace(defaultText))
+            {
+                throw new ArgumentException("Parameter can only be null, empty or contain only whitespaces, when dataTypeName is not in a know datatype.", "defaultText");
+            }
+
+            return defaultText;
         }
 
         public void HandlePrimaryKey(SqlTable table, SqlColumn column, StringBuilder columnBuilder)
@@ -361,7 +443,9 @@ go
             if (column.IsPrimaryKey)
             {
                 // TODO: this will break, when column is part of a composite primairy key.
-                columnBuilder.AppendFormat(" constraint PK_{0}_{1}_{2} primary key", table.Schema, table.Name, column.Name);
+                string constraint = string.Format(" constraint PK_{0}_{1}_{2} primary key", table.Schema, table.Name, column.Name);
+                constraint = RemoveInvalidCharacters(constraint);
+                columnBuilder.Append(constraint);
             }
         }
 
@@ -384,7 +468,7 @@ go
                 columnBuilder.Append(" not null");
             }
         }
-
+           
         public void HandleDataTypeLength(SqlColumn column, StringBuilder columnBuilder)
         {
             string dataTypeName = column.DataTypeName;

@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\app.js" />
+    <Content Include="Client\Core\polyfill.js" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part5\app.css" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part5\app.js" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part5\index.html" />
@@ -135,12 +136,17 @@
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\index.html" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.css" />
     <Content Include="Client\Features\AngularJS_and_Breeze\Part1\app.js" />
+    <Content Include="Client\Features\Companion\index-absolute.html" />
+    <Content Include="Client\Features\Companion\index.html" />
     <Content Include="Client\Features\Kendo\Confirm\app.js" />
     <Content Include="Client\Features\Kendo\Confirm\index.html" />
     <Content Include="Client\Features\Kendo\kendo.extensions.js" />
     <Content Include="Client\Features\Kendo\kendo-controller.js" />
     <Content Include="Client\Features\Kendo\UnitTests.html" />
     <Content Include="Client\Features\Kendo\UnitTests.js" />
+    <Content Include="Client\Features\Layout\reset-yahoo.html" />
+    <Content Include="Client\Features\Layout\reset.html" />
+    <Content Include="Client\Features\Layout\index.html" />
     <Content Include="Client\Features\Plunker\GoogleMapsKendoGridBinding.html" />
     <Content Include="Client\Features\Plunker\FullScreenHeightApp.html" />
     <Content Include="Client\Features\Plunker\UseSwitchInKendoGrid.html" />
@@ -158,10 +164,9 @@
     <Content Include="Client\Features\Spa\Crud\crud.html" />
     <Content Include="Client\Features\Spa\Crud\crud.js" />
     <Content Include="Client\Features\Spa\index.html" />
+    <Content Include="Client\Features\Vanilla\unittests.html" />
     <Content Include="Client\Features\Vanilla\index.html" />
-    <Content Include="Client\Features\Vanilla\unit_tests.html" />
-    <Content Include="Client\Features\Vanilla\UnitTests.js" />
-    <Content Include="Client\Features\Vanilla\vanilla.js" />
+    <Content Include="Client\Features\Jasmine\jasmine.html" />
     <Content Include="Client\Libraries\Angular\angular-animate.js" />
     <Content Include="Client\Libraries\Angular\angular-animate.min.js" />
     <Content Include="Client\Libraries\Angular\angular-animate.min.js.map" />
@@ -629,6 +634,7 @@
     <Content Include="Client\Libraries\Jasmine\jasmine_favicon.png" />
     <Content Include="Client\Libraries\Toastr\toastr.css" />
     <Content Include="Client\Libraries\Toastr\toastr.min.css" />
+    <Content Include="Client\Libraries\Ut\ut.js" />
     <Content Include="content\breeze.directives.css" />
     <Content Include="packages.config" />
     <Content Include="Client\Libraries\Kendo\css\images\kendoui.woff" />
