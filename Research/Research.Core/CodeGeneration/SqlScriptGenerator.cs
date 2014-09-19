@@ -239,8 +239,11 @@ namespace Research.Core.CodeGeneration
                     {
                         AddTextObjectHeader(contentBuilder, name, textObject.TypeName);
                     }
-                    contentBuilder.Append(textObject.TextHeader);
-                    contentBuilder.Append(textObject.TextBody);
+                    contentBuilder.Append(Environment.NewLine);
+                    contentBuilder.Append(textObject.TextHeader.Trim());
+                    contentBuilder.Append(Environment.NewLine);
+                    contentBuilder.Append(textObject.TextBody.Trim());
+                    contentBuilder.Append(Environment.NewLine);
                     AddTextObjectFooter(contentBuilder);
 
                     AddScriptToResult(rootFolder, textObject.GroupName, textObject.Schema, textObject.Name, contentBuilder, result);
