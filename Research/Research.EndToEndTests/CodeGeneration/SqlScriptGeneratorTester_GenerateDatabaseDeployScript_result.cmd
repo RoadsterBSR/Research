@@ -46,6 +46,9 @@ echo Recreate [Functions].
 echo Recreate [Stored Procedures].
 {3}
 
+echo Recreate [Views].
+{4}
+
 echo Deploy.cmd finished
 
 goto :eof

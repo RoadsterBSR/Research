@@ -70,7 +70,7 @@ namespace Research.EndToEndTests.CodeGeneration
             SqlDeployScriptResult result = generator.GenerateDeployScript(input);
             string template = Assembly.GetExecutingAssembly().GetFileAsString("Research.EndToEndTests.CodeGeneration.SqlScriptGeneratorTester_GenerateDatabaseDeployScript_result.cmd");
 
-            string content = string.Format(template, result.Schemas, result.Tables, result.Functions, result.StoredProcedures);
+            string content = string.Format(template, result.Schemas, result.Tables, result.Functions, result.StoredProcedures, result.Views);
 
             var file = new FileInfoDto
             {
