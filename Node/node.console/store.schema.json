@@ -1,0 +1,36 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema",
+	"type": "object",
+	"properties": {
+		"products": {
+			"type": "array",
+			"items": { "$ref": "#/definitions/product" }
+		},
+		"user": { "$ref": "#/definitions/user" }
+	},
+	"definitions": {
+		"company": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" }
+			}
+		},
+		"product": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" }
+			}
+		},
+		"user": {
+			"type": "object",
+			"properties": {
+				"company": { "$ref": "#/definitions/company" },
+				"name": { "type": "string" },
+				"products": {
+					"type": "array",
+					"items": { "$ref": "#/definitions/product" }
+				}
+			}
+		}
+	}
+}
