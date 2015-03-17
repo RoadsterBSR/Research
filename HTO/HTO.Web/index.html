@@ -23,10 +23,10 @@
 	<link rel="icon" href="/Images/icon_96x96.png">
 </head>
 <body>
-	<div hto-desktop>
-		<h1>Admin V1</h1>
-		<div hto-login>Dit is de login voor {{ user.name }}</div>
+	<div class="splash" ng-if="desktop.isSplashVisible">
+		Loading...
 	</div>
+	<div hto-desktop></div>
 		
 	<script src="/Scripts/modernizr-2.8.3.js"></script>
 	<script src="/Client/Core/Components/error.handler.js"></script>
