@@ -1,2 +1,8 @@
 ﻿<h1>Desktop V1</h1>
 <div>{{ app.user.name }}</div>
+<div>
+    <button class="btn" ng-click="app.sendMessage()">Send</button>
+</div>
+<div ng-repeat="message in messages">
+    {{ message }}
+</div>

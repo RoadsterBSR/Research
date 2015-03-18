@@ -8,8 +8,8 @@
         /// It expects a $scope.app.user of type "hto.models.User".
 		/// </summary>
 
-		function link($scope) {
-			
+	    function link($scope, $element) {
+		    $element[0].focus();
 		}
 
 		return {
