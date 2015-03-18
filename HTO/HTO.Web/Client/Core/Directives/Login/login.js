@@ -4,16 +4,17 @@
 
 	function directive() {
 		/// <summary>
-		/// Represent a signature pad in the ui.
+	    /// Represent a login screen.
+        /// It expects a $scope.app.user of type "hto.models.User".
 		/// </summary>
 
 		function link($scope) {
-			$scope.user = new hto.models.User();
+			
 		}
 
 		return {
-			restrict: "EA",
-			link: link
+		    link: link,
+		    restrict: "EA",
 		};
 	}
 

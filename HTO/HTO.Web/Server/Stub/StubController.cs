@@ -2,15 +2,15 @@
 
 namespace HTO.Web.Server.Desktop
 {
-    public class DesktopController : ApiController
+    public class StubController : ApiController
     {
         /// <summary>
         /// We only use POST ajax calls for security reasons.
         /// 
-        /// Route: Server/Desktop/GetData
+        /// Route: Server/Stub/HandleRequest
         /// </summary>
         /// <param name="value"></param>
-        [Route("Server/Desktop/GetData")]
+        [Route("Server/Stub/HandleRequest")]
         [HttpPost]
         public void Post(string value)
         {

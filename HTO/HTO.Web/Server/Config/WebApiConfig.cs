@@ -8,7 +8,7 @@ namespace HTO.Web.Server.Config
         {
             HttpConfiguration config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
-            
+
             return config;
         }
     }

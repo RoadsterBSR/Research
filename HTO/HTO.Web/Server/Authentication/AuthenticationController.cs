@@ -2,7 +2,7 @@
 
 namespace HTO.Web.Server.Desktop
 {
-    public class DesktopController : ApiController
+    public class AuthenticationController : ApiController
     {
         /// <summary>
         /// We only use POST ajax calls for security reasons.
@@ -10,7 +10,7 @@ namespace HTO.Web.Server.Desktop
         /// Route: Server/Desktop/GetData
         /// </summary>
         /// <param name="value"></param>
-        [Route("Server/Desktop/GetData")]
+        [Route("Server/Authentication/Authenticate")]
         [HttpPost]
         public void Post(string value)
         {

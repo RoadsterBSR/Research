@@ -1,24 +1,45 @@
-﻿(function (hto) {
+﻿/// <reference path="/Client/Core/hto.js" />
+/// <reference path="/Client/Core/Settings/settings.js" />
+
+(function (hto) {
     "use strict";
+
+    function Desktop() {
+        this.templateUrl = hto.settings.urls.loginTemplate;
+        this.user = new hto.models.User();
+        this.title = "HTO Desktop"
+    }
+    Desktop.prototype.handleAuthenticationResult = function () {
+        this.templateUrl = hto.settings.urls.desktopTemplate;
+    };
+
+    Desktop.prototype.getTemplateUrl = function () {
+        return this.templateUrl;
+    };
 
     function directive() {
         /// <summary>
         /// Represent the desktop app in the ui.
         /// </summary>
 
+        function controller($scope) {
+            $scope.app = new Desktop();
+        }
+
         function link($scope, $element) {
             
         }
 
         return {
+            controller: controller,
+            link: link,
             restrict: "EA",
-            templateUrl: 'my-customer.html',
-            link: link
+            template: '<div ng-include="app.getTemplateUrl()"></div>'
         };
     }
 
     angular
         .module("hto")
-        .directive("htoDrawing", [directive]);
+        .directive("htoDesktop", [directive]);
 
 }(hto));

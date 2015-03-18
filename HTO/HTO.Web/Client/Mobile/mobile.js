@@ -1,15 +1,23 @@
 ﻿(function (hto) {
-	"use strict";
+    "use strict";
 
-	function controller($scope) {
-		/// <summary>
-		/// Represents the desktop app in the ui.
-		/// </summary>
+    function directive() {
+        /// <summary>
+        /// Represent the desktop app in the ui.
+        /// </summary>
 
-	}
+        function link($scope, $element) {
 
-	angular
+        }
+
+        return {
+            restrict: "EA",
+            link: link
+        };
+    }
+
+    angular
         .module("hto")
-        .controller("Mobile", ["$scope", controller]);
+        .directive("htoMobile", [directive]);
 
 }(hto));

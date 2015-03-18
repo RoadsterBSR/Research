@@ -1,17 +1,21 @@
-﻿using HTO.Web.Server.Config;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
-using System;
+
+[assembly: OwinStartup(typeof(HTO.Web.Startup))]
 
 namespace HTO.Web
 {
-	public class Startup
-	{
-		public void Configuration(IAppBuilder app)
-		{
-			app.MapSignalR();
-            app.
-            app.UseWebApi(WebApiConfig.Register());
+    public class Startup
+    {
+        /// <summary>
+        /// Initialize SignalR.
+        /// Initialize Web API.
+        /// </summary>
+        /// <param name="app"></param>
+        public void Configuration(IAppBuilder app)
+        {
+            app.MapSignalR();
+            app.UseWebApi(HTO.Web.Server.Config.WebApiConfig.Register());
         }
-	}
+    }
 }

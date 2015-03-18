@@ -1,26 +1,38 @@
-﻿/// <reference path="../zvdz.js" />
-
+﻿
 (function (hto) {
-    "use strict";
-    
-    // Contains settings used throughout the whole application.
+    /// <summary>
+    /// Contains settings used throughout the whole application.
+    /// </summary>
 
-    var urls =  {
+    "use strict";
+
+    var urls = {
+        authenticate: "Server/Authentication/Authenticate",
         desktopTemplate: "/Client/Desktop/desktop.html",
-        getDesktopData: "/Desktop/GetDesktopData",
-        stubService: "/StubService/HandleRequest"
+        getDesktopData: "/Server/Desktop/GetData",
+        getMobileData: "/Server/Mobile/GetData",
+        loginTemplate: "/Client/Core/Directives/Login/login.html",
+        stubService: "/Server/Stub/HandleRequest"
     };
 
     var handlers = {
-        getBasisDashboardData: {
-            stubDataHandler: "ZvdZOnline.Web.Controllers.StubDataHandlers.BasisDashboard.GetData",
-            url: urls.getBasisDashboardData
+        authenticate: {
+            stubDataHandler: "HTO.Web.Server.Stub.Authentication.Authenticate",
+            url: urls.authenticate
+        },
+        getDesktopData: {
+            stubDataHandler: "HTO.Web.Server.Stub.Desktop.GetData",
+            url: urls.getDesktopData
+        },
+        getMobileData: {
+                stubDataHandler: "HTO.Web.Server.Stub.Mobile.GetData",
+                url: urls.getMobileData
         }
     };
 
-    zvdz.settings = {
+    hto.settings = {
         handlers: handlers,
         urls: urls,
         useAntiForgeryToken: true /* When turned on, all postdata will use an anti forgery token. */
     };
-}(zvdz));
+}(hto));
