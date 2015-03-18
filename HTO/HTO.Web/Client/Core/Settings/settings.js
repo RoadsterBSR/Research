@@ -12,6 +12,7 @@
         getDesktopData: "/Server/Desktop/GetData",
         getMobileData: "/Server/Mobile/GetData",
         loginTemplate: "/Client/Core/Directives/Login/login.html",
+        mobileTemplate: "/Client/Mobile/mobile.html",
         stubService: "/Server/Stub/HandleRequest"
     };
 

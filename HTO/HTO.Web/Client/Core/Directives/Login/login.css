@@ -5,12 +5,11 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    padding: 20px;
 }
 
-@media (min-width: 979px) {
-    body {
-        padding-top: 80px;
-    }
+.clearBackground {
+    background: none;
 }
 
 .blue {
@@ -58,16 +57,16 @@ body {
     margin-top: 5px;
 }
 
-.login-form .body {
+.login-form-body {
     padding-bottom: 30px;
     border-bottom: 1px solid #eeeeee;
 }
 
-    .login-form .body label {
+    .login-form-body label {
         display: block;
     }
 
-    .login-form .body input {
+    .login-form-body input {
         -webkit-appearance: none;
         -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
         -webkit-rtl-ordering: logical;
@@ -130,7 +129,7 @@ body {
         word-spacing: 0px;
     }
 
-        .login-form .body input:focus {
+        .login-form-body input:focus {
             -webkit-appearance: none;
             -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset, rgba(82, 168, 236, 0.6) 0px 0px 8px 0px;
             -webkit-rtl-ordering: logical;
@@ -200,16 +199,16 @@ body {
     margin-top: 20px;
     margin-bottom: 10px;
 }
-    
+
     .login-form .footer .checkbox.inline {
         display: inline;
     }
-    
+
         .login-form .footer .checkbox.inline input[type="checkbox"] {
             float: none;
             margin-top: -4px;
         }
-    
+
     .login-form .footer .btn {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;

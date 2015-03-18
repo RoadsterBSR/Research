@@ -24,7 +24,7 @@
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="/Client/Core/Directives/Login/login.css" rel="stylesheet" />
 </head>
-<body>
+<body ng-class="{ clearBackground: app.user.isAuthenticated  }">
 	<div class="splash" ng-if="app.isSplashVisible">
 		Loading...
 	</div>

@@ -1,5 +1,6 @@
 ﻿/// <reference path="/Client/Core/hto.js" />
 /// <reference path="/Client/Core/Settings/settings.js" />
+/// <reference path="/Client/Core/Models/user.js" />
 
 (function (hto) {
     "use strict";
@@ -10,6 +11,7 @@
         this.title = "HTO Desktop"
     }
     Desktop.prototype.handleAuthenticationResult = function () {
+        this.user.isAuthenticated = true;
         this.templateUrl = hto.settings.urls.desktopTemplate;
     };
 

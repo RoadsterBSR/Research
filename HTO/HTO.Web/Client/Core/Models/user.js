@@ -5,7 +5,8 @@
 	function User() {
 		/// <summary>
 		/// Represent a user.
-		/// </summary>		
+	    /// </summary>
+	    this.isAuthenticated = false;
 	    this.name = "User 1";
         this.nameLabel = "Gebruikersnaam" 
         this.password = "";
