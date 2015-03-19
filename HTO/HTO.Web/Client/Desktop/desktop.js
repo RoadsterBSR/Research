@@ -2,31 +2,24 @@
 (function (hto) {
     "use strict";
 
-    function directive($cookies) {
+    function directive($cookieStore) {
         /// <summary>
         /// Represent the desktop app in the ui.
         /// </summary>
 
     	function controller($scope) {
     		/// <summary>
-    		/// When this directive is loaded, load cookie information from disk.
-    		/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
-			/// When cookie, contains "rememberMe" === true, then directly authenticate user.
+    		/// When this directive is loaded, construct "App" object and activate it.
     		/// </summary>
 
+    		var cookies = $cookieStore;
+    		var hub = $.connection.signatureHub;
     		var app = new hto.models.App();
-        	app.title = "HTO Desktop";
-        	app.rememberMe = $cookies.rememberMe;
-        	app.initializeSignalR();
-        	$scope.app = app;
+    		app.type = hto.enums.AppTypes.Desktop;
+    		app.title = "HTO Desktop";
 
-        	$scope.$watch('app.rememberMe', function (newValue, oldValue) {
-        		$cookies.rememberMe = newValue;
-        	});
-
-        	if (app.rememberMe) {
-        		app.user.authenticate(app);
-        	}
+    		$scope.app = app;
+    		$scope.app.activate(cookies, hub);
         }
 
         function link($scope, $element) {
@@ -43,6 +36,6 @@
 
     angular
         .module("hto")
-        .directive("htoDesktop", ["$cookies", directive]);
+        .directive("htoDesktop", ["$cookieStore", directive]);
 
 }(hto));

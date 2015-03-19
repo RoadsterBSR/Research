@@ -1,8 +1,17 @@
 ﻿<h1>Desktop V1</h1>
 <div>{{ app.user.name }}</div>
 <div>
-    <button class="btn" ng-click="app.sendMessage()">Send</button>
+	<button class="btn" ng-click="app.signOut()">Afmelden</button>
 </div>
-<div ng-repeat="message in messages">
+<div>
+	<button class="btn" ng-click="app.sendToMobile('A message from the desktop application.')">Versturen</button>
+</div>
+<div ng-if="app.receivedDateTime">
+	Last message received at: {{ app.receivedDateTime }}
+</div>
+<div ng-if="app.sendDateTime">
+	Last message received at: {{ app.sendDateTime }}
+</div>
+<div ng-repeat="message in app.messages">
     {{ message }}
 </div>

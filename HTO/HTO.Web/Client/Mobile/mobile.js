@@ -2,7 +2,7 @@
 (function (hto, $) {
     "use strict";
 
-    function directive() {
+    function directive($cookieStore) {
         /// <summary>
         /// Represent the Mobile app in the ui.
         /// </summary>
@@ -13,15 +13,18 @@
 			/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
     		/// </summary>
 
-    		var app = new hto.models.App();
-    		app.title = "HTO Mobile";
-    		app.rememberMe = $cookies.rememberMe;
-    		app.initializeSignalR();
-    		$scope.app = app;
+    		/// <summary>
+    		/// When this directive is loaded, construct "App" object and activate it.
+    		/// </summary>
 
-    		$scope.$watch('app.rememberMe', function (newValue, oldValue) {
-    			$cookies.rememberMe = newValue;
-    		});
+    		var cookies = $cookieStore;
+    		var hub = $.connection.signatureHub;
+    		var app = new hto.models.App();
+    		app.type = hto.enums.AppTypes.Mobile;
+    		app.title = "HTO Mobile";
+
+    		$scope.app = app;
+    		$scope.app.activate(cookies, hub);
         }
 
         function link($scope, $element) {
@@ -38,6 +41,6 @@
 
     angular
         .module("hto")
-        .directive("htoMobile", [directive]);
+        .directive("htoMobile", ["$cookieStore", directive]);
 
 }(hto, $));

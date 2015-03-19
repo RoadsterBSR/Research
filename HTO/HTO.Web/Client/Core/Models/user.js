@@ -11,17 +11,8 @@
 	    this.nameLabel = "Gebruikersnaam";
         this.password = "";
         this.passwordLabel = "Wachtwoord";
+        this.rememberMe = false;
 	}
-
-	User.prototype.authenticate = function (app) {
-	    /// <summary>
-	    /// Authenticates a User.
-		/// It expects an app.handleAuthenticationResult function.
-		/// 
-		/// TODO: request for authentication.
-	    /// </summary>
-	    app.handleAuthenticationResult();
-	};
 
 	hto.models.User = User;
 	
