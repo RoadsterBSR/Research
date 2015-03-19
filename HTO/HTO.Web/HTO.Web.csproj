@@ -102,9 +102,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Client\Core\Services\geolocation.js" />
     <Content Include="Client\Core\Directives\focus.js" />
     <Content Include="Client\Core\Models\app.js" />
     <Content Include="Client\Core\Enums\enums.js" />
+    <Content Include="Client\Core\Models\desktopMessage.js" />
+    <Content Include="Client\Core\Models\mobileMessage.js" />
     <Content Include="Client\Core\Styles\app.css" />
     <Content Include="Client\Core\Styles\reset.css" />
     <Content Include="Client\Mobile\mobile.html" />
@@ -923,7 +926,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\Core\Components\error.handler.js" />
+    <Content Include="Client\Core\Services\global.error.handling.js" />
     <Content Include="favicon.ico" />
     <Content Include="Images\icon.png" />
     <Content Include="Images\icon114x114.png" />
@@ -952,15 +955,16 @@
     <Compile Include="Server\Config\WebApiConfig.cs" />
     <Compile Include="Server\Desktop\DesktopController.cs" />
     <Compile Include="Server\Mobile\MobileController.cs" />
+    <Compile Include="Server\SignalR\IClient.cs" />
+    <Compile Include="Server\SignalR\MobileMessage.cs" />
+    <Compile Include="Server\SignalR\DesktopMessage.cs" />
     <Compile Include="Server\SignalR\SignatureHub.cs" />
     <Compile Include="Server\Stub\Desktop.cs" />
     <Compile Include="Server\Stub\Mobile.cs" />
     <Compile Include="Server\Stub\StubController.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Client\Core\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

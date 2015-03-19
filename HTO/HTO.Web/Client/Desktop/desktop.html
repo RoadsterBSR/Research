@@ -9,10 +9,10 @@
 	<button class="btn" ng-click="app.sendToMobile('A message from the desktop application.')">Versturen</button>
 </div>
 <div class="hto-seperate-block" ng-if="app.receivedDateTime">
-	Last message received at: {{ app.receivedDateTime }}
+	Laatst ontvangen bericht: {{ app.receivedDateTime }}
 </div>
 <div class="hto-seperate-block" ng-if="app.sendDateTime">
-	Last message send at: {{ app.sendDateTime }}
+	Laatst verzonden bericht: {{ app.sendDateTime }}
 </div>
 <div class="hto-seperate-block" ng-repeat="message in app.messages track by $index">
 	{{ message }}

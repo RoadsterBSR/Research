@@ -1,7 +1,15 @@
-﻿(function () {
+﻿
+(function (hto, window, document) {
 	"use strict";
-	
-	function showError(errorMsg, url, lineNumber, column, errorObj) {
+
+	function GlobalErrorHandling() {
+	}
+
+	GlobalErrorHandling.prototype.activate = function () {
+		window.onerror = this.showError;
+	};
+
+	GlobalErrorHandling.prototype.showError = function (errorMsg, url, lineNumber, column, errorObj) {
 		var message = "";
 		if (errorMsg) {
 			message += "<p>Message: " + errorMsg + "</p>";
@@ -22,11 +30,13 @@
 		if (errorObj) {
 			message += "<p>Error: " + errorObj + "</p>";
 		}
-		
+
 		document.open();
 		document.write("<div>" + message + "</div>");
 		document.close();
 	}
 
-	window.onerror = showError;
-}());
+	hto.services.globalErrorHandling = new GlobalErrorHandling();
+	hto.services.globalErrorHandling.activate();
+
+}(hto, window, document));

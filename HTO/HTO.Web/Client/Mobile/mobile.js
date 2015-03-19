@@ -2,10 +2,14 @@
 (function (hto, $) {
     "use strict";
 
-    function directive($cookieStore) {
+    
+
+    function directive($cookieStore, $q) {
         /// <summary>
         /// Represent the Mobile app in the ui.
-        /// </summary>
+    	/// </summary>
+
+    	
 
     	function controller($scope) {
     		/// <summary>
@@ -13,9 +17,23 @@
 			/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
     		/// </summary>
 
-    		/// <summary>
-    		/// When this directive is loaded, construct "App" object and activate it.
-    		/// </summary>
+    		hto.models.App.prototype.latitude = null;
+    		hto.models.App.prototype.longitude = null;
+
+    		hto.models.App.prototype.onSendClick = function () {
+    			var self = this;
+    			hto.services.geolocation.getPosition($q)
+					.then(function (position) {
+						self.latitude = position.coords.latitude;
+						self.longitude = position.coords.longitude;
+
+						//$scope.$apply(function () {
+
+						//	self.postion = position;
+						//});
+					});
+    			self.sendToDesktop('A message from the mobile application.')
+    		}
 
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Mobile;
@@ -42,6 +60,6 @@
 
     angular
         .module("hto")
-        .directive("htoMobile", ["$cookieStore", directive]);
+        .directive("htoMobile", ["$cookieStore", "$q", directive]);
 
 }(hto, $));

@@ -51,13 +51,13 @@ namespace HTO.Web.Server.SignalR
 		/// <summary>
 		/// When the desktop connection for this user exists, send the message to the desktop application.
 		/// </summary>
-        public void SendToDesktop(string message, string userName)
+        public void SendToDesktop(MobileMessage message)
         {
-			if (!string.IsNullOrWhiteSpace(userName))
+			if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
 			{
-				if (_desktopConnections.ContainsKey(userName))
+				if (_desktopConnections.ContainsKey(message.UserName))
 				{
-					var connectionId = _desktopConnections[userName];
+					var connectionId = _desktopConnections[message.UserName];
 					Clients.Client(connectionId).ShowMessageOnDekstop(message);
 				}
 			}
@@ -66,28 +66,16 @@ namespace HTO.Web.Server.SignalR
 		/// <summary>
 		/// When the mobile connection for this user exists, send the message to the mobile application.
 		/// </summary>
-		public void SendToMobile(string message, string userName)
+		public void SendToMobile(DesktopMessage message)
 		{
-			if (!string.IsNullOrWhiteSpace(userName))
+			if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
 			{
-				if (_mobileConnections.ContainsKey(userName))
+				if (_mobileConnections.ContainsKey(message.UserName))
 				{
-					var connectionId = _mobileConnections[userName];
+					var connectionId = _mobileConnections[message.UserName];
 					Clients.Client(connectionId).ShowMessageOnMobile(message);
 				}
 			}
 		}
-	}
-
-    public class UserConnectionInfo
-    {
-        public string DesktopConnectionId { get; set; }
-        public string MobileConnectionId { get; set; }
-    }
-
-    public interface IClient
-    {
-        void ShowMessageOnMobile(string message);
-		void ShowMessageOnDekstop(string message);
 	}
 }

@@ -34,9 +34,12 @@
 	</div>
 	<div hto-desktop></div>
     
+	<!-- Error handling -->
+	<script src="/Client/Core/namespaces.js"></script>
+	<script src="/Client/Core/Services/global.error.handling.js"></script>
+
 	<!-- Library code -->
 	<script src="/Scripts/modernizr-2.8.3.js"></script>
-	<script src="/Client/Core/Components/error.handler.js"></script>
 	<script src="/Scripts/jquery-2.1.3.min.js"></script>
 	<script src="/Scripts/jquery.signalR-2.2.0.min.js"></script>
 	<script src="/signalr/hubs"></script>
@@ -45,11 +48,12 @@
 	<script src="/Scripts/fastclick.js"></script>
 
 	<!-- App code -->
-	<script src="/Client/Core/namespaces.js"></script>
 	<script src="/Client/Core/Enums/enums.js"></script>
     <script src="Client/Core/Settings/settings.js"></script>
 	<script src="/Client/Core/Models/user.js"></script>
 	<script src="/Client/Core/Models/app.js"></script>
+	<script src="/Client/Core/Models/desktopMessage.js"></script>
+	<script src="/Client/Core/Models/mobileMessage.js"></script>
 	<script src="/Client/Core/Modules/hto.js"></script>
     <script src="/Client/Core/Directives/focus.js"></script>
 	<script src="/Client/Desktop/desktop.js"></script>

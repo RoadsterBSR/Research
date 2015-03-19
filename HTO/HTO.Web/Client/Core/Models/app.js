@@ -83,14 +83,14 @@
 			_hub.client.showMessageOnMobile = function (message) {
 				_scope.$apply(function () {
 					self.receivedDateTime = new Date();
-					self.messages.push(message);
+					self.messages.push(message.Message);
 				});
 			};
 		} else {
 			_hub.client.showMessageOnDekstop = function (message) {
 				_scope.$apply(function () {
 					self.receivedDateTime = new Date();
-					self.messages.push(message);
+					self.messages.push(message.Message);
 				});
 			};
 		}
@@ -116,7 +116,10 @@
 
 		if (self.connected) {
 			self.sendDateTime = new Date();
-			_hub.server.sendToDesktop(message, self.user.name);
+			var model = new hto.models.MobileMessage();
+			model.message = message;
+			model.userName = self.user.name;
+			_hub.server.sendToDesktop(model);
 		}
 	};
 
@@ -128,7 +131,10 @@
 
 		if (self.connected) {
 			self.sendDateTime = new Date();
-			_hub.server.sendToMobile(message, self.user.name);
+			var model = new hto.models.DesktopMessage();
+			model.message = message;
+			model.userName = self.user.name;
+			_hub.server.sendToMobile(model);
 		}
 	};
 
