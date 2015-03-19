@@ -103,9 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Core\Directives\focus.js" />
+    <Content Include="Client\Core\Models\app.js" />
+    <Content Include="Client\Core\Enums\enums.js" />
     <Content Include="Client\Mobile\mobile.html" />
     <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -121,13 +122,14 @@
     <Content Include="Client\Core\Directives\Login\login.html" />
     <Content Include="Client\Core\Directives\Login\login.js" />
     <Content Include="Client\Core\Directives\drawing.js" />
-    <Content Include="Client\Core\hto.js" />
+    <Content Include="Client\Core\namespaces.js" />
     <Content Include="Client\Core\Models\user.js" />
     <Content Include="Client\Core\Modules\hto.js" />
     <Content Include="Client\Core\Settings\settings.js" />
     <Content Include="Client\Desktop\desktop.html" />
     <Content Include="Client\Desktop\desktop.js" />
     <Content Include="Client\Mobile\mobile.js" />
+    <Content Include="gulpfile.js" />
     <Content Include="mobile.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -154,6 +156,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -918,7 +921,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\Mobile\app.js" />
     <Content Include="Client\Core\Components\error.handler.js" />
     <Content Include="favicon.ico" />
     <Content Include="Images\icon.png" />
@@ -938,6 +940,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
   </ItemGroup>

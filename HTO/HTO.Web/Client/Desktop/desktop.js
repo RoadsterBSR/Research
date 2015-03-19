@@ -1,67 +1,32 @@
-﻿/// <reference path="/Client/Core/hto.js" />
-/// <reference path="/Client/Core/Settings/settings.js" />
-/// <reference path="/Client/Core/Models/user.js" />
-
+﻿
 (function (hto) {
     "use strict";
 
-    var _hub = null;
-
-    function Desktop() {
-        this.messages = [];
-        this.templateUrl = hto.settings.urls.loginTemplate;
-        this.title = "HTO Desktop";
-        this.user = new hto.models.User();
-        this.connected = false;
-    }
-
-    Desktop.prototype.getTemplateUrl = function () {
-        return this.templateUrl;
-    };
-
-    Desktop.prototype.handleAuthenticationResult = function () {
-        this.user.isAuthenticated = true;
-        this.templateUrl = hto.settings.urls.desktopTemplate;
-    };
-
-    Desktop.prototype.initializeSignalR = function () {
-        /// <summary>
-        /// Hookup the functions that the server can call, e.g. "showMessage".
-        ///
-        /// Notes
-        /// - "$.connection.signatureHub" is the auto-generated SignalR hub proxy.
-        /// </summary>
-        var self = this;
-
-        _hub = $.connection.signatureHub;
-        _hub.client.showMessage = function (message) {
-            self.messages.push(message);
-        };
-        $.connection.hub
-            .start()
-            .done(function () {
-                self.connected = true;
-            });
-    };
-
-    Desktop.prototype.sendMessage = function () {
-        /// <summary>
-        /// Send a message to the server.
-        /// </summary>
-
-        if (this.connected) {
-            _hub.server.send("Dit is een test.");
-        }
-    };
-
-    function directive() {
+    function directive($cookies) {
         /// <summary>
         /// Represent the desktop app in the ui.
         /// </summary>
 
-        function controller($scope) {
-            $scope.app = new Desktop();
-            $scope.app.initializeSignalR();
+    	function controller($scope) {
+    		/// <summary>
+    		/// When this directive is loaded, load cookie information from disk.
+    		/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
+			/// When cookie, contains "rememberMe" === true, then directly authenticate user.
+    		/// </summary>
+
+    		var app = new hto.models.App();
+        	app.title = "HTO Desktop";
+        	app.rememberMe = $cookies.rememberMe;
+        	app.initializeSignalR();
+        	$scope.app = app;
+
+        	$scope.$watch('app.rememberMe', function (newValue, oldValue) {
+        		$cookies.rememberMe = newValue;
+        	});
+
+        	if (app.rememberMe) {
+        		app.user.authenticate(app);
+        	}
         }
 
         function link($scope, $element) {
@@ -78,6 +43,6 @@
 
     angular
         .module("hto")
-        .directive("htoDesktop", [directive]);
+        .directive("htoDesktop", ["$cookies", directive]);
 
 }(hto));
