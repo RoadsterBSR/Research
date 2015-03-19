@@ -105,6 +105,8 @@
     <Content Include="Client\Core\Directives\focus.js" />
     <Content Include="Client\Core\Models\app.js" />
     <Content Include="Client\Core\Enums\enums.js" />
+    <Content Include="Client\Core\Styles\app.css" />
+    <Content Include="Client\Core\Styles\reset.css" />
     <Content Include="Client\Mobile\mobile.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
@@ -950,7 +952,6 @@
     <Compile Include="Server\Config\WebApiConfig.cs" />
     <Compile Include="Server\Desktop\DesktopController.cs" />
     <Compile Include="Server\Mobile\MobileController.cs" />
-    <Compile Include="Server\SignalR\CustomUserIdProvider.cs" />
     <Compile Include="Server\SignalR\SignatureHub.cs" />
     <Compile Include="Server\Stub\Desktop.cs" />
     <Compile Include="Server\Stub\Mobile.cs" />

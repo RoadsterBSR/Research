@@ -1,17 +1,19 @@
 ﻿<h1>Desktop V1</h1>
-<div>{{ app.user.name }}</div>
-<div>
+<div class="hto-seperate-block">
+	U bent inglogd als <span class="hto-text-highlight">{{ app.user.name }}</span>
+</div>
+<div class="hto-seperate-block">
 	<button class="btn" ng-click="app.signOut()">Afmelden</button>
 </div>
-<div>
+<div class="hto-seperate-block">
 	<button class="btn" ng-click="app.sendToMobile('A message from the desktop application.')">Versturen</button>
 </div>
-<div ng-if="app.receivedDateTime">
+<div class="hto-seperate-block" ng-if="app.receivedDateTime">
 	Last message received at: {{ app.receivedDateTime }}
 </div>
-<div ng-if="app.sendDateTime">
-	Last message received at: {{ app.sendDateTime }}
+<div class="hto-seperate-block" ng-if="app.sendDateTime">
+	Last message send at: {{ app.sendDateTime }}
 </div>
-<div ng-repeat="message in app.messages">
-    {{ message }}
+<div class="hto-seperate-block" ng-repeat="message in app.messages track by $index">
+	{{ message }}
 </div>

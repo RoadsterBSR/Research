@@ -17,14 +17,15 @@
     		/// When this directive is loaded, construct "App" object and activate it.
     		/// </summary>
 
-    		var cookies = $cookieStore;
-    		var hub = $.connection.signatureHub;
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Mobile;
     		app.title = "HTO Mobile";
-
+    		
+    		var cookies = $cookieStore;
+    		var hub = $.connection.signatureHub;
+    		var scope = $scope;
     		$scope.app = app;
-    		$scope.app.activate(cookies, hub);
+    		$scope.app.activate(cookies, hub, scope);
         }
 
         function link($scope, $element) {

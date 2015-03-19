@@ -8,6 +8,7 @@
 
 	var _cookies = null;
 	var _hub = null;
+	var _scope = null;
 
 	function App() {
 		this.connected = false;
@@ -20,7 +21,7 @@
 		this.user = new hto.models.User();
 	}
 
-	App.prototype.activate = function (cookies, hub) {
+	App.prototype.activate = function (cookies, hub, scope) {
 		/// <summary>
 		/// After the application is constructed, this function should be called to start the application.
 		/// </summary>
@@ -29,6 +30,7 @@
 
 		_cookies = cookies;
 		_hub = hub;
+		_scope = scope;
 
 		self.storeCookieInfoOnModel();
 		self.initializeSignalR();
@@ -79,24 +81,30 @@
 
 		if (self.type === hto.enums.AppTypes.Mobile) {
 			_hub.client.showMessageOnMobile = function (message) {
-				self.receivedDateTime = new Date();
-				self.messages.push(message);
+				_scope.$apply(function () {
+					self.receivedDateTime = new Date();
+					self.messages.push(message);
+				});
 			};
 		} else {
 			_hub.client.showMessageOnDekstop = function (message) {
-				self.receivedDateTime = new Date();
-				self.messages.push(message);
+				_scope.$apply(function () {
+					self.receivedDateTime = new Date();
+					self.messages.push(message);
+				});
 			};
 		}
 
 		$.connection.hub
             .start()
             .done(function () {
-            	self.connected = true;
+            	_scope.$apply(function () {
+            		self.connected = true;
 
-            	if (self.user.rememberMe && self.user.name) {
-            		self.authenticate();
-            	}
+            		if (self.user.rememberMe && self.user.name) {
+            			self.authenticate();
+            		}
+            	});
             });
 	};
 
@@ -130,8 +138,12 @@
 		/// </summary>
 		var self = this;
 
-		self.user.password = null;
-		self.user.name = null;
+		self.user.isAuthenticated = false;
+		self.user.password = "";
+		self.user.name = "";
+		self.user.rememberMe = false;
+		self.storeCookieInfoOnDisk();
+
 		this.templateUrl = hto.settings.urls.loginTemplate;
 	};
 
@@ -142,12 +154,29 @@
 		var self = this;
 
 		if (self.type === hto.enums.AppTypes.Mobile) {
-			_cookies.get("userNameOnMobile") = self.user.name;
-			_cookies.get("rememberMeOnMobile") = self.user.rememberMe;
+			if (self.user.name && self.user.name !== "undefined") {
+				_cookies.put("userNameOnMobile", self.user.name);
+			} else {
+				_cookies.put("userNameOnMobile", "");
+			}
 
+			if (self.user.rememberMe && self.user.rememberMe !== "undefined") {
+				_cookies.put("rememberMeOnMobile", true);
+			} else {
+				_cookies.put("rememberMeOnMobile", false);
+			}
 		} else {
-			_cookies.get("userNameOnDesktop") = self.user.name;
-			_cookies.get("rememberMeOnDesktop") = self.user.rememberMe;
+			if (self.user.name && self.user.name !== "undefined") {
+				_cookies.put("userNameOnDesktop", self.user.name);
+			} else {
+				_cookies.put("userNameOnDesktop", "");
+			}
+
+			if (self.user.rememberMe && self.user.rememberMe !== "undefined") {
+				_cookies.put("rememberMeOnDesktop", true);
+			} else {
+				_cookies.put("rememberMeOnDesktop", false);
+			}
 		}
 	};
 
