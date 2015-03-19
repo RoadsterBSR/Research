@@ -102,6 +102,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Client\Core\Directives\onload.js" />
+    <Content Include="Client\Core\Services\canvas.js" />
     <Content Include="Client\Core\Services\geolocation.js" />
     <Content Include="Client\Core\Directives\focus.js" />
     <Content Include="Client\Core\Models\app.js" />
@@ -162,6 +164,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\fastclick.js" />
+    <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />

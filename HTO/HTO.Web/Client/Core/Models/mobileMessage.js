@@ -10,6 +10,7 @@
 		//this.latitude = null;
 		//this.longitude = null;
 		this.message = null;
+		this.image = null
 		this.userName = null;
 	}
 

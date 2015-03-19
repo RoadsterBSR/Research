@@ -8,7 +8,7 @@ namespace HTO.Web.Server.SignalR
 {
 	public class MobileMessage
 	{
-		public int MyProperty { get; set; }
+		public string Image { get; set; }
 		public string Message { get; set; }
 		public string UserName { get; set; }
 	}

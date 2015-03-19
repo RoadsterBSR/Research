@@ -10,15 +10,23 @@
 <div class="hto-seperate-block">
 	<button class="btn" ng-click="app.onSendClick()">Versturen</button>
 </div>
+<div class="hto-seperate-block" ng-if="app.latitude">
+	Uw locatie (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).
+</div>
+<div class="hto-seperate-block" ng-if="app.latitude">
+	<img id="locationImage" ng-src="{{ app.locationImageUrl }}" hto-onload="{ load: app.onLocationImageLoad }" />
+</div>
 <div class="hto-seperate-block" ng-if="app.receivedDateTime">
 	Laatst ontvangen bericht: {{ app.receivedDateTime }}
 </div>
 <div class="hto-seperate-block" ng-if="app.sendDateTime">
 	Laatst verzonden bericht: {{ app.sendDateTime }}
 </div>
-<div class="hto-seperate-block" ng-if="app.latitude">
-	Uw locatie (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).
-</div>
+
+
+
+
+
 <div class="hto-seperate-block" ng-repeat="message in app.messages track by $index">
 	{{ message }}
 </div>

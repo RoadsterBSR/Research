@@ -1,5 +1,5 @@
 ﻿
-(function (hto, $) {
+(function (hto, $, document) {
     "use strict";
 
     
@@ -9,32 +9,12 @@
         /// Represent the Mobile app in the ui.
     	/// </summary>
 
-    	
-
     	function controller($scope) {
     		/// <summary>
     		/// When this directive is loaded, load cookie information from disk.
 			/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
     		/// </summary>
-
-    		hto.models.App.prototype.latitude = null;
-    		hto.models.App.prototype.longitude = null;
-
-    		hto.models.App.prototype.onSendClick = function () {
-    			var self = this;
-    			hto.services.geolocation.getPosition($q)
-					.then(function (position) {
-						self.latitude = position.coords.latitude;
-						self.longitude = position.coords.longitude;
-
-						//$scope.$apply(function () {
-
-						//	self.postion = position;
-						//});
-					});
-    			self.sendToDesktop('A message from the mobile application.')
-    		}
-
+			
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Mobile;
     		app.title = "HTO Mobile";
@@ -47,7 +27,32 @@
         }
 
         function link($scope, $element) {
+        	
 
+        	hto.models.App.prototype.onLocationImageLoad = function (img) {
+        		var self = this;
+        	
+        		html2canvas(img)
+					.then(function (canvas) {
+						//document.body.appendChild(canvas);
+						//var canvas = document.createElement("canvas");
+						$scope.app.locationImageDataUrl = hto.services.canvas.getDataUrlFromImage(img, canvas);
+						//document.body.appendChild(canvas);
+						//self.sendToDesktop('A message from the mobile application.');
+					}).then(function () {
+						$scope.app.sendToDesktop('A message from the mobile application.');
+					});
+        	}
+
+        	hto.models.App.prototype.onSendClick = function () {
+        		var self = this;
+        		hto.services.geolocation.getPosition($q)
+					.then(function (position) {
+						self.latitude = position.coords.latitude;
+						self.longitude = position.coords.longitude;
+						self.locationImageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + self.latitude + "," + self.longitude + "&zoom=13&size=300x300&sensor=false";
+					});
+        	}
         }
 
         return {
@@ -62,4 +67,4 @@
         .module("hto")
         .directive("htoMobile", ["$cookieStore", "$q", directive]);
 
-}(hto, $));
+}(hto, $, document));

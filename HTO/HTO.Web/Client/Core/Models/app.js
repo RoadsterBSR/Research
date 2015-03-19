@@ -19,6 +19,11 @@
 		this.title = "";
 		this.type = null;
 		this.user = new hto.models.User();
+
+		this.latitude = null;
+		this.longitude = null;
+		this.locationImageUrl = null;
+		this.locationImageDataUrl = null;
 	}
 
 	App.prototype.activate = function (cookies, hub, scope) {
@@ -119,6 +124,7 @@
 			var model = new hto.models.MobileMessage();
 			model.message = message;
 			model.userName = self.user.name;
+			model.image = self.locationImageDataUrl;
 			_hub.server.sendToDesktop(model);
 		}
 	};
