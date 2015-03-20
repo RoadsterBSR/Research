@@ -15,7 +15,7 @@
 			
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Mobile;
-    		app.title = "HTO Mobile";
+    		app.title = "HTO Mobile3";
     		
     		var cookies = $cookieStore;
     		var hub = $.connection.signatureHub;

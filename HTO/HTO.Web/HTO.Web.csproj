@@ -139,6 +139,8 @@
     <Content Include="Client\Desktop\desktop.js" />
     <Content Include="Client\Mobile\mobile.js" />
     <Content Include="gulpfile.js" />
+    <Content Include="Images\icon_36x36.png" />
+    <Content Include="Images\icon_48x48.png" />
     <Content Include="mobile.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -924,8 +926,10 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="manifest.json" />
     <None Include="Properties\PublishProfiles\hto2 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hto2 - Web Deploy.pubxml" />
+    <Content Include="Resources\manifest.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
