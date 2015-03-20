@@ -106,6 +106,7 @@
     <Content Include="Client\Core\Directives\Signature\color-selector.html" />
     <Content Include="Client\Core\Directives\Signature\signature.controller.js" />
     <Content Include="Client\Core\Directives\Signature\signature.css" />
+    <Content Include="Client\Core\Services\appcache.js" />
     <Content Include="Client\Core\Services\canvas.js" />
     <Content Include="Client\Core\Services\geolocation.js" />
     <Content Include="Client\Core\Directives\focus.js" />
@@ -926,7 +927,7 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="manifest.json" />
+    <Content Include="Resources\manifest.appcache" />
     <None Include="Properties\PublishProfiles\hto2 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hto2 - Web Deploy.pubxml" />
     <Content Include="Resources\manifest.json" />
@@ -941,10 +942,10 @@
     <Content Include="Client\Core\Services\global.error.handling.js" />
     <Content Include="favicon.ico" />
     <Content Include="Images\icon.png" />
-    <Content Include="Images\icon114x114.png" />
-    <Content Include="Images\icon144x144.png" />
-    <Content Include="Images\icon57X57.png" />
-    <Content Include="Images\icon72x72.png" />
+    <Content Include="Images\icon_114x114.png" />
+    <Content Include="Images\icon_144x144.png" />
+    <Content Include="Images\icon_57X57.png" />
+    <Content Include="Images\icon_72x72.png" />
     <Content Include="Images\icon_196x196.png" />
     <Content Include="Images\icon_256x256.png" />
     <Content Include="Images\icon_96x96.png" />
