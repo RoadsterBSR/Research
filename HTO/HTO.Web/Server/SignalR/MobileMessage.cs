@@ -8,8 +8,11 @@ namespace HTO.Web.Server.SignalR
 {
 	public class MobileMessage
 	{
-		public string Image { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string LocationImageUrl { get; set; }
 		public string Message { get; set; }
+        public string SignatureImageDataUrl { get; set; }
 		public string UserName { get; set; }
 	}
 }

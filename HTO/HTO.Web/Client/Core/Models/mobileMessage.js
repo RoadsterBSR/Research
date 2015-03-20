@@ -7,10 +7,11 @@
 		/// Represents a message sent from the mobile application.
 		/// </summary>
 
-		//this.latitude = null;
-		//this.longitude = null;
+		this.latitude = null;
+		this.longitude = null;
+		this.locationImageUrl = null;
 		this.message = null;
-		this.image = null
+		this.signatureImageDataUrl = null
 		this.userName = null;
 	}
 

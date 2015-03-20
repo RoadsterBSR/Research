@@ -29,6 +29,7 @@
 	<link href="/Client/Core/Styles/reset.css" rel="stylesheet" />
 	<link href="/Client/Core/Styles/app.css" rel="stylesheet" />
 	<link href="/Client/Core/Directives/Login/login.css" rel="stylesheet" />
+    <link href="/Client/Core/Directives/Signature/signature.css" rel="stylesheet" />
 
 </head>
 <body ng-class="{ clearBackground: app.user.isAuthenticated  }">
@@ -49,8 +50,7 @@
     <script src="/Scripts/angular.min.js"></script>
 	<script src="/Scripts/angular-cookies.min.js"></script>
 	<script src="/Scripts/fastclick.js"></script>
-	<script src="/Scripts/html2canvas.js"></script>
-
+    
 	<!-- App code -->
 	<script src="/Client/Core/Enums/enums.js"></script>
     <script src="Client/Core/Settings/settings.js"></script>
@@ -62,7 +62,8 @@
 	<script src="/Client/Core/Models/mobileMessage.js"></script>
     <script src="/Client/Core/Modules/hto.js"></script>
     <script src="/Client/Core/Directives/focus.js"></script>
-	<script src="/Client/Core/Directives/onload.js"></script>
+    <script src="/Client/Core/Directives/Signature/angular-canvas-painter.js"></script>
+    <script src="Client/Core/Directives/Signature/signature.controller.js"></script>
     <script src="/Client/Mobile/mobile.js"></script>
     <script src="/Client/Core/Directives/Login/login.js"></script>
 </body>

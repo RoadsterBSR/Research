@@ -1,32 +1,51 @@
 ﻿<h1>
-	Mobile V1
+    Mobile V1
 </h1>
 <div class="hto-seperate-block">
-	U bent inglogd als <span class="hto-text-highlight">{{ app.user.name }}</span>
+    U bent inglogd als <span class="hto-text-highlight">{{ app.user.name }}</span>
 </div>
 <div class="hto-seperate-block">
-	<button class="btn" ng-click="app.signOut()">Afmelden</button>
+    <button class="btn" ng-click="app.signOut()">Afmelden</button>
 </div>
 <div class="hto-seperate-block">
-	<button class="btn" ng-click="app.onSendClick()">Versturen</button>
+    <div class="container" ng-controller="Signature">
+        <div pw-canvas="" version="version" options="{undo: true, width: 400, height: 300, color: selectedColor, lineWidth: selectedLineWidth}">
+            <div class="pwCanvasPaint">
+                <canvas id="pwCanvasMain" width="400" height="300"></canvas>
+                <canvas id="pwCanvasTmp"></canvas>
+            </div>
+        </div>
+        <div pw-color-selector="['#000', '#9CB199', '#CF3759', '#485247', '#E77547', '#D38E47', '#0A6A74', '#153974']" color="selectedColor">
+            <ul class="pwColorSelector">
+                <li ng-repeat="color in colorList track by $index"
+                    class="pwColor" 
+                    ng-class="{'active': (selectedColor === color)}" 
+                    ng-style="{'background-color':color}" 
+                    ng-click="setColor(color)"></li>
+            </ul>
+        </div>
+        <input type="range" min="1" max="50" ng-model="selectedLineWidth" class="lineWidthSelector">
+
+        <div class="undo">
+            <button ng-click="undo()" ng-disabled="version < 1">Undo (Version {{ version }})</button>
+        </div>
+    </div>
+</div>
+<div class="hto-seperate-block">
+    <button class="btn" ng-click="app.onSendToDekstopClick()">Versturen</button>
 </div>
 <div class="hto-seperate-block" ng-if="app.latitude">
-	Uw locatie (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).
+    Uw locatie (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).
 </div>
-<div class="hto-seperate-block" ng-if="app.latitude">
-	<img id="locationImage" ng-src="{{ app.locationImageUrl }}" hto-onload="{ load: app.onLocationImageLoad }" />
+<div class="hto-seperate-block" ng-if="app.locationImageUrl">
+    <img id="locationImage" ng-src="{{ app.locationImageUrl }}" />
 </div>
 <div class="hto-seperate-block" ng-if="app.receivedDateTime">
-	Laatst ontvangen bericht: {{ app.receivedDateTime }}
+    Laatst ontvangen bericht: {{ app.receivedDateTime }}
 </div>
 <div class="hto-seperate-block" ng-if="app.sendDateTime">
-	Laatst verzonden bericht: {{ app.sendDateTime }}
+    Laatst verzonden bericht: {{ app.sendDateTime }}
 </div>
-
-
-
-
-
 <div class="hto-seperate-block" ng-repeat="message in app.messages track by $index">
-	{{ message }}
+    {{ message }}
 </div>

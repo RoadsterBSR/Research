@@ -8,25 +8,25 @@
 
 	var _cookies = null;
 	var _hub = null;
+	var _q = null;
 	var _scope = null;
 
 	function App() {
 		this.connected = false;
+		this.latitude = null;
+		this.longitude = null;
+		this.locationImageUrl = null;
 		this.messages = [];
 		this.receivedDateTime = null;
 		this.sendDateTime = null;
+		this.signatureImageDataUrl = null;
 		this.templateUrl = hto.settings.urls.loginTemplate;
 		this.title = "";
 		this.type = null;
 		this.user = new hto.models.User();
-
-		this.latitude = null;
-		this.longitude = null;
-		this.locationImageUrl = null;
-		this.locationImageDataUrl = null;
 	}
 
-	App.prototype.activate = function (cookies, hub, scope) {
+	App.prototype.activate = function (cookies, hub, scope, q) {
 		/// <summary>
 		/// After the application is constructed, this function should be called to start the application.
 		/// </summary>
@@ -35,6 +35,7 @@
 
 		_cookies = cookies;
 		_hub = hub;
+		_q = q;
 		_scope = scope;
 
 		self.storeCookieInfoOnModel();
@@ -96,6 +97,10 @@
 				_scope.$apply(function () {
 					self.receivedDateTime = new Date();
 					self.messages.push(message.Message);
+					self.latitude = message.Latitude;
+					self.longitude = message.Longitude;
+					self.locationImageUrl = message.LocationImageUrl;
+					self.signatureImageDataUrl = message.SignatureImageDataUrl;
 				});
 			};
 		}
@@ -113,6 +118,18 @@
             });
 	};
 
+	App.prototype.onSendToDekstopClick = function () {
+	    var self = this;
+	    hto.services.geolocation.getPosition(_q)
+            .then(function (position) {
+                self.latitude = position.coords.latitude;
+                self.longitude = position.coords.longitude;
+                self.locationImageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + self.latitude + "," + self.longitude + "&zoom=13&size=300x300&sensor=false";
+                self.signatureImageDataUrl = hto.services.canvas.getDataUrl("pwCanvasMain", false);
+                self.sendToDesktop("Een bericht van de mobiele applicatie");
+            });
+	}
+
 	App.prototype.sendToDesktop = function (message) {
 		/// <summary>
 		/// Send a message to the Desktop application.
@@ -120,11 +137,16 @@
 		var self = this;
 
 		if (self.connected) {
-			self.sendDateTime = new Date();
+		    self.sendDateTime = new Date();
+
 			var model = new hto.models.MobileMessage();
+			model.latitude = self.latitude;
+			model.longitude = self.longitude;
+			model.locationImageUrl = self.locationImageUrl;
 			model.message = message;
 			model.userName = self.user.name;
-			model.image = self.locationImageDataUrl;
+			model.signatureImageDataUrl = self.signatureImageDataUrl;
+			
 			_hub.server.sendToDesktop(model);
 		}
 	};

@@ -102,7 +102,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\Core\Directives\onload.js" />
+    <Content Include="Client\Core\Directives\Signature\canvas.html" />
+    <Content Include="Client\Core\Directives\Signature\color-selector.html" />
+    <Content Include="Client\Core\Directives\Signature\signature.controller.js" />
+    <Content Include="Client\Core\Directives\Signature\signature.css" />
     <Content Include="Client\Core\Services\canvas.js" />
     <Content Include="Client\Core\Services\geolocation.js" />
     <Content Include="Client\Core\Directives\focus.js" />
@@ -123,12 +126,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Properties\PublishProfiles\hto2.pubxml" />
     <Content Include="Client\Core\Directives\Login\bg1.png" />
     <Content Include="Client\Core\Directives\Login\login.css" />
     <Content Include="Client\Core\Directives\Login\login.html" />
     <Content Include="Client\Core\Directives\Login\login.js" />
-    <Content Include="Client\Core\Directives\drawing.js" />
+    <Content Include="Client\Core\Directives\Signature\drawing.js" />
     <Content Include="Client\Core\namespaces.js" />
     <Content Include="Client\Core\Models\user.js" />
     <Content Include="Client\Core\Modules\hto.js" />
@@ -142,6 +144,8 @@
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
     <Content Include="Scripts\angular-aria.min.js" />
+    <Content Include="Client\Core\Directives\Signature\angular-canvas-painter.js" />
+    <Content Include="Client\Core\Directives\Signature\angular-canvas-painter.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
@@ -164,7 +168,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\fastclick.js" />
-    <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -921,6 +924,8 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\hto2 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hto2 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

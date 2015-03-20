@@ -8,6 +8,15 @@
 <div class="hto-seperate-block">
 	<button class="btn" ng-click="app.sendToMobile('A message from the desktop application.')">Versturen</button>
 </div>
+<div class="hto-seperate-block" ng-if="app.latitude">
+    De hantekening is gezet op de locatie: (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).
+</div>
+<div class="hto-seperate-block" ng-if="app.latitude">
+    <img id="locationImage" ng-src="{{ app.locationImageUrl }}" />
+</div>
+<div class="hto-seperate-block" ng-if="app.latitude">
+    <img id="signatureImage" ng-src="{{ app.signatureImageDataUrl }}" />
+</div>
 <div class="hto-seperate-block" ng-if="app.receivedDateTime">
 	Laatst ontvangen bericht: {{ app.receivedDateTime }}
 </div>
