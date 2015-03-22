@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html manifest="/Resources/manifest.appcache" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="hto">
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="hto">
 <head>
     <title>HTO</title>
     <meta charset="utf-8">
@@ -9,28 +9,30 @@
 	<meta name="apple-mobile-web-app-title" content="HTO">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	
-    <!-- App icons. -->
-    <!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
-    <!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
-    <meta name="msapplication-TileColor" content="#222222">
-    <meta name="msapplication-TileImage" content="/Images/icon_144x144.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Images/icon_144x144.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Images/icon_114x114.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Images/icon_72x72.png">
-    <link rel="apple-touch-icon-precomposed" href="/Images/icon_57X57.png">
-    <link rel="shortcut icon" sizes="196x196" href="/Images/icon_196x196.png">
-    <link rel="shortcut icon" href="/Images/icon_256x256.png">
-    <link rel="icon" href="/Images/icon_96x96.png">
-    <link rel="manifest" href="/Resources/manifest.json">
+	<!--<html manifest="/Resources/manifest.appcache" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="hto">-->
+
+	<!-- App icons. -->
+	<!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
+	<!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
+	<meta name="msapplication-TileColor" content="#222222">
+	<meta name="msapplication-TileImage" content="/Images/icon_144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Images/icon_144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Images/icon_114x114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Images/icon_72x72.png">
+	<link rel="apple-touch-icon-precomposed" href="/Images/icon_57X57.png">
+	<link rel="shortcut icon" sizes="196x196" href="/Images/icon_196x196.png">
+	<link rel="shortcut icon" href="/Images/icon_256x256.png">
+	<link rel="icon" href="/Images/icon_96x96.png">
+	<link rel="manifest" href="/Resources/manifest.json">
 
 	<!-- Library styles-->
-	<link href="Content/bootstrap.min.css" rel="stylesheet" />
+	<link href="/Content/bootstrap.min.css" rel="stylesheet" />
 
 	<!-- App styles -->
 	<link href="/Client/Core/Styles/reset.css" rel="stylesheet" />
 	<link href="/Client/Core/Styles/app.css" rel="stylesheet" />
 	<link href="/Client/Core/Directives/Login/login.css" rel="stylesheet" />
-    <link href="/Client/Core/Directives/Signature/signature.css" rel="stylesheet" />
+	<link href="/Client/Core/Directives/Signature/signature.css" rel="stylesheet" />
 
 </head>
 <body ng-class="{ clearBackground: app.user.isAuthenticated  }">

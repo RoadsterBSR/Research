@@ -8,7 +8,7 @@
     <button class="btn" ng-click="app.signOut()">Afmelden</button>
 </div>
 <div class="hto-seperate-block">
-    <div class="container" ng-controller="Signature">
+    <div class="pwContainer" ng-controller="Signature">
         <div pw-canvas="" version="version" options="{undo: true, width: 400, height: 300, color: selectedColor, lineWidth: selectedLineWidth}">
             <div class="pwCanvasPaint">
                 <canvas id="pwCanvasMain" width="400" height="300"></canvas>
@@ -25,7 +25,7 @@
             </ul>
         </div>
         <input type="range" min="1" max="50" ng-model="selectedLineWidth" class="lineWidthSelector">
-
+		<div>{{ selectedLineWidth }}</div>
         <div class="undo">
             <button ng-click="undo()" ng-disabled="version < 1">Undo (Version {{ version }})</button>
         </div>

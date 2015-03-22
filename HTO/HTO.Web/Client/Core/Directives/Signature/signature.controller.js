@@ -7,7 +7,7 @@
 	    /// <summary>
 	    /// 
 	    /// </summary>
-
+		$scope.version = 0;
 	    $scope.selectedLineWidth = 10;
 
 	    $scope.undo = function () {

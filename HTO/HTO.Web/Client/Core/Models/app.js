@@ -20,7 +20,7 @@
 		this.receivedDateTime = null;
 		this.sendDateTime = null;
 		this.signatureImageDataUrl = null;
-		this.templateUrl = hto.settings.urls.loginTemplate;
+		this.templateUrl = "";
 		this.title = "";
 		this.type = null;
 		this.user = new hto.models.User();
@@ -113,6 +113,8 @@
 
             		if (self.user.rememberMe && self.user.name) {
             			self.authenticate();
+            		} else {
+            			self.templateUrl = hto.settings.urls.loginTemplate;
             		}
             	});
             });
