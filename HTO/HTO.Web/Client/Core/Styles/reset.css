@@ -7,7 +7,7 @@ html, body {
     height: 100%;
 }
 
-a, div, form, p, h1, h2, h3, h4, h5, h6, input, li, select, span, table, td, textarea, th, tr, ul {
+a, button, div, form, p, h1, h2, h3, h4, h5, h6, input, li, select, span, table, td, textarea, th, tr, ul {
     border: 0;
     border-image-width: 0;
     -webkit-box-sizing: border-box;

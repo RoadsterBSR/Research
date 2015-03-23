@@ -131,7 +131,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Client\Core\Directives\Login\bg1.png" />
     <Content Include="Client\Core\Directives\Login\login.css" />
     <Content Include="Client\Core\Directives\Login\login.html" />
     <Content Include="Client\Core\Directives\Login\login.js" />

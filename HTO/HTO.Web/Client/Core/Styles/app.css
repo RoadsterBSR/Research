@@ -1,4 +1,8 @@
 ﻿
+body {
+	background-color: rgb(243, 243, 243);
+}
+
 .hto-card {
     -webkit-box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
     -webkit-font-smoothing: antialiased;

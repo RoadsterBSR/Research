@@ -1,6 +1,6 @@
 ﻿CACHE MANIFEST
 
-# version {{ 2015-03-23T14:14:03.771Z }}
+# version {{ 2015-03-23T16:47:05.275Z }}
 
 CACHE:
 
@@ -15,7 +15,6 @@ CACHE:
 
 # image files
 /favicon.ico
-/Client/Core/Directives/Login/bg1.png
 /Images/icon.png
 /Images/icon_114x114.png
 /Images/icon_144x144.png
