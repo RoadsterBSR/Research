@@ -12,10 +12,17 @@
 </div>
 <div class="hto-seperate-block hto-card">
     <div class="hto-h3">Chat</div>
-    <div class="hto-seperate-block" ng-repeat="message in app.chatMessages track by $index">
-        <div>{{ message.Message }}</div>
-        <div>{{ message.ReceivedDateTime }}</div>
-        <div>{{ message.SendDateTime }}</div>
+    <div class="hto-seperate-block">
+        <input class="hto-input-text" ng-model="app.chatMessage" />
+        <button class="btn" ng-click="app.sendChatMessage()">Versturen</button>
+    </div>
+    <div class="hto-seperate-block hto-flex hto-flex-center" ng-repeat="message in app.chatMessages track by $index">
+        <div class="hto-flex-item-fixed"><i class="fa fa-mobile fa-3x"></i></div>
+        <div class="hto-flex-item-fixed">
+            <div class="hto-h4">{{ message.Message }}</div>
+            <div class="hto-text-small">Ontvangen: {{ message.ReceivedDateTime | date : "dd-MM-yyyy HH:mm:ss" }}</div>
+            <div class="hto-text-small">Verstuurd: {{ message.SendDateTime | date : "dd-MM-yyyy HH:mm:ss" }}</div>
+        </div>
     </div>
 </div>
 <div class="hto-seperate-block">

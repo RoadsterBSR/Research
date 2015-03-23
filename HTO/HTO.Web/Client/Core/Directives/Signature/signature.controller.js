@@ -12,7 +12,7 @@
 
 	    $scope.undo = function () {
 	        $scope.version--;
-	    }
+	    };
 	}
 
 	angular

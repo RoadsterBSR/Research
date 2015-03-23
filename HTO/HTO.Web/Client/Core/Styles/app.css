@@ -10,15 +10,96 @@
     padding: 12px;
 }
 
+.hto-flex {
+    -webkit-flex-direction: row;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+}
+
+.hto-flex-center {
+    align-items: center;
+}
+
+.hto-flex-item-fixed {
+    -webkit-flex: 0 1 auto;
+    flex: 0 1 auto;
+    padding: 0 12px 0 0;
+}
+
+.hto-input-text {
+    -webkit-appearance: none;
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    -webkit-font-smoothing: antialiased;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    -webkit-writing-mode: horizontal-tb;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-color: rgba(0, 0, 0, 0.117647);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-style: inset;
+    border-bottom-width: 1px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: rgba(0, 0, 0, 0.117647);
+    border-left-style: inset;
+    border-left-width: 0px;
+    border-right-color: rgba(0, 0, 0, 0.117647);
+    border-right-style: inset;
+    border-right-width: 0px;
+    border-top-color: rgba(0, 0, 0, 0.117647);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top-style: inset;
+    border-top-width: 0px;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.870588);
+    cursor: auto;
+    letter-spacing: normal;
+    line-height: 26px;
+    margin: 0;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    text-align: start;
+    text-indent: 0;
+    text-shadow: none;
+    text-transform: none;
+    vertical-align: baseline;
+    width: 273.328125px;
+    word-spacing: 0;
+}
+
 .hto-h3 {
     color: rgb(97, 97, 97);
     font-size: 20px;
 }
 
+.hto-h4 {
+    color: rgb(97, 97, 97);
+    font-size: 16px;
+}
+
 .hto-seperate-block {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .hto-text-highlight {
-	color: steelblue;
+    color: steelblue;
+}
+
+.hto-text-small {
+    font-size: 10px;
 }

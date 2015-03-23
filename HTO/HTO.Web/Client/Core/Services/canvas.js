@@ -7,10 +7,7 @@
 
 	Canvas.prototype.getDataUrl = function (id, removePrefix) {
 	    var canvas = document.getElementById(id);
-	    var dataURL = canvas.toDataURL();
-
 		var dataURL = canvas.toDataURL("image/png");
-
 		if (removePrefix) {
 			dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 		}

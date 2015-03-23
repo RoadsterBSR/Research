@@ -4,8 +4,9 @@
  * Copyright (c) 2015, Philipp Wambach
  * Released under the MIT license.
  */
-'use strict';
-(function (window) {
+
+(function (angular, document, navigator, window) {
+    "use strict";
 
 	(function (module) {
 		try {
@@ -261,4 +262,4 @@
       	};
       });
 
-}(this));
+}(angular, document, navigator, window));

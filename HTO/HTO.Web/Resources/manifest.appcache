@@ -1,6 +1,6 @@
 ﻿CACHE MANIFEST
 
-# version {{ 2015-03-23T07:56:19.199Z }}
+# version {{ 2015-03-23T14:14:03.771Z }}
 
 CACHE:
 
@@ -28,6 +28,12 @@ CACHE:
 /Images/icon_96x96.png
 
 # font files
+/Client/Libraries/Fontawesome/fontawesome-webfont.eot
+/Client/Libraries/Fontawesome/fontawesome-webfont.eot
+/Client/Libraries/Fontawesome/fontawesome-webfont.woff
+/Client/Libraries/Fontawesome/fontawesome-webfont.woff2
+/Client/Libraries/Fontawesome/fontawesome-webfont.ttf
+/Client/Libraries/Fontawesome/fontawesome-webfont.svg
 /fonts/glyphicons-halflings-regular.eot
 /fonts/glyphicons-halflings-regular.svg
 /fonts/glyphicons-halflings-regular.ttf
@@ -36,6 +42,7 @@ CACHE:
 
 # css files
 /Content/bootstrap.min.css
+/Client/Libraries/Fontawesome/font-awesome.min.css
 /Client/Core/Styles/reset.css
 /Client/Core/Styles/app.css
 /Client/Core/Directives/Login/login.css

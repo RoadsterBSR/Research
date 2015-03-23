@@ -1,4 +1,4 @@
-﻿<h1>Desktop V2</h1>
+﻿<h1>Desktop V3</h1>
 <div class="hto-seperate-block">
 	U bent inglogd als <span class="hto-text-highlight">{{ app.user.name }}</span>
 </div>
@@ -7,14 +7,18 @@
 </div>
 <div class="hto-seperate-block hto-card">
     <div class="hto-h3">Chat</div>
-    <div class="hto-seperate-block" ng-repeat="message in app.chatMessages track by $index">
-        <div>{{ message.Message }}</div>
-        <div>{{ message.ReceivedDateTime }}</div>
-        <div>{{ message.SendDateTime }}</div>
+    <div class="hto-seperate-block">
+        <input class="hto-input-text" ng-model="app.chatMessage" />
+        <button class="btn" ng-click="app.sendChatMessage()">Versturen</button>
     </div>
-</div>
-<div class="hto-seperate-block">
-	<button class="btn" ng-click="app.sendToMobile('A message from the desktop application.')">Versturen</button>
+    <div class="hto-seperate-block hto-flex hto-flex-center" ng-repeat="message in app.chatMessages track by $index">
+        <div class="hto-flex-item-fixed"><i class="fa fa-laptop fa-3x"></i></div>
+        <div class="hto-flex-item-fixed">
+            <div class="hto-h4">{{ message.Message }}</div>
+            <div class="hto-text-small">Ontvangen: {{ message.ReceivedDateTime | date : "dd-MM-yyyy HH:mm:ss" }}</div>
+            <div class="hto-text-small">Verstuurd: {{ message.SendDateTime | date : "dd-MM-yyyy HH:mm:ss" }}</div>
+        </div>
+    </div>
 </div>
 <div class="hto-seperate-block" ng-if="app.latitude">
     De hantekening is gezet op de locatie: (latitude, longitude): ({{ app.latitude }}°, {{ app.longitude }}°).

@@ -11,7 +11,7 @@
 		this.longitude = null;
 		this.locationImageUrl = null;
 		this.message = null;
-		this.signatureImageDataUrl = null
+		this.signatureImageDataUrl = null;
 		this.userName = null;
 	}
 

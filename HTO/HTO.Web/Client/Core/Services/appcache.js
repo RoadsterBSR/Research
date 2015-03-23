@@ -25,7 +25,7 @@
 
 	    // Prevents 2 page reloads.
 	    _detectedNewVersion = true;
-	}
+	};
 
 	hto.services.appcache = new Appcache();
 	hto.services.appcache.initialize();

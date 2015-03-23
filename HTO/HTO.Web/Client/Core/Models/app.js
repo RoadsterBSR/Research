@@ -29,20 +29,20 @@
 	}
 
 	App.prototype.activate = function (cookies, hub, scope, q) {
-		/// <summary>
-		/// After the application is constructed, this function should be called to start the application.
-		/// </summary>
+	    /// <summary>
+	    /// After the application is constructed, this function should be called to start the application.
+	    /// </summary>
 
-		var self = this;
+	    var self = this;
 
-		_cookies = cookies;
-		_hub = hub;
-		_q = q;
-		_scope = scope;
+	    _cookies = cookies;
+	    _hub = hub;
+	    _q = q;
+	    _scope = scope;
 
-		self.storeCookieInfoOnModel();
-		self.initializeSignalR();
-	}
+	    self.storeCookieInfoOnModel();
+	    self.initializeSignalR();
+	};
 
 	App.prototype.authenticate = function () {
 		/// <summary>
@@ -90,7 +90,7 @@
         // Both desktop and client use the same function to show chat messages.
 		_hub.client.showChatMessage = function (message) {
 		    _scope.$apply(function () {
-		        message.receivedDateTime = new Date();
+		        message.ReceivedDateTime = new Date();
 		        self.chatMessages.push(message);
 		    });
 		};
@@ -140,7 +140,7 @@
                 self.signatureImageDataUrl = hto.services.canvas.getDataUrl("pwCanvasMain", false);
                 self.sendToDesktop("Een bericht van de mobiele applicatie");
             });
-	}
+	};
 
 	App.prototype.refresh = function () {
 	    /// <summary>
@@ -155,13 +155,17 @@
 	    /// Send chat message.
 	    /// </summary>
 
+	    var self = this;
 	    var model = new hto.models.ChatMessage();
-	    model.from = null;
-	    model.message = null;
+	    model.from = self.type;
+	    model.message = self.chatMessage;
 	    model.receivedDateTime = null;
-	    model.sendDateTime = null;
-	    model.to = "";
-	    model.userName = self.user.name;;
+	    model.sendDateTime = new Date();
+	    model.to = hto.enums.AppTypes.Mobile;
+	    if (self.type === hto.enums.AppTypes.Mobile) {
+	        model.to = hto.enums.AppTypes.Desktop;
+	    }
+	    model.userName = self.user.name;
 
 	    _hub.server.sendChatMessage(model);
 	};

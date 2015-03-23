@@ -117,6 +117,9 @@
     <Content Include="Client\Core\Models\mobileMessage.js" />
     <Content Include="Client\Core\Styles\app.css" />
     <Content Include="Client\Core\Styles\reset.css" />
+    <Content Include="Client\Libraries\Fontawesome\font-awesome.css" />
+    <Content Include="Client\Libraries\Fontawesome\font-awesome.min.css" />
+    <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.svg" />
     <Content Include="Client\Mobile\mobile.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
@@ -149,7 +152,6 @@
     <Content Include="Scripts\angular-aria.js" />
     <Content Include="Scripts\angular-aria.min.js" />
     <Content Include="Client\Core\Directives\Signature\angular-canvas-painter.js" />
-    <Content Include="Client\Core\Directives\Signature\angular-canvas-painter.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
@@ -929,6 +931,11 @@
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Resources\manifest.appcache" />
+    <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.eot" />
+    <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.ttf" />
+    <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.woff" />
+    <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.woff2" />
+    <Content Include="Client\Libraries\Fontawesome\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\hto2 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hto2 - Web Deploy.pubxml" />
     <Content Include="Resources\manifest.json" />
