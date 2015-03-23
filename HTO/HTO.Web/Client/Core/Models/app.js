@@ -1,5 +1,5 @@
 ﻿
-(function (hto, $) {
+(function (hto, $, document) {
 	/// <summary>
 	/// This is the main model for the mobile and desktop application.
 	/// </summary>
@@ -12,6 +12,8 @@
 	var _scope = null;
 
 	function App() {
+	    this.chatMessage = null;
+	    this.chatMessages = [];
 		this.connected = false;
 		this.latitude = null;
 		this.longitude = null;
@@ -85,6 +87,14 @@
 		/// </summary>
 		var self = this;
 
+        // Both desktop and client use the same function to show chat messages.
+		_hub.client.showChatMessage = function (message) {
+		    _scope.$apply(function () {
+		        message.receivedDateTime = new Date();
+		        self.chatMessages.push(message);
+		    });
+		};
+
 		if (self.type === hto.enums.AppTypes.Mobile) {
 			_hub.client.showMessageOnMobile = function (message) {
 				_scope.$apply(function () {
@@ -131,6 +141,30 @@
                 self.sendToDesktop("Een bericht van de mobiele applicatie");
             });
 	}
+
+	App.prototype.refresh = function () {
+	    /// <summary>
+	    /// Reload the current page, without using the cache.
+	    /// </summary>
+
+	    document.location.reload(true);
+	};
+
+	App.prototype.sendChatMessage = function () {
+	    /// <summary>
+	    /// Send chat message.
+	    /// </summary>
+
+	    var model = new hto.models.ChatMessage();
+	    model.from = null;
+	    model.message = null;
+	    model.receivedDateTime = null;
+	    model.sendDateTime = null;
+	    model.to = "";
+	    model.userName = self.user.name;;
+
+	    _hub.server.sendChatMessage(model);
+	};
 
 	App.prototype.sendToDesktop = function (message) {
 		/// <summary>
@@ -234,4 +268,4 @@
 
 	hto.models.App = App;
 
-}(hto, $));
+}(hto, $, document));

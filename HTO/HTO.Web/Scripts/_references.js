@@ -7,5 +7,6 @@
 /// <reference path="/Client/Core/Services/canvas.js" />
 /// <reference path="/Client/Core/Models/app.js" />
 /// <reference path="/Client/Core/Models/user.js" />
+/// <reference path="/Client/Core/Models/chatMessage.js" />
 /// <reference path="/Client/Core/Models/desktopMessage.js" />
 /// <reference path="/Client/Core/Models/mobileMessage.js" />

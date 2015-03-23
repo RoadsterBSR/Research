@@ -106,6 +106,7 @@
     <Content Include="Client\Core\Directives\Signature\color-selector.html" />
     <Content Include="Client\Core\Directives\Signature\signature.controller.js" />
     <Content Include="Client\Core\Directives\Signature\signature.css" />
+    <Content Include="Client\Core\Models\chatMessage.js" />
     <Content Include="Client\Core\Services\appcache.js" />
     <Content Include="Client\Core\Services\canvas.js" />
     <Content Include="Client\Core\Services\geolocation.js" />
@@ -967,7 +968,9 @@
     <Compile Include="Server\Authentication\AuthenticationController.cs" />
     <Compile Include="Server\Config\WebApiConfig.cs" />
     <Compile Include="Server\Desktop\DesktopController.cs" />
+    <Compile Include="Server\Enums\Enums.cs" />
     <Compile Include="Server\Mobile\MobileController.cs" />
+    <Compile Include="Server\SignalR\ChatMessage.cs" />
     <Compile Include="Server\SignalR\IClient.cs" />
     <Compile Include="Server\SignalR\MobileMessage.cs" />
     <Compile Include="Server\SignalR\DesktopMessage.cs" />

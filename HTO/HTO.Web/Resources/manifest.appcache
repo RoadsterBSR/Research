@@ -1,6 +1,6 @@
 ﻿CACHE MANIFEST
 
-# version {{ 2015-03-20T14:52:59.906Z }}
+# version {{ 2015-03-23T07:56:19.199Z }}
 
 CACHE:
 
@@ -58,6 +58,7 @@ CACHE:
 /Client/Core/Services/canvas.js
 /Client/Core/Models/user.js
 /Client/Core/Models/app.js
+/Client/Core/Models/chatMessage.js
 /Client/Core/Models/desktopMessage.js
 /Client/Core/Models/mobileMessage.js
 /Client/Core/Modules/hto.js

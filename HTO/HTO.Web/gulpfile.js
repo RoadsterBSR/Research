@@ -104,9 +104,12 @@
         /// </summary>
 
         livereload.listen();
-        gulp.watch("./Client/**/*.js", ["fingerprint-appcache"]);
+        gulp.watch([
+            "./Client/**/*.css",
+            "./Client/**/*.html",
+            "./Client/**/*.js",
+        ], ["fingerprint-appcache"]);
     });
-
     
     gulp.task("jshint", function () {
         /// <summary>

@@ -5,7 +5,18 @@
     U bent inglogd als <span class="hto-text-highlight">{{ app.user.name }}</span>
 </div>
 <div class="hto-seperate-block">
+    <button class="btn" ng-click="app.refresh()">Refresh</button>
+</div>
+<div class="hto-seperate-block">
     <button class="btn" ng-click="app.signOut()">Afmelden</button>
+</div>
+<div class="hto-seperate-block hto-card">
+    <div class="hto-h3">Chat</div>
+    <div class="hto-seperate-block" ng-repeat="message in app.chatMessages track by $index">
+        <div>{{ message.Message }}</div>
+        <div>{{ message.ReceivedDateTime }}</div>
+        <div>{{ message.SendDateTime }}</div>
+    </div>
 </div>
 <div class="hto-seperate-block">
     <div class="pwContainer" ng-controller="Signature">

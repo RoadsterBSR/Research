@@ -47,10 +47,40 @@ namespace HTO.Web.Server.SignalR
 				}
 			}
         }
-		
-		/// <summary>
-		/// When the desktop connection for this user exists, send the message to the desktop application.
-		/// </summary>
+
+        /// <summary>
+        /// Sends a chat message.
+        /// Based on the "To" fiel in the message, the message will be sent to the desktop or mobile.
+        /// </summary>
+        public void SendChatMessage(ChatMessage message)
+        {
+            if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
+            {
+                string connectionId = null;
+                switch (message.To)
+                {
+                    case Enums.ApplicationTypes.Destkop:
+                        if (_desktopConnections.ContainsKey(message.UserName))
+                        {
+                            connectionId = _desktopConnections[message.UserName];
+                            Clients.Client(connectionId).ShowChatMessage(message);
+                        }
+                        break;
+                    case Enums.ApplicationTypes.Mobile:
+                        if (_mobileConnections.ContainsKey(message.UserName))
+                        {
+                            connectionId = _mobileConnections[message.UserName];
+                            Clients.Client(connectionId).ShowChatMessage(message);
+                        }
+                        break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// When the desktop connection for this user exists, send the message to the desktop application.
+        /// </summary>
         public void SendToDesktop(MobileMessage message)
         {
 			if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
