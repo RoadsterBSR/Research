@@ -59,14 +59,14 @@ namespace HTO.Web.Server.SignalR
                 string connectionId = null;
                 switch (message.To)
                 {
-                    case Enums.ApplicationTypes.Destkop:
+                    case Enums.AppTypes.Desktop:
                         if (_desktopConnections.ContainsKey(message.UserName))
                         {
                             connectionId = _desktopConnections[message.UserName];
                             Clients.Client(connectionId).ShowChatMessage(message);
                         }
                         break;
-                    case Enums.ApplicationTypes.Mobile:
+                    case Enums.AppTypes.Mobile:
                         if (_mobileConnections.ContainsKey(message.UserName))
                         {
                             connectionId = _mobileConnections[message.UserName];
