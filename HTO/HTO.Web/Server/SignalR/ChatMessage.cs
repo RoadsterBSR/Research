@@ -5,11 +5,11 @@ namespace HTO.Web.Server.SignalR
 {
     public class ChatMessage
     {
-        public ApplicationTypes From { get; set; }
+        public AppTypes From { get; set; }
         public string Message { get; set; }
         public DateTime? ReceivedDateTime { get; set; }
         public DateTime SendDateTime { get; set; }
-        public ApplicationTypes To { get; set; }
+        public AppTypes To { get; set; }
         public string UserName { get; set; }
     }
 }
