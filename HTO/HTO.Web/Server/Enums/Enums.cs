@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HTO.Web.Server.Enums
 {
-    public enum ApplicationTypes
-    {
-        Destkop = 1,
+    public enum AppTypes
+	{
+        Desktop = 1,
         Mobile = 2
     }
 }
