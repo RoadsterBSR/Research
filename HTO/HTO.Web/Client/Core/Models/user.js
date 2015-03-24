@@ -12,6 +12,7 @@
         this.password = "";
         this.passwordLabel = "Wachtwoord";
         this.rememberMe = false;
+        this.token = null;
 	}
 
 	hto.models.User = User;

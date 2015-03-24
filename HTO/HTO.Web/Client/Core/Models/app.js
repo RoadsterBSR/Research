@@ -51,30 +51,37 @@
 		/// </summary>
 		var self = this;
 
-		// TODO: request for authentication.
+		_hub.server.getToken(self.user.name, self.user.password, self.type)
+			.done(function (token) {
+				self.handleAuthenticationResult(token);
+			});
 
-		self.handleAuthenticationResult();
+		
 	};
 
 	App.prototype.getTemplateUrl = function () {
 		return this.templateUrl;
 	};
 
-	App.prototype.handleAuthenticationResult = function () {
+	App.prototype.handleAuthenticationResult = function (token) {
 		/// <summary>
 		/// This function is called, when the user is sucessfully authenticated.
 		/// </summary>
 
 		var self = this;
-		self.user.isAuthenticated = true;
-		self.storeCookieInfoOnDisk();
 
-		if (self.type === hto.enums.AppTypes.Mobile) {
-			self.templateUrl = hto.settings.urls.mobileTemplate;
-			_hub.server.registerMobileConnectionId(self.user.name);
+		if (token) {
+			self.user.token = token;
+			self.user.isAuthenticated = true;
+			self.storeCookieInfoOnDisk();
+
+			if (self.type === hto.enums.AppTypes.Mobile) {
+				self.templateUrl = hto.settings.urls.mobileTemplate;
+			} else {
+				self.templateUrl = hto.settings.urls.desktopTemplate;
+			}
 		} else {
-			self.templateUrl = hto.settings.urls.desktopTemplate;
-			_hub.server.registerDesktopConnectionId(self.user.name);
+			// TODO: show error message.
 		}
 	};
 
@@ -88,32 +95,23 @@
 		var self = this;
 
         // Both desktop and client use the same function to show chat messages.
-		_hub.client.showChatMessage = function (message) {
+		_hub.client.showChat = function (message) {
 		    _scope.$apply(function () {
 		        message.ReceivedDateTime = new Date();
 		        self.chatMessages.push(message);
 		    });
 		};
 
-		if (self.type === hto.enums.AppTypes.Mobile) {
-			_hub.client.showMessageOnMobile = function (message) {
-				_scope.$apply(function () {
-					self.receivedDateTime = new Date();
-					self.messages.push(message.Message);
-				});
-			};
-		} else {
-			_hub.client.showMessageOnDekstop = function (message) {
-				_scope.$apply(function () {
-					self.receivedDateTime = new Date();
-					self.messages.push(message.Message);
-					self.latitude = message.Latitude;
-					self.longitude = message.Longitude;
-					self.locationImageUrl = message.LocationImageUrl;
-					self.signatureImageDataUrl = message.SignatureImageDataUrl;
-				});
-			};
-		}
+		_hub.client.showSignature = function (message) {
+			_scope.$apply(function () {
+				self.receivedDateTime = new Date();
+				self.messages.push(message.Message);
+				self.latitude = message.Latitude;
+				self.longitude = message.Longitude;
+				self.locationImageUrl = message.LocationImageUrl;
+				self.signatureImageDataUrl = message.SignatureImageDataUrl;
+			});
+		};
 
 		$.connection.hub
             .start()
@@ -130,7 +128,7 @@
             });
 	};
 
-	App.prototype.onSendToDekstopClick = function () {
+	App.prototype.onSendSignatureClick = function () {
 	    var self = this;
 	    hto.services.geolocation.getPosition(_q)
             .then(function (position) {
@@ -138,7 +136,7 @@
                 self.longitude = position.coords.longitude;
                 self.locationImageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + self.latitude + "," + self.longitude + "&zoom=13&size=300x300&sensor=false";
                 self.signatureImageDataUrl = hto.services.canvas.getDataUrl("pwCanvasMain", false);
-                self.sendToDesktop("Een bericht van de mobiele applicatie");
+                self.sendSignature();
             });
 	};
 
@@ -150,7 +148,7 @@
 	    document.location.reload(true);
 	};
 
-	App.prototype.sendChatMessage = function () {
+	App.prototype.sendChat = function () {
 	    /// <summary>
 	    /// Send chat message.
 	    /// </summary>
@@ -167,10 +165,10 @@
 	    }
 	    model.userName = self.user.name;
 
-	    _hub.server.sendChatMessage(model);
+	    _hub.server.sendChat(model);
 	};
 
-	App.prototype.sendToDesktop = function (message) {
+	App.prototype.sendSignature = function (message) {
 		/// <summary>
 		/// Send a message to the Desktop application.
 		/// </summary>
@@ -179,30 +177,17 @@
 		if (self.connected) {
 		    self.sendDateTime = new Date();
 
-			var model = new hto.models.MobileMessage();
+		    var model = new hto.models.SignatureMessage();
+		    model.from = hto.enums.AppTypes.Mobile;
 			model.latitude = self.latitude;
 			model.longitude = self.longitude;
 			model.locationImageUrl = self.locationImageUrl;
 			model.message = message;
-			model.userName = self.user.name;
+			model.to = hto.enums.AppTypes.Desktop;
 			model.signatureImageDataUrl = self.signatureImageDataUrl;
-			
-			_hub.server.sendToDesktop(model);
-		}
-	};
-
-	App.prototype.sendToMobile = function (message) {
-		/// <summary>
-		/// Send a message to the Mobile application.
-		/// </summary>
-		var self = this;
-
-		if (self.connected) {
-			self.sendDateTime = new Date();
-			var model = new hto.models.DesktopMessage();
-			model.message = message;
 			model.userName = self.user.name;
-			_hub.server.sendToMobile(model);
+			
+			_hub.server.sendSignature(model);
 		}
 	};
 

@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HTO.Web.Server.Enums;
 
-namespace HTO.Web.Server.SignalR
+namespace HTO.Web.Server.Models
 {
-	public class MobileMessage
+	public class SignatureMessage
 	{
-        public decimal Latitude { get; set; }
+		public AppTypes From { get; set; }
+		
+		public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public string LocationImageUrl { get; set; }
 		public string Message { get; set; }
         public string SignatureImageDataUrl { get; set; }
+		public AppTypes To { get; set; }
+		public string Token { get; set; }
 		public string UserName { get; set; }
 	}
 }

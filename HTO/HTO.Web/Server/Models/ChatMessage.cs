@@ -1,7 +1,7 @@
 ﻿using HTO.Web.Server.Enums;
 using System;
 
-namespace HTO.Web.Server.SignalR
+namespace HTO.Web.Server.Models
 {
     public class ChatMessage
     {
@@ -11,5 +11,6 @@ namespace HTO.Web.Server.SignalR
         public DateTime SendDateTime { get; set; }
         public AppTypes To { get; set; }
         public string UserName { get; set; }
-    }
+		public string Token { get; set; }
+	}
 }

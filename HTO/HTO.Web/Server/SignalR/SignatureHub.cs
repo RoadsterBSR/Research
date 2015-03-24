@@ -1,111 +1,115 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using HTO.Web.Server.Enums;
+using HTO.Web.Server.Models;
+using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 
 namespace HTO.Web.Server.SignalR
 {
     public class SignatureHub : Hub<IClient>
     {
-		private static Dictionary<string, string> _desktopConnections = new Dictionary<string, string>();
-		private static Dictionary<string, string> _mobileConnections = new Dictionary<string, string>();
+		private static Dictionary<string, User> _users = new Dictionary<string, User>();
 
-		/// <summary>
-		/// Register the current connection as the desktop connection for the given user.
-		/// When "userName" is null or empty or only whitespace, ignore registration.
-		/// </summary>
-		/// <param name="userName"></param>
-		public void RegisterDesktopConnectionId(string userName)
+		public SignatureHub()
 		{
-			if (!string.IsNullOrWhiteSpace(userName))
+			if (_users.Count == 0)
 			{
-				if (_desktopConnections.ContainsKey(userName))
+				var user = new User
 				{
-					_desktopConnections[userName] = Context.ConnectionId;
-				}
-				else
-				{
-					_desktopConnections.Add(userName, Context.ConnectionId);
-				}
-			}
+					Token = "ALrZWfTWjsnapwBigDAs6XiWLf3VW9g25liTVXTRYVjfP29zcMl7p1X4CMeqIftIxw==",
+					UserName = "admin"
+				};
+				_users.Add(user.UserName, user);
+            }
 		}
 
 		/// <summary>
-		/// Register the current connection as the mobile connection for the given user.
-		/// When "userName" is null or empty or only whitespace, ignore registration.
+		/// Gets an authorization token and register the connection, when authentication succeeds.
+		/// Convert username to lowercase before checking.
+		/// 
+		/// Notes
+		/// - Throws an exception, when username is null, empty or contains only whitespaces.
+		/// - Throws an exception, when password is null, empty or contains only whitespaces.
 		/// </summary>
 		/// <param name="userName"></param>
-		public void RegisterMobileConnectionId(string userName)
-        {
-			if (!string.IsNullOrWhiteSpace(userName))
+		/// <param name="password"></param>
+		/// <param name="appType"></param>
+		/// <returns>
+		/// Acccess token, when authenticated.
+		/// Null, when not authenticated.
+		/// </returns>
+		public string GetToken(string userName, string password, AppTypes appType)
+		{
+			if (string.IsNullOrWhiteSpace(userName))
 			{
-				if (_mobileConnections.ContainsKey(userName))
-				{
-					_mobileConnections[userName] = Context.ConnectionId;
-				}
-				else
-				{
-					_mobileConnections.Add(userName, Context.ConnectionId);
-				}
+				throw new ApplicationException("UserName can't be null, empty or contain only whitespaces.");
 			}
-        }
+
+			if (string.IsNullOrWhiteSpace(password))
+			{
+				throw new ApplicationException("Password can't be null, empty or contain only whitespaces.");
+			}
+			
+			userName = userName.ToLower();
+			if (!_users.ContainsKey(userName))
+			{
+				return null;
+			}
+
+			User user = _users[userName];
+			if (!Crypto.VerifyHashedPassword(user.Token, password))
+			{
+				return null;
+			}
+
+			switch (appType)
+			{
+				case AppTypes.Desktop:
+					user.DesktopConnectionId = Context.ConnectionId;
+					break;
+				case AppTypes.Mobile:
+					user.MobileConnectionId = Context.ConnectionId;
+					break;
+				default:
+					throw new ApplicationException("Unknown apptype");
+			}
+            
+
+			return user.Token;
+		}
 
         /// <summary>
         /// Sends a chat message.
-        /// Based on the "To" fiel in the message, the message will be sent to the desktop or mobile.
+        /// Based on the "To" field in the message, the message will be sent to the desktop or mobile.
         /// </summary>
-        public void SendChatMessage(ChatMessage message)
+        public void SendChat(ChatMessage message)
         {
-            if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
+            if (message != null && !string.IsNullOrWhiteSpace(message.UserName) && _users.ContainsKey(message.UserName.ToLower()))
             {
-                string connectionId = null;
+				User user = _users[message.UserName.ToLower()];
                 switch (message.To)
                 {
                     case Enums.AppTypes.Desktop:
-                        if (_desktopConnections.ContainsKey(message.UserName))
-                        {
-                            connectionId = _desktopConnections[message.UserName];
-                            Clients.Client(connectionId).ShowChatMessage(message);
-                        }
+						Clients.Client(user.DesktopConnectionId).ShowChat(message);
                         break;
                     case Enums.AppTypes.Mobile:
-                        if (_mobileConnections.ContainsKey(message.UserName))
-                        {
-                            connectionId = _mobileConnections[message.UserName];
-                            Clients.Client(connectionId).ShowChatMessage(message);
-                        }
-                        break;
+						Clients.Client(user.MobileConnectionId).ShowChat(message);
+						break;
                 }
             }
         }
-
-
+		
         /// <summary>
-        /// When the desktop connection for this user exists, send the message to the desktop application.
+        /// Send a signature message from mobile to desktop.
         /// </summary>
-        public void SendToDesktop(MobileMessage message)
+        public void SendSignature(SignatureMessage message)
         {
-			if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
+			if (message != null && !string.IsNullOrWhiteSpace(message.UserName) && _users.ContainsKey(message.UserName.ToLower()))
 			{
-				if (_desktopConnections.ContainsKey(message.UserName))
-				{
-					var connectionId = _desktopConnections[message.UserName];
-					Clients.Client(connectionId).ShowMessageOnDekstop(message);
-				}
+				User user = _users[message.UserName.ToLower()];
+				Clients.Client(user.DesktopConnectionId).ShowSignature(message);
 			}
 		}
-
-		/// <summary>
-		/// When the mobile connection for this user exists, send the message to the mobile application.
-		/// </summary>
-		public void SendToMobile(DesktopMessage message)
-		{
-			if (message != null && !string.IsNullOrWhiteSpace(message.UserName))
-			{
-				if (_mobileConnections.ContainsKey(message.UserName))
-				{
-					var connectionId = _mobileConnections[message.UserName];
-					Clients.Client(connectionId).ShowMessageOnMobile(message);
-				}
-			}
-		}
+		
 	}
 }

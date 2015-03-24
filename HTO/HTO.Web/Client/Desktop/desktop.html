@@ -9,7 +9,7 @@
     <div class="hto-h3">Chat</div>
     <div class="hto-seperate-block">
         <input class="hto-input-text" ng-model="app.chatMessage" />
-        <button class="btn" ng-click="app.sendChatMessage()">Versturen</button>
+        <button class="btn" ng-click="app.sendChat()">Versturen</button>
     </div>
     <div class="hto-seperate-block hto-flex hto-flex-center" ng-repeat="message in app.chatMessages track by $index">
         <div class="hto-flex-item-fixed"><i class="fa fa-laptop fa-3x"></i></div>

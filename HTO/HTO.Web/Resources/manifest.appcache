@@ -1,6 +1,6 @@
 ﻿CACHE MANIFEST
 
-# version {{ 2015-03-24T10:49:26.197Z }}
+# version {{ 2015-03-24T16:16:51.886Z }}
 
 CACHE:
 
@@ -65,8 +65,7 @@ CACHE:
 /Client/Core/Models/user.js
 /Client/Core/Models/app.js
 /Client/Core/Models/chatMessage.js
-/Client/Core/Models/desktopMessage.js
-/Client/Core/Models/mobileMessage.js
+/Client/Core/Models/signatureMessage.js
 /Client/Core/Modules/hto.js
 /Client/Core/Directives/focus.js
 /Client/Core/Directives/Signature/angular-canvas-painter.js

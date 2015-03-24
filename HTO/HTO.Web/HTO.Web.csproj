@@ -113,8 +113,7 @@
     <Content Include="Client\Core\Directives\focus.js" />
     <Content Include="Client\Core\Models\app.js" />
     <Content Include="Client\Core\Enums\enums.js" />
-    <Content Include="Client\Core\Models\desktopMessage.js" />
-    <Content Include="Client\Core\Models\mobileMessage.js" />
+    <Content Include="Client\Core\Models\signatureMessage.js" />
     <Content Include="Client\Core\Styles\app.css" />
     <Content Include="Client\Core\Styles\reset.css" />
     <Content Include="Client\Libraries\Fontawesome\font-awesome.css" />
@@ -973,15 +972,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\Authentication\AuthenticationController.cs" />
     <Compile Include="Server\Config\WebApiConfig.cs" />
-    <Compile Include="Server\Desktop\DesktopController.cs" />
-    <Compile Include="Server\Enums\Enums.cs" />
-    <Compile Include="Server\Mobile\MobileController.cs" />
-    <Compile Include="Server\SignalR\ChatMessage.cs" />
+    <Compile Include="Server\Enums\AppTypes.cs" />
+    <Compile Include="Server\Models\ChatMessage.cs" />
+    <Compile Include="Server\Models\User.cs" />
+    <Compile Include="Server\SignalR\Crypto.cs" />
     <Compile Include="Server\SignalR\IClient.cs" />
-    <Compile Include="Server\SignalR\MobileMessage.cs" />
-    <Compile Include="Server\SignalR\DesktopMessage.cs" />
+    <Compile Include="Server\Models\SignatureMessage.cs" />
     <Compile Include="Server\SignalR\SignatureHub.cs" />
     <Compile Include="Server\Stub\Desktop.cs" />
     <Compile Include="Server\Stub\Mobile.cs" />
