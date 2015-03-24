@@ -121,7 +121,8 @@
     <Content Include="Client\Libraries\Fontawesome\font-awesome.min.css" />
     <Content Include="Client\Libraries\Fontawesome\fontawesome-webfont.svg" />
     <Content Include="Client\Mobile\mobile.html" />
-    <Content Include="Client\Research\index.html" />
+    <Content Include="Client\Research\vanilla.html" />
+    <Content Include="Client\Research\vanilla.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
