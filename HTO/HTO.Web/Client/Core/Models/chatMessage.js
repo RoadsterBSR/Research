@@ -7,12 +7,11 @@
 		/// Represents a message sent from the mobile application.
 		/// </summary>
 
-	    this.from = null;
+	    this.appType = null;
 	    this.message = null;
 	    this.receivedDateTime = null;
 	    this.sendDateTime = null;
-	    this.to = null;
-	    this.userName = null;
+	    this.token = null;
 	}
 
 	hto.models.ChatMessage = ChatMessage;

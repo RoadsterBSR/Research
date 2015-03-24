@@ -51,12 +51,14 @@
 		/// </summary>
 		var self = this;
 
-		_hub.server.getToken(self.user.name, self.user.password, self.type)
+		if (self.connected) {
+			_hub.server.getToken(self.user.name, self.user.password, self.user.token, self.type)
 			.done(function (token) {
-				self.handleAuthenticationResult(token);
+				_scope.$apply(function () {
+					self.handleAuthenticationResult(token);
+				});
 			});
-
-		
+		}
 	};
 
 	App.prototype.getTemplateUrl = function () {
@@ -81,7 +83,7 @@
 				self.templateUrl = hto.settings.urls.desktopTemplate;
 			}
 		} else {
-			// TODO: show error message.
+			self.templateUrl = hto.settings.urls.loginTemplate;
 		}
 	};
 
@@ -118,12 +120,7 @@
             .done(function () {
             	_scope.$apply(function () {
             		self.connected = true;
-
-            		if (self.user.rememberMe && self.user.name) {
-            			self.authenticate();
-            		} else {
-            			self.templateUrl = hto.settings.urls.loginTemplate;
-            		}
+            		self.authenticate();
             	});
             });
 	};
@@ -155,14 +152,11 @@
 
 	    var self = this;
 	    var model = new hto.models.ChatMessage();
-	    model.from = self.type;
+	    model.appType = self.type;
 	    model.message = self.chatMessage;
 	    model.receivedDateTime = null;
 	    model.sendDateTime = new Date();
-	    model.to = hto.enums.AppTypes.Mobile;
-	    if (self.type === hto.enums.AppTypes.Mobile) {
-	        model.to = hto.enums.AppTypes.Desktop;
-	    }
+	    model.token = self.user.token;
 	    model.userName = self.user.name;
 
 	    _hub.server.sendChat(model);
@@ -178,13 +172,13 @@
 		    self.sendDateTime = new Date();
 
 		    var model = new hto.models.SignatureMessage();
-		    model.from = hto.enums.AppTypes.Mobile;
+		    model.appType = self.type;
 			model.latitude = self.latitude;
 			model.longitude = self.longitude;
 			model.locationImageUrl = self.locationImageUrl;
 			model.message = message;
-			model.to = hto.enums.AppTypes.Desktop;
 			model.signatureImageDataUrl = self.signatureImageDataUrl;
+			model.token = self.user.token;
 			model.userName = self.user.name;
 			
 			_hub.server.sendSignature(model);
@@ -201,6 +195,7 @@
 		self.user.password = "";
 		self.user.name = "";
 		self.user.rememberMe = false;
+		self.user.token = "";
 		self.storeCookieInfoOnDisk();
 
 		this.templateUrl = hto.settings.urls.loginTemplate;
@@ -221,8 +216,18 @@
 
 			if (self.user.rememberMe && self.user.rememberMe !== "undefined") {
 				_cookies.put("rememberMeOnMobile", true);
+				if (self.user.password && self.user.password !== "undefined") {
+					_cookies.put("passwordOnMobile", self.user.password);
+				}
 			} else {
 				_cookies.put("rememberMeOnMobile", false);
+				_cookies.put("passwordOnMobile", "");
+			}
+
+			if (self.user.token && self.user.token !== "undefined") {
+				_cookies.put("tokenOnMobile", self.user.token);
+			} else {
+				_cookies.put("tokenOnMobile", "");
 			}
 		} else {
 			if (self.user.name && self.user.name !== "undefined") {
@@ -233,8 +238,18 @@
 
 			if (self.user.rememberMe && self.user.rememberMe !== "undefined") {
 				_cookies.put("rememberMeOnDesktop", true);
+				if (self.user.password && self.user.password !== "undefined") {
+					_cookies.put("passwordOnDesktop", self.user.password);
+				}
 			} else {
 				_cookies.put("rememberMeOnDesktop", false);
+				_cookies.put("passwordOnDesktop", "");
+			}
+
+			if (self.user.token && self.user.token !== "undefined") {
+				_cookies.put("tokenOnDesktop", self.user.token);
+			} else {
+				_cookies.put("tokenOnDesktop", "");
 			}
 		}
 	};
@@ -247,11 +262,15 @@
 
 		if (self.type === hto.enums.AppTypes.Mobile) {
 			self.user.name = _cookies.get("userNameOnMobile");
+			self.user.password = _cookies.get("passwordOnMobile");
 			self.user.rememberMe = _cookies.get("rememberMeOnMobile");
+			self.user.token = _cookies.get("tokenOnMobile");
 			
 		} else {
 			self.user.name = _cookies.get("userNameOnDesktop");
+			self.user.password = _cookies.get("passwordOnDesktop");
 			self.user.rememberMe = _cookies.get("rememberMeOnDesktop");
+			self.user.token = _cookies.get("tokenOnDesktop");
 		}
 	};
 

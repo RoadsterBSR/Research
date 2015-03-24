@@ -975,6 +975,7 @@
     <Compile Include="Server\Config\WebApiConfig.cs" />
     <Compile Include="Server\Enums\AppTypes.cs" />
     <Compile Include="Server\Models\ChatMessage.cs" />
+    <Compile Include="Server\Models\Connection.cs" />
     <Compile Include="Server\Models\User.cs" />
     <Compile Include="Server\SignalR\Crypto.cs" />
     <Compile Include="Server\SignalR\IClient.cs" />

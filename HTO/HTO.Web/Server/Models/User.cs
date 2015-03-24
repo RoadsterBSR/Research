@@ -10,7 +10,10 @@ namespace HTO.Web.Server.Models
 	{
 		public string DesktopConnectionId { get; set; }
 		public string MobileConnectionId { get; set; }
-		public string Token { get; set; }
+		/// <summary>
+		/// Hashed and salted password.
+		/// </summary>
+		public string Password { get; set; }
 		public string UserName { get; set; }
 	}
 }
