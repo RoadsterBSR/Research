@@ -15,12 +15,8 @@
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Desktop;
     		app.title = "HTO Desktop";
-
-    		var cookies = $cookieStore;
-    		var hub = $.connection.signatureHub;
-    		var scope = $scope;
     		$scope.app = app;
-    		$scope.app.activate(cookies, hub, scope);
+    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope);
         }
 
         function link($scope, $element) {

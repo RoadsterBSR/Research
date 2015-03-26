@@ -12,6 +12,6 @@ namespace HTO.Web.Server.Models
 		/// </summary>
 		public string Id { get; set; }
 
-		public string UserName { get; set; }
-	}
+        public User User { get; set; }
+    }
 }

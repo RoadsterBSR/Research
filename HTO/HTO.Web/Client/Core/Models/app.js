@@ -40,7 +40,7 @@
 	    _q = q;
 	    _scope = scope;
 
-	    self.storeCookieInfoOnModel();
+	    self.copyCookieInfoToModel();
 	    self.initializeSignalR();
 	};
 
@@ -52,13 +52,33 @@
 		var self = this;
 
 		if (self.connected) {
-			_hub.server.getToken(self.user.name, self.user.password, self.user.token, self.type)
+		    _hub.server.authenticate(self.user.name, self.user.password, self.user.token, self.type)
 			.done(function (token) {
 				_scope.$apply(function () {
 					self.handleAuthenticationResult(token);
 				});
 			});
 		}
+	};
+
+	App.prototype.copyCookieInfoToModel = function () {
+	    /// <summary>
+	    /// Retrieve cookie information and store on model.
+	    /// </summary>
+	    var self = this;
+
+	    if (self.type === hto.enums.AppTypes.Mobile) {
+	        self.user.name = _cookies.get("userNameOnMobile");
+	        self.user.password = _cookies.get("passwordOnMobile");
+	        self.user.rememberMe = _cookies.get("rememberMeOnMobile");
+	        self.user.token = _cookies.get("tokenOnMobile");
+
+	    } else {
+	        self.user.name = _cookies.get("userNameOnDesktop");
+	        self.user.password = _cookies.get("passwordOnDesktop");
+	        self.user.rememberMe = _cookies.get("rememberMeOnDesktop");
+	        self.user.token = _cookies.get("tokenOnDesktop");
+	    }
 	};
 
 	App.prototype.getTemplateUrl = function () {
@@ -75,7 +95,7 @@
 		if (token) {
 			self.user.token = token;
 			self.user.isAuthenticated = true;
-			self.storeCookieInfoOnDisk();
+			self.saveCookie();
 
 			if (self.type === hto.enums.AppTypes.Mobile) {
 				self.templateUrl = hto.settings.urls.mobileTemplate;
@@ -196,12 +216,12 @@
 		self.user.name = "";
 		self.user.rememberMe = false;
 		self.user.token = "";
-		self.storeCookieInfoOnDisk();
+		self.saveCookie();
 
 		this.templateUrl = hto.settings.urls.loginTemplate;
 	};
 
-	App.prototype.storeCookieInfoOnDisk = function () {
+	App.prototype.saveCookie = function () {
 		/// <summary>
 		/// Save information from model to cookies on disk.
 		/// </summary>
@@ -251,26 +271,6 @@
 			} else {
 				_cookies.put("tokenOnDesktop", "");
 			}
-		}
-	};
-
-	App.prototype.storeCookieInfoOnModel = function () {
-		/// <summary>
-		/// Retrieve cookie information and store on model.
-		/// </summary>
-		var self = this;
-
-		if (self.type === hto.enums.AppTypes.Mobile) {
-			self.user.name = _cookies.get("userNameOnMobile");
-			self.user.password = _cookies.get("passwordOnMobile");
-			self.user.rememberMe = _cookies.get("rememberMeOnMobile");
-			self.user.token = _cookies.get("tokenOnMobile");
-			
-		} else {
-			self.user.name = _cookies.get("userNameOnDesktop");
-			self.user.password = _cookies.get("passwordOnDesktop");
-			self.user.rememberMe = _cookies.get("rememberMeOnDesktop");
-			self.user.token = _cookies.get("tokenOnDesktop");
 		}
 	};
 

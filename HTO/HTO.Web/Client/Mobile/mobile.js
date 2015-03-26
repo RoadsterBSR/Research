@@ -16,13 +16,8 @@
     		var app = new hto.models.App();
     		app.type = hto.enums.AppTypes.Mobile;
     		app.title = "HTO Mobile";
-    		
-    		var cookies = $cookieStore;
-    		var hub = $.connection.signatureHub;
-    		var q = $q;
-    		var scope = $scope;
     		$scope.app = app;
-    		$scope.app.activate(cookies, hub, scope, q);
+    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope);
         }
 
         function link($scope, $element) {

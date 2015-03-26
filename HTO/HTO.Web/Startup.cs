@@ -4,7 +4,7 @@ using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(HTO.Web.Startup))]
-
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 namespace HTO.Web
 {
     public class Startup
