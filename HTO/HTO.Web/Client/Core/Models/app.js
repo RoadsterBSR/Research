@@ -116,7 +116,6 @@
 		/// </summary>
 		var self = this;
 
-        // Both desktop and client use the same function to show chat messages.
 		_hub.client.showChat = function (message) {
 		    _scope.$apply(function () {
 		        message.ReceivedDateTime = new Date();

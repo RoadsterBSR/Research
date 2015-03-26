@@ -17,7 +17,7 @@
     		app.type = hto.enums.AppTypes.Mobile;
     		app.title = "HTO Mobile";
     		$scope.app = app;
-    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope);
+    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope, $q);
         }
 
         function link($scope, $element) {

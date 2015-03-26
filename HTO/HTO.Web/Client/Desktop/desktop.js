@@ -2,7 +2,7 @@
 (function (hto) {
     "use strict";
 
-    function directive($cookieStore) {
+    function directive($cookieStore, $q) {
         /// <summary>
         /// Represent the desktop app in the ui.
         /// </summary>
@@ -16,7 +16,7 @@
     		app.type = hto.enums.AppTypes.Desktop;
     		app.title = "HTO Desktop";
     		$scope.app = app;
-    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope);
+    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope, $q);
         }
 
         function link($scope, $element) {
@@ -33,6 +33,6 @@
 
     angular
         .module("hto")
-        .directive("htoDesktop", ["$cookieStore", directive]);
+        .directive("htoDesktop", ["$cookieStore", "$q", directive]);
 
 }(hto));

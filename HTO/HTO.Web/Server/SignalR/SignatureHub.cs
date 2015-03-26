@@ -37,6 +37,7 @@ namespace HTO.Web.Server.SignalR
             {
                 var user = new User
                 {
+                    // Wachtwoord is ook "admin".
                     Password = "ALrZWfTWjsnapwBigDAs6XiWLf3VW9g25liTVXTRYVjfP29zcMl7p1X4CMeqIftIxw==",
                     UserName = "admin"
                 };
