@@ -1,5 +1,6 @@
 var HTO;
 (function (HTO) {
+    "use strict";
     var App = (function () {
         function App() {
         }

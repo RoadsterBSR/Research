@@ -1,4 +1,4 @@
-﻿
+﻿var hto;
 (function (hto) {
     "use strict";
 
@@ -12,11 +12,16 @@
     		/// When this directive is loaded, construct "App" object and activate it.
     		/// </summary>
 
-    		var app = new hto.models.App();
-    		app.type = hto.enums.AppTypes.Desktop;
+    	    var app = new hto.models.App();
+    	    app.cookies = $cookieStore;
+    	    app.hub = $.connection.signatureHub;
+    	    app.q = $q;
+    	    app.scope = $scope;
+    		app.appType = hto.enums.AppTypes.Desktop;
     		app.title = "HTO Desktop";
+
     		$scope.app = app;
-    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope, $q);
+    		$scope.app.activate();
         }
 
         function link($scope, $element) {
@@ -35,4 +40,4 @@
         .module("hto")
         .directive("htoDesktop", ["$cookieStore", "$q", directive]);
 
-}(hto));
+}(hto || (hto = {})));

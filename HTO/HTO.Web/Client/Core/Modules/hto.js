@@ -1,4 +1,5 @@
 ﻿ 
+var angular;
 (function (angular) {
 	/// <summary>
 	/// For angular this is the starting point (main) for this app.

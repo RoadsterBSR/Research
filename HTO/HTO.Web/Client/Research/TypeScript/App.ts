@@ -1,4 +1,6 @@
 ﻿module HTO {
+    "use strict"
+
     export class App {
         start(): void {
             var engine: HTO.Models.Engine = new HTO.Models.Engine(100, "BMW");

@@ -2,6 +2,7 @@ var HTO;
 (function (HTO) {
     var Models;
     (function (Models) {
+        "use strict";
         var Car = (function () {
             function Car(engine) {
                 this.engine = engine;

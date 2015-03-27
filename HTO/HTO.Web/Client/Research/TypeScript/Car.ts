@@ -1,4 +1,6 @@
 ﻿module HTO.Models {
+    "use strict"
+
     export class Car {
         private _engine: Engine;
         constructor(engine: Engine) {

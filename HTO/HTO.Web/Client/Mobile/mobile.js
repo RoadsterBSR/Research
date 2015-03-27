@@ -1,4 +1,4 @@
-﻿
+﻿var hto;
 (function (hto, $, document) {
     "use strict";
 
@@ -13,11 +13,16 @@
 			/// Wireup change handler on "rememberMe", so cookie changes, when checkbox changes.
     		/// </summary>
 			
-    		var app = new hto.models.App();
-    		app.type = hto.enums.AppTypes.Mobile;
+    	    var app = new hto.models.App();
+    	    app.cookies = $cookieStore;
+    	    app.hub = $.connection.signatureHub;
+    	    app.q = $q;
+    	    app.scope = $scope;
+    	    app.appType = hto.enums.AppTypes.Mobile;
     		app.title = "HTO Mobile";
+
     		$scope.app = app;
-    		$scope.app.activate($cookieStore, $.connection.signatureHub, $scope, $q);
+    		$scope.app.activate();
         }
 
         function link($scope, $element) {
@@ -38,4 +43,4 @@
         .module("hto")
         .directive("htoMobile", ["$cookieStore", "$q", directive]);
 
-}(hto, $, document));
+}(hto || (hto = {}), $, document));

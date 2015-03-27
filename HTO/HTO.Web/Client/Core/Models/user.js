@@ -1,20 +1,19 @@
-﻿
+var hto;
 (function (hto) {
-	"use strict";
-
-	function User() {
-		/// <summary>
-		/// Represent a user.
-	    /// </summary>
-	    this.isAuthenticated = false;
-	    this.name = "User 1";
-	    this.nameLabel = "Gebruikersnaam";
-        this.password = "";
-        this.passwordLabel = "Wachtwoord";
-        this.rememberMe = false;
-        this.token = null;
-	}
-
-	hto.models.User = User;
-	
-}(hto));
+    var models;
+    (function (models) {
+        "use strict";
+        /**
+         * Represent a user.
+         */
+        var User = (function () {
+            function User() {
+                this.nameLabel = "Gebruikersnaam";
+                this.passwordLabel = "Wachtwoord";
+            }
+            return User;
+        })();
+        models.User = User;
+    })(models = hto.models || (hto.models = {}));
+})(hto || (hto = {}));
+//# sourceMappingURL=user.js.map

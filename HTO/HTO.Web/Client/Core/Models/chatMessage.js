@@ -1,19 +1,17 @@
-﻿
+var hto;
 (function (hto) {
-	"use strict";
-
-	function ChatMessage() {
-		/// <summary>
-		/// Represents a message sent from the mobile application.
-		/// </summary>
-
-	    this.appType = null;
-	    this.message = null;
-	    this.receivedDateTime = null;
-	    this.sendDateTime = null;
-	    this.token = null;
-	}
-
-	hto.models.ChatMessage = ChatMessage;
-
-}(hto));
+    var models;
+    (function (models) {
+        "use strict";
+        /**
+         * Represents a chat message, can be sent and received from both the desktop as the mobile application.
+         */
+        var ChatMessage = (function () {
+            function ChatMessage() {
+            }
+            return ChatMessage;
+        })();
+        models.ChatMessage = ChatMessage;
+    })(models = hto.models || (hto.models = {}));
+})(hto || (hto = {}));
+//# sourceMappingURL=chatMessage.js.map

@@ -1,5 +1,5 @@
 ﻿
-(function (hto) {
+(function () {
 	"use strict";
 
 	function directive() {
@@ -107,4 +107,4 @@
         .module("hto")
         .directive("htoDrawing", [directive]);
 
-}(hto));
+}());

@@ -1,6 +1,7 @@
-var hto;
-(function (hto) {
-    "user strict";
+﻿
+module hto {
+    "user strict"
+
     var urls = {
         authenticate: "Server/Authentication/Authenticate",
         desktopTemplate: "/Client/Desktop/desktop.html",
@@ -10,6 +11,7 @@ var hto;
         mobileTemplate: "/Client/Mobile/mobile.html",
         stubService: "/Server/Stub/HandleRequest"
     };
+
     var handlers = {
         authenticate: {
             stubDataHandler: "HTO.Web.Server.Stub.Authentication.Authenticate",
@@ -24,15 +26,15 @@ var hto;
             url: urls.getMobileData
         }
     };
+
     /**
      * Settings used in this application.
-     *
+     * 
      * When "useAntiForgeryToken" is turned on, all postdata will use an anti forgery token.
      */
-    hto.settings = {
+    export var settings = {
         handlers: handlers,
         urls: urls,
-        useAntiForgeryToken: true
+        useAntiForgeryToken: true 
     };
-})(hto || (hto = {}));
-//# sourceMappingURL=settings.js.map
+}

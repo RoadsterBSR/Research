@@ -5,6 +5,10 @@
  * Released under the MIT license.
  */
 
+var angular;
+var document;
+var navigator;
+var window;
 (function (angular, document, navigator, window) {
     "use strict";
 
@@ -32,8 +36,6 @@
 		}]);
 	})();
 
-
-
 	angular.module('hto')
       .directive('pwCanvas', function () {
       	return {
@@ -43,8 +45,6 @@
       			version: "="
       		},
       		templateUrl: '/Client/Core/Directives/Signature/canvas.html',
-
-
       		link: function postLink(scope, element, attrs) {
 
       			var isTouch = !!('ontouchstart' in window);
@@ -109,7 +109,6 @@
       			ctxTmp.lineWidth = 10;
       			ctxTmp.strokeStyle = options.color;
 
-
       			//Watch options
       			scope.$watch('options.lineWidth', function (newValue) {
       				if (typeof newValue === 'string') {
@@ -133,13 +132,6 @@
       				}
       			});
 
-
-      			/* var clearCanvas = function(){
-          ctx.clearRect(0, 0, canvasTmp.width, canvasTmp.height);
-          ctxTmp.clearRect(0, 0, canvasTmp.width, canvasTmp.height);
-        };*/
-
-
       			var setPointFromEvent = function (point, e) {
       				if (isTouch) {
       					if (iOS) {
@@ -154,7 +146,6 @@
       					point.y = e.offsetY !== undefined ? e.offsetY : e.layerY;
       				}
       			};
-
 
       			var paint = function (e) {
       				if (e) {
@@ -226,8 +217,6 @@
       			};
       			initListeners();
 
-
-
       			var undo = function (version) {
       				if (undoCache.length > 0) {
       					ctx.putImageData(undoCache[version], 0, 0);
@@ -236,14 +225,8 @@
       			};
 
       		}
-
-
-
-
       	};
       });
-
-
 
 	angular.module('hto')
       .directive('pwColorSelector', function () {
@@ -261,5 +244,7 @@
       		}
       	};
       });
-
-}(angular, document, navigator, window));
+}(angular || (angular = {}),
+  document || (document = {}),
+  navigator || (navigator = {}),
+  window || (window = {})));

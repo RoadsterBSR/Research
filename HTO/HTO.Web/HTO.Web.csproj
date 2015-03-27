@@ -112,14 +112,14 @@
     <Content Include="Client\Core\Directives\Signature\color-selector.html" />
     <Content Include="Client\Core\Directives\Signature\signature.controller.js" />
     <Content Include="Client\Core\Directives\Signature\signature.css" />
-    <Content Include="Client\Core\Models\chatMessage.js" />
-    <Content Include="Client\Core\Services\appcache.js" />
-    <Content Include="Client\Core\Services\canvas.js" />
-    <Content Include="Client\Core\Services\geolocation.js" />
+    <TypeScriptCompile Include="Client\Core\Models\chatMessage.ts" />
+    <TypeScriptCompile Include="Client\Core\Services\appcache.ts" />
+    <TypeScriptCompile Include="Client\Core\Services\canvas.ts" />
+    <TypeScriptCompile Include="Client\Core\Services\geolocation.ts" />
     <Content Include="Client\Core\Directives\focus.js" />
-    <Content Include="Client\Core\Models\app.js" />
-    <Content Include="Client\Core\Enums\enums.js" />
-    <Content Include="Client\Core\Models\signatureMessage.js" />
+    <TypeScriptCompile Include="Client\Core\Models\app.ts" />
+    <TypeScriptCompile Include="Client\Core\Enums\appTypes.ts" />
+    <TypeScriptCompile Include="Client\Core\Models\signatureMessage.ts" />
     <Content Include="Client\Core\Styles\app.css" />
     <Content Include="Client\Core\Styles\reset.css" />
     <Content Include="Client\Libraries\Angular\angular-animate.js" />
@@ -913,10 +913,9 @@
     <Content Include="Client\Core\Directives\Login\login.html" />
     <Content Include="Client\Core\Directives\Login\login.js" />
     <Content Include="Client\Core\Directives\Signature\drawing.js" />
-    <Content Include="Client\Core\namespaces.js" />
-    <Content Include="Client\Core\Models\user.js" />
+    <TypeScriptCompile Include="Client\Core\Models\user.ts" />
     <Content Include="Client\Core\Modules\hto.js" />
-    <Content Include="Client\Core\Settings\settings.js" />
+    <TypeScriptCompile Include="Client\Core\Settings\settings.ts" />
     <Content Include="Client\Desktop\desktop.html" />
     <Content Include="Client\Desktop\desktop.js" />
     <Content Include="Client\Mobile\mobile.js" />
@@ -960,9 +959,17 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-route.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\Angular\angular.d.ts" />
+    <TypeScriptCompile Include="Client\Libraries\jQuery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\Core\Services\global.error.handling.js" />
+    <TypeScriptCompile Include="Client\Core\Services\global.error.handling.ts" />
     <Content Include="favicon.ico" />
     <Content Include="Client\Core\Images\icon.png" />
     <Content Include="Client\Core\Images\icon_114x114.png" />
@@ -997,6 +1004,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Client\Libraries\SignalR\signalr.d.ts" />
     <TypeScriptCompile Include="Client\Research\TypeScript\App.ts" />
     <TypeScriptCompile Include="Client\Research\TypeScript\Car.ts" />
     <TypeScriptCompile Include="Client\Research\TypeScript\Engine.ts" />
