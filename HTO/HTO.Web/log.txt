@@ -12,3 +12,19 @@
 2015-03-27 10:01:57,298 1013 [11] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - Both [password] as [token] were null, empty or whitespace.
 2015-03-27 10:07:29,018 62   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
 2015-03-27 10:07:30,039 1083 [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - Both [password] as [token] were null, empty or whitespace.
+2015-03-27 10:22:01,916 93   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:22:03,323 1500 [12] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 10:23:07,817 62   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:23:08,896 1142 [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 10:25:11,304 50   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:25:11,993 739  [11] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 10:44:02,184 46   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:44:02,784 647  [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 10:44:39,915 62   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:44:40,852 1000 [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 10:45:03,790 46   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:46:10,760 46   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 10:46:11,338 625  [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 12:10:33,729 70   [1] INFO  HTO.Web.Global Application_Start (null) - Service started.
+2015-03-27 12:10:34,383 724  [10] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.
+2015-03-27 12:10:53,592 19933 [11] ERROR HTO.Web.Server.SignalR.SignatureHub Authenticate (null) - [userName] was null, empty or whitespace.

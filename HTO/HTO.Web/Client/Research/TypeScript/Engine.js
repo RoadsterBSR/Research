@@ -1,8 +1,15 @@
-var Engine = (function () {
-    function Engine(horsePower, engineType) {
-        this.horsePower = horsePower;
-        this.engineType = engineType;
-    }
-    return Engine;
-})();
-//# sourceMappingURL=engine.js.map
+var HTO;
+(function (HTO) {
+    var Models;
+    (function (Models) {
+        var Engine = (function () {
+            function Engine(horsePower, engineType) {
+                this.horsePower = horsePower;
+                this.engineType = engineType;
+            }
+            return Engine;
+        })();
+        Models.Engine = Engine;
+    })(Models = HTO.Models || (HTO.Models = {}));
+})(HTO || (HTO = {}));
+//# sourceMappingURL=Engine.js.map

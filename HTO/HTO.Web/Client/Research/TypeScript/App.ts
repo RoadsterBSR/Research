@@ -1,9 +1,13 @@
-﻿class App {
-	start(): void {
-		var engine: Engine = new Engine(100, "BMW");
-		var car: Car = new Car(engine);
-		car.start();
-	}
+﻿module HTO {
+    export class App {
+        start(): void {
+            var engine: HTO.Models.Engine = new HTO.Models.Engine(100, "BMW");
+            var car: HTO.Models.Car = new HTO.Models.Car(engine);
+            car.start();
+            var table: HTMLTableElement = document.createElement("table");
+        }
+    }
 }
-var app = new App();
+
+var app = new HTO.App();
 app.start();
